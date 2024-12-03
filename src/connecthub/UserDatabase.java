@@ -116,6 +116,7 @@ public class UserDatabase {
                
    }
     public boolean login(String email,String Password){
+        
        for(User x: users){
            if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
                x.setIsOnline(true);
@@ -154,7 +155,61 @@ public class UserDatabase {
        return true;
 
     }
+    
+    public boolean isemailvalid(String email){
+           if (email == null) {
+            System.out.println("Email is NULL. Please provide a valid email.");
+            return false;  // Invalid if the email is null
+        }
 
-      
-   
+        int length = email.length();
+        int atSymbolIndex = -1;
+        int dotIndex = -1;
+
+        // Find the index of the '@' symbol
+        for (int i = 0; i < length ; i++) {
+            if (email.charAt(i) == '@') {
+                atSymbolIndex = i;
+                break;
+            }
+        }
+
+        // Check if the '@' symbol is present
+        if (atSymbolIndex == -1) {
+           
+            return false;
+        }
+
+        // Check if there is at least one character before and after '@'
+        if (atSymbolIndex <= 0 || atSymbolIndex >= length - 1) {
+            
+            return false;
+        }
+        // Find the index of the '.' symbol after '@'
+        for (int i = atSymbolIndex + 1; i < length; i++) {
+            if (email.charAt(i) == '.') {
+                dotIndex = i;
+                break;
+            }
+        }
+
+        // Check if the dot is directly after the '@' symbol
+        if (dotIndex == atSymbolIndex + 1) {
+           
+            return false;
+        }
+
+        // Check for a valid domain (at least one '.' after '@')
+        if (dotIndex == -1 || dotIndex >= length - 1) {
+          
+            return false;
+        }
+
+        return true;  // Valid email
     }
+
+    }
+
+  
+   
+    
