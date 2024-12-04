@@ -9,7 +9,7 @@ package connecthub;
  * @author Raz_RAMADAN
  */
 public class MainWindow extends javax.swing.JFrame {
-     UserDatabase userdata=new UserDatabase();
+    UserDatabase userdata=UserDatabase.getInstance();
     /**
      * Creates new form MainWindow
      */
@@ -40,7 +40,9 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Connect Hub\n");
 
+        SigninButton.setBackground(new java.awt.Color(204, 204, 255));
         SigninButton.setText("Signin");
         SigninButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        LoginBtn.setBackground(new java.awt.Color(204, 204, 255));
         LoginBtn.setText("Login");
         LoginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,8 +58,10 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(255, 229, 250));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Hello!  welcome to Connect Hub");
+        jLabel1.setOpaque(true);
 
         jLabel2.setText("sign in if you don't have an account");
 
@@ -76,7 +81,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(117, 117, 117)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );

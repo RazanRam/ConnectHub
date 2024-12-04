@@ -4,11 +4,14 @@
  */
 package connecthub;
 
+import static connecthub.UserDatabase.u;
+
 /**
  *
  * @author Raz_RAMADAN
  */
 public class User {
+    
     private String userId;
     private String email;
     private String username;
@@ -16,17 +19,18 @@ public class User {
     private String dateOfBirth;
     private boolean isOnline;
 
-    public User(String userId, String email, String username, String hashedPassword, String dateOfBirth) {
+    public User(String userId, String email, String username, String Password, String dateOfBirth) {
         this.userId = userId;
         this.email = email;
         this.username = username;
-        this.Password = hashedPassword;
+        this.Password = Password;
         this.dateOfBirth = dateOfBirth;
         this.isOnline = false;
     }
 
-    public User() {
-    }
+    
+
+     
     
 
     public String getUserId() {

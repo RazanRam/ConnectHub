@@ -9,7 +9,7 @@ package connecthub;
  * @author Raz_RAMADAN
  */
 public class SigninFrame extends javax.swing.JFrame {
- UserDatabase userdata=new UserDatabase();
+ UserDatabase userdata=UserDatabase.getInstance();
     /**
      * Creates new form SigninFrame
      */
@@ -36,15 +36,24 @@ public class SigninFrame extends javax.swing.JFrame {
         usernameTextField = new javax.swing.JTextField();
         EntersigninButtom = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sign-in  Frame");
 
+        usernameLabel.setBackground(new java.awt.Color(204, 204, 255));
         usernameLabel.setText("Username");
+        usernameLabel.setOpaque(true);
 
+        jLabel2.setBackground(new java.awt.Color(204, 204, 255));
         jLabel2.setText("E-mail");
+        jLabel2.setOpaque(true);
 
+        jLabel3.setBackground(new java.awt.Color(204, 204, 255));
         jLabel3.setText("Password");
+        jLabel3.setOpaque(true);
 
-        jLabel4.setText("DateOfBirth");
+        jLabel4.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel4.setText("Date Of Birth");
+        jLabel4.setOpaque(true);
 
         PasswordField.setText("jPasswordField1");
         PasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +80,8 @@ public class SigninFrame extends javax.swing.JFrame {
             }
         });
 
-        EntersigninButtom.setText("Enter");
+        EntersigninButtom.setBackground(new java.awt.Color(204, 204, 255));
+        EntersigninButtom.setText("Signin");
         EntersigninButtom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EntersigninButtomActionPerformed(evt);
@@ -87,10 +97,10 @@ public class SigninFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(78, 78, 78)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(PasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
@@ -98,8 +108,8 @@ public class SigninFrame extends javax.swing.JFrame {
                             .addComponent(emailTextField)
                             .addComponent(usernameTextField)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(EntersigninButtom)))
+                        .addGap(128, 128, 128)
+                        .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -122,8 +132,8 @@ public class SigninFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateofbirthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(EntersigninButtom)
-                .addGap(29, 29, 29))
+                .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         pack();

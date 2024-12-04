@@ -5,6 +5,7 @@
 package connecthub;
 
 import connecthub.User;
+
 import connecthub.hashedPass;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.*;
+import javax.swing.JOptionPane;
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
@@ -23,18 +25,25 @@ import org.json.JSONObject;
  *
  * @author Raz_RAMADAN
  */
+
 public class UserDatabase {
+     public static UserDatabase u =null;
    private static final String filename="users.json";
  //   private Map<String, User> users =new HashMap<>();
  //  private ObjectMapper objectmapper = new ObjectMapper();
   private List<User> users = new ArrayList<>();
 
-    public UserDatabase() {
+    private UserDatabase() {
         loadDatabase();
     }
-    
+   public static UserDatabase getInstance(){
+        if(u==null){
+            u= new UserDatabase();
+        }
+        return u;
+    }
     //read json file 
-     private void loadDatabase() {
+     public void loadDatabase() {
          File file = new File(filename);
          if (file.exists()) 
          try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -58,6 +67,7 @@ public class UserDatabase {
                     String dateOfBirth = jsonUser.getString("dateOfBirth");
                     boolean isOnline = jsonUser.getBoolean("isOnline");
              User user = new User(userId, username, email, password, dateOfBirth);
+            
                     user.setIsOnline(isOnline);
                     users.add(user);
                 }
@@ -176,13 +186,13 @@ public class UserDatabase {
 
         // Check if the '@' symbol is present
         if (atSymbolIndex == -1) {
-           
+        JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Check if there is at least one character before and after '@'
         if (atSymbolIndex <= 0 || atSymbolIndex >= length - 1) {
-            
+        JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // Find the index of the '.' symbol after '@'
@@ -195,7 +205,7 @@ public class UserDatabase {
 
         // Check if the dot is directly after the '@' symbol
         if (dotIndex == atSymbolIndex + 1) {
-           
+           JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
