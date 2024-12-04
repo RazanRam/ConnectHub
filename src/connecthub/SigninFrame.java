@@ -13,7 +13,8 @@ public class SigninFrame extends javax.swing.JFrame {
     /**
      * Creates new form SigninFrame
      */
-    public SigninFrame() {
+    public SigninFrame()
+    {
         initComponents();
     }
 
@@ -55,7 +56,6 @@ public class SigninFrame extends javax.swing.JFrame {
         jLabel4.setText("Date Of Birth");
         jLabel4.setOpaque(true);
 
-        PasswordField.setText("jPasswordField1");
         PasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PasswordFieldActionPerformed(evt);
@@ -159,12 +159,17 @@ public class SigninFrame extends javax.swing.JFrame {
 
     private void EntersigninButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntersigninButtomActionPerformed
         // TODO add your handling code here:
-        String email=emailTextField.getText();
-        String pass=usernameTextField.getText();
-        String birthdate=dateofbirthTextField.getText();
         String username=usernameTextField.getText();
+        String email=emailTextField.getText();
+        String pass=PasswordField.getText();
+        String birthdate=dateofbirthTextField.getText();
+       
          userdata.isemailvalid(email);
          userdata.signin(username, email, pass, birthdate);
+         
+        NewsFeed frame = new NewsFeed();
+        frame.setVisible(true);
+                this.dispose();
     }//GEN-LAST:event_EntersigninButtomActionPerformed
 
     /**

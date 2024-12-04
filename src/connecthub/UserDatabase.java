@@ -52,13 +52,15 @@ public class UserDatabase extends Database {
                     JSONObject jsonUser = jsonArray.getJSONObject(i);
 
                     // Extract user properties
+                   
                     String userId = jsonUser.getString("userId");
                     String username = jsonUser.getString("username");
                     String email = jsonUser.getString("email");
                     String password = jsonUser.getString("password");
                     String dateOfBirth = jsonUser.getString("dateOfBirth");
                     boolean isOnline = jsonUser.getBoolean("isOnline");
-             User user = new User(userId, username, email, password, dateOfBirth);
+                      User user = new User.UserBuilder().setUsername(username).setUserId(userId).setEmail(email).setDateOfBirth(dateOfBirth).setPassword(password).build();
+            // User user = new User(userId, username, email, password, dateOfBirth);
             
                     user.setIsOnline(isOnline);
                     users.add(user);
@@ -88,7 +90,7 @@ public class UserDatabase extends Database {
             }
 
             // Write the JSON array to the file
-            writer.write(jsonArray.toString());
+            writer.write(jsonArray.toString(4));
             writer.close();
         } catch (IOException e) {
             System.out.println("Error saving to JSON database.");
@@ -111,15 +113,28 @@ public class UserDatabase extends Database {
                
    }
     public boolean login(String email,String Password){
+        if (email == null || email.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Email cannot be empty!", "Login Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    if (Password == null || Password.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Password cannot be empty!", "Login Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
         
        for(User x: users){
            if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
                x.setIsOnline(true);
                saveDatabase();
                return true;
-               
            }
-           return false;
+               else {
+                JOptionPane.showMessageDialog(null, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
+                return false;}
+               
+           
+           
        }
        return false;
     }
@@ -144,7 +159,9 @@ public class UserDatabase extends Database {
        }
         } 
         String hashedPassword = hashedPass.hashPassword(Password);
-        User newUser = new User(UUID.randomUUID().toString(), username, email, hashedPassword, dateOfBirth);
+        User newUser = new User.UserBuilder().setUsername(username).setUserId(UUID.randomUUID().toString()).setEmail(email).setIsOnline(true).setDateOfBirth(dateOfBirth).setPassword(hashedPassword).build();
+      // User newUser = new User(UUID.randomUUID().toString(), username, email, hashedPassword, dateOfBirth);
+     
         users.add(newUser);
         saveDatabase();
        return true;

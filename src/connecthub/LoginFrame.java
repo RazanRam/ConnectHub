@@ -43,7 +43,6 @@ UserDatabase userdata=UserDatabase.getInstance();
         jLabel2.setText("Password");
         jLabel2.setOpaque(true);
 
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
@@ -108,8 +107,18 @@ UserDatabase userdata=UserDatabase.getInstance();
         String pass=jPasswordField1.getText();
          userdata.isemailvalid(email);
          userdata.login( email, pass);
+//         NewsFeed frame = new NewsFeed();
+//        frame.setVisible(true);
+//                this.dispose();
+boolean loginSuccessful = userdata.login(email, pass);
+    if (loginSuccessful) {
+        // Open the NewsFeed on successful login
+       
+        NewsFeed frame = new NewsFeed();
+        frame.setVisible(true);
+        this.dispose(); // Close
     }//GEN-LAST:event_enterloginButtonActionPerformed
-
+    }
     private void loginEmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginEmailTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginEmailTextFieldActionPerformed
