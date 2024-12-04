@@ -11,13 +11,15 @@ import static connecthub.UserDatabase.u;
  * @author Raz_RAMADAN
  */
 public class User {
-    
+    private String Bio;
     private String userId;
     private String email;
     private String username;
     private String Password;
     private String dateOfBirth;
     private boolean isOnline;
+    private String ProfilePhotoPath;
+    private String CoverPhotoPath;
 
     public User(String userId, String email, String username, String Password, String dateOfBirth) {
         this.userId = userId;
@@ -27,6 +29,14 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.isOnline = false;
     }
+
+    public User(String Bio, String Password, String ProfilePhotoPath, String CoverPhotoPath) {
+        this.Bio = Bio;
+        this.Password = Password;
+        this.ProfilePhotoPath = ProfilePhotoPath;
+        this.CoverPhotoPath = CoverPhotoPath;
+    }
+    
 
     
 
