@@ -26,7 +26,7 @@ import org.json.JSONObject;
  * @author Raz_RAMADAN
  */
 
-public class UserDatabase {
+public class UserDatabase extends Database {
      public static UserDatabase u =null;
    private static final String filename="users.json";
  //   private Map<String, User> users =new HashMap<>();
@@ -34,7 +34,7 @@ public class UserDatabase {
   private List<User> users = new ArrayList<>();
 
     private UserDatabase() {
-        loadDatabase();
+        LoadDatabase();
     }
    public static UserDatabase getInstance(){
         if(u==null){
@@ -42,20 +42,12 @@ public class UserDatabase {
         }
         return u;
     }
+   
     //read json file 
-     public void loadDatabase() {
-         File file = new File(filename);
-         if (file.exists()) 
-         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                StringBuilder jsonString = new StringBuilder();
-
-              String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonString.append(line);
-                }
-
+     public void LoadDatabase() {
+         
                 // Parse the JSON array
-                JSONArray jsonArray = new JSONArray(jsonString.toString());
+                JSONArray jsonArray = loadDatabase(filename);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonUser = jsonArray.getJSONObject(i);
 
@@ -71,20 +63,12 @@ public class UserDatabase {
                     user.setIsOnline(isOnline);
                     users.add(user);
                 }
-            } catch (IOException e) {
-                System.out.println("Error reading JSON database.");
-                e.printStackTrace();
-
-    
-          
-
          //    users = objectmapper.readValue(file, new TypeReference<Map<String, User>>(){} );
              //Map.class
-         } else {
-             System.out.println("JSON database not found");
-         }
+         
     }
      
+     @Override
       public void saveDatabase() {
        //   objectmapper.writeValue(new File(filename), users);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
@@ -105,6 +89,7 @@ public class UserDatabase {
 
             // Write the JSON array to the file
             writer.write(jsonArray.toString());
+            writer.close();
         } catch (IOException e) {
             System.out.println("Error saving to JSON database.");
             e.printStackTrace();
@@ -168,7 +153,8 @@ public class UserDatabase {
     
     public boolean isemailvalid(String email){
            if (email == null) {
-            System.out.println("Email is NULL. Please provide a valid email.");
+            //System.out.println("Email is NULL. Please provide a valid email.");
+              JOptionPane.showMessageDialog(null, "Email is NULL. Please provide a valid email.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;  // Invalid if the email is null
         }
 
@@ -186,13 +172,13 @@ public class UserDatabase {
 
         // Check if the '@' symbol is present
         if (atSymbolIndex == -1) {
-        JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Please Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Check if there is at least one character before and after '@'
         if (atSymbolIndex <= 0 || atSymbolIndex >= length - 1) {
-        JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Please Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // Find the index of the '.' symbol after '@'
@@ -205,7 +191,7 @@ public class UserDatabase {
 
         // Check if the dot is directly after the '@' symbol
         if (dotIndex == atSymbolIndex + 1) {
-           JOptionPane.showMessageDialog(null, "P;ease Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null, "Please Enter a valid e-mail format", "Input Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 

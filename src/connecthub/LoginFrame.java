@@ -9,7 +9,7 @@ package connecthub;
  * @author Raz_RAMADAN
  */
 public class LoginFrame extends javax.swing.JFrame {
-UserDatabase userdata=new UserDatabase();
+UserDatabase userdata=UserDatabase.getInstance();
     /**
      * Creates new form LoginFrame
      */
