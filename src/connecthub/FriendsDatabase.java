@@ -29,6 +29,7 @@ public class FriendsDatabase extends Database{
     private ArrayList<friend> Friends=new ArrayList<>();
     private ArrayList<friend> FriendRqustes=new ArrayList<>();
     private ArrayList<friend> Blocks=new ArrayList<>();
+    private ArrayList<friend> suggested=new ArrayList<>();
     private ArrayList<friend> array;
 
     private FriendsDatabase() {
@@ -121,7 +122,40 @@ public class FriendsDatabase extends Database{
     public void Block(String user1,String user2){
         friend f=new friend(user1, user2);
         friend fr=new friend(user2, user1);
+        if(Friends.contains(f))Friends.remove(f);
+        else if(Friends.contains(fr))Friends.remove(fr);
+        Blocks.add(f);
         
+        filename=blocksFILE;
+        array=Blocks;
+        saveDatabase();
+        filename=friendsFILE;
+        array=Friends;
+        saveDatabase();
     }
+    //user1 removes usser2
+    public void Remove(String user1,String user2){
+        friend f=new friend(user1, user2);
+        friend fr=new friend(user2, user1);
+        if(Friends.contains(f))Friends.remove(f);
+        else if(Friends.contains(fr))Friends.remove(fr);
+        
+        filename=friendsFILE;
+        array=Friends;
+        saveDatabase();
+    }
+
+    public ArrayList<friend> getFriends() {
+        return Friends;
+    }
+
+    public ArrayList<friend> getFriendRqustes() {
+        return FriendRqustes;
+    }
+
+    public ArrayList<friend> getBlocks() {
+        return Blocks;
+    }
+    
     
 }
