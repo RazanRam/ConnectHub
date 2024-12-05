@@ -8,11 +8,11 @@ package connecthub;
  *
  * @author janaf
  */
-public class friend {
+public class friendship {
     private String UserID1;
     private String UserID2;
 
-    public friend(String UserID1, String UserID2) {
+    public friendship(String UserID1, String UserID2) {
         this.UserID1 = UserID1;
         this.UserID2 = UserID2;
     }

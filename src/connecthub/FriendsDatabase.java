@@ -26,12 +26,11 @@ public class FriendsDatabase extends Database{
     private static String blocksFILE="blocks.json";
     private String filename;
 
-    private ArrayList<friend> Friends=new ArrayList<>();
-    private ArrayList<friend> FriendRqustes=new ArrayList<>();
-    private ArrayList<friend> Blocks=new ArrayList<>();
-    private ArrayList<friend> suggested=new ArrayList<>();
-    private ArrayList<friend> array;
-
+    private ArrayList<friendship> Friends=new ArrayList<>();
+    private ArrayList<friendship> FriendRqustes=new ArrayList<>();
+    private ArrayList<friendship> Blocks=new ArrayList<>();
+    private ArrayList<friendship> array;
+    
     private FriendsDatabase() {
         filename=friendsFILE;
         array=Friends;
@@ -57,14 +56,14 @@ public class FriendsDatabase extends Database{
             JSONObject fObj=new JSONObject(i);
             String u1=fObj.getString("UserID1");
             String u2=fObj.getString("UserID2");
-            friend f=new friend(u1, u2);
+            friendship f=new friendship(u1, u2);
             array.add(f);
         }
     }
     @Override
     public void saveDatabase(){
         JSONArray frArr=new JSONArray();
-        for(friend f:array){
+        for(friendship f:array){
             JSONObject fObj=new JSONObject();
             fObj.put("UserID1", f.getUserID1());
             fObj.put("UserID2", f.getUserID2());
@@ -85,18 +84,22 @@ public class FriendsDatabase extends Database{
             Logger.getLogger(FriendsDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     //user1 sent a friend request to user2
+    //user1 sender
+    //user2 reciever
     public void FriendRequest(String user1,String user2){
-        friend f=new friend(user1, user2);
+        friendship f=new friendship(user1, user2);
         FriendRqustes.add(f);
         
         filename=friendsrequestsFILE;
         array=FriendRqustes;
         saveDatabase();
     }
+    
     //user1 accept a friend request from user2
     public void AcceptRrquest(String user1,String user2){
-        friend f=new friend(user2, user1);
+        friendship f=new friendship(user2, user1);
         int i=FriendRqustes.indexOf(f);
         FriendRqustes.remove(i);
         Friends.add(f);
@@ -108,9 +111,10 @@ public class FriendsDatabase extends Database{
         array=Friends;
         saveDatabase();
     }
+    
     //user1 decline a friend request from user2
-    public void DeclineRrquest(String user1,String user2){
-        friend f=new friend(user2, user1);
+    public void DeclineRequest(String user1,String user2){
+        friendship f=new friendship(user2, user1);
         int i=FriendRqustes.indexOf(f);
         FriendRqustes.remove(i);
         
@@ -118,10 +122,11 @@ public class FriendsDatabase extends Database{
         array=FriendRqustes;
         saveDatabase();
     }
-    //user1 blocks usser2
+    
+    //user1 blocks user2
     public void Block(String user1,String user2){
-        friend f=new friend(user1, user2);
-        friend fr=new friend(user2, user1);
+        friendship f=new friendship(user1, user2);
+        friendship fr=new friendship(user2, user1);
         if(Friends.contains(f))Friends.remove(f);
         else if(Friends.contains(fr))Friends.remove(fr);
         Blocks.add(f);
@@ -133,10 +138,11 @@ public class FriendsDatabase extends Database{
         array=Friends;
         saveDatabase();
     }
-    //user1 removes usser2
+    
+    //user1 removes user2
     public void Remove(String user1,String user2){
-        friend f=new friend(user1, user2);
-        friend fr=new friend(user2, user1);
+        friendship f=new friendship(user1, user2);
+        friendship fr=new friendship(user2, user1);
         if(Friends.contains(f))Friends.remove(f);
         else if(Friends.contains(fr))Friends.remove(fr);
         
@@ -145,17 +151,62 @@ public class FriendsDatabase extends Database{
         saveDatabase();
     }
 
-    public ArrayList<friend> getFriends() {
-        return Friends;
-    }
-
-    public ArrayList<friend> getFriendRqustes() {
-        return FriendRqustes;
-    }
-
-    public ArrayList<friend> getBlocks() {
-        return Blocks;
+    public ArrayList<String> getFriendsof(String user1){
+        ArrayList<String> U1Friends=new ArrayList<>();
+        for(friendship f:Friends){
+            if(f.getUserID1().equals(user1)){
+                U1Friends.add(f.getUserID2());
+            }
+            else if(f.getUserID2().equals(user1)){
+                U1Friends.add(f.getUserID1());
+            }
+        }
+        return U1Friends;
     }
     
+    public ArrayList<String> getFriendRequestsof(String user1){
+        ArrayList<String> U1Friendreq=new ArrayList<>();
+        for(friendship f:FriendRqustes){
+            if(f.getUserID2().equals(user1)){
+                U1Friendreq.add(f.getUserID1());
+            }
+        }
+        return U1Friendreq;
+    }
+    
+    //List of people who user1 blocked
+    public ArrayList<String> getBlocksof(String user1){
+        ArrayList<String> U1Blocks=new ArrayList<>();
+        for(friendship f:Blocks){
+            if(f.getUserID1().equals(user1)){
+                U1Blocks.add(f.getUserID2());
+            }
+        }
+        return U1Blocks;
+    }
+    
+    /*get friends of user1
+    for each friend of user1 --> get their friends
+    suggest these friends to user1 on condition:
+    1)not already a friend
+    2)not Blocked by user1
+    3)not already in suggestions list
+    */
+    public ArrayList<String> getSuggestedTo(String user1){
+        ArrayList<String> U1SuggestedFriends=new ArrayList<>();
+        ArrayList<String> U1Blocks=getBlocksof(user1);
+        
+        ArrayList<String> U1Friends=getFriendsof(user1);
+        for(String Friend:U1Friends){
+            
+            ArrayList<String> FriendsofFriend=getFriendsof(Friend);
+            for(String person:FriendsofFriend){
+                if(!U1Friends.contains(person) && !U1Blocks.contains(person) && !U1SuggestedFriends.contains(person)){
+                    U1SuggestedFriends.add(person);
+                }
+            }
+        }
+        return U1SuggestedFriends;
+    }
     
 }
