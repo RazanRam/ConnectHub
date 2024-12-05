@@ -27,6 +27,7 @@ import org.json.JSONObject;
  */
 
 public class UserDatabase extends Database {
+    private static User currentuser;
      public static UserDatabase u =null;
    private static final String filename="users.json";
  //   private Map<String, User> users =new HashMap<>();
@@ -52,14 +53,18 @@ public class UserDatabase extends Database {
                     JSONObject jsonUser = jsonArray.getJSONObject(i);
 
                     // Extract user properties
-                   
+                    
+                    String Bio= jsonUser.getString("Bio");
                     String userId = jsonUser.getString("userId");
                     String username = jsonUser.getString("username");
                     String email = jsonUser.getString("email");
                     String password = jsonUser.getString("password");
                     String dateOfBirth = jsonUser.getString("dateOfBirth");
                     boolean isOnline = jsonUser.getBoolean("isOnline");
-                      User user = new User.UserBuilder().setUsername(username).setUserId(userId).setEmail(email).setDateOfBirth(dateOfBirth).setPassword(password).build();
+                    String ProfilePhotoPath = jsonUser.getString("ProfilePhotoPath");
+                    String CoverPhotoPath = jsonUser.getString("CoverPhotoPath");
+                    
+                      User user = new User.UserBuilder().setUsername(username).setUserId(userId).setEmail(email).setDateOfBirth(dateOfBirth).setPassword(password).setCoverPhotoPath(CoverPhotoPath).setProfilePhotoPath(ProfilePhotoPath).setBio(Bio).build();
             // User user = new User(userId, username, email, password, dateOfBirth);
             
                     user.setIsOnline(isOnline);
@@ -79,12 +84,16 @@ public class UserDatabase extends Database {
             // Convert each user to a JSONObject and add it to the JSON array
             for (User user : users) {
                 JSONObject jsonUser = new JSONObject();
+                jsonUser.put("Bio", user.getBio());
                 jsonUser.put("userId", user.getUserId());
                 jsonUser.put("username", user.getUsername());
                 jsonUser.put("email", user.getEmail());
                 jsonUser.put("password", user.getHashedPassword());
                 jsonUser.put("dateOfBirth", user.getDateOfBirth());
                 jsonUser.put("isOnline", user.isIsOnline());
+                jsonUser.put("ProfilePhotoPath", user.getProfilePhotoPath());
+                jsonUser.put("ProfilePhotoPath", user.getCoverPhotoPath());
+                
 
                 jsonArray.put(jsonUser);
             }
@@ -217,11 +226,35 @@ public class UserDatabase extends Database {
           
             return false;
         }
+         return true;  // Valid email
+    }
+        public User getUserByEmail(String email){
+            for (User user : users) {
+                if(user.getEmail().equals(email))
+                    return user;
+            }
+            return null;
+        }
 
-        return true;  // Valid email
+    public static void setCurrentuser(User currentuser) {
+        UserDatabase.currentuser = currentuser;
     }
 
+    public static User getCurrentuser() {
+        return currentuser;
     }
+    
+    public User getUserById(String id){
+            for (User user : users) {
+                if(user.getUserId().equals(id))
+                    return user;
+            }
+            return null;
+        }
+       
+    }
+         
+    
 
   
    
