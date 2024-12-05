@@ -54,5 +54,29 @@
         "userId": "f8c4f165-04fd-4338-b21d-f6da2273aed1",
         "email": "yara@gmail.com",
         "username": "Yara"
+    },
+    {
+        "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+        "dateOfBirth": "12/33/44",
+        "isOnline": true,
+        "userId": "8d543f0b-24c1-47dc-b035-1c412d3c2c13",
+        "email": "oura@yahoo.com",
+        "username": "nour"
+    },
+    {
+        "password": "318aee3fed8c9d040d35a7fc1fa776fb31303833aa2de885354ddf3d44d8fb69",
+        "dateOfBirth": "12/12/2022",
+        "isOnline": true,
+        "userId": "6bdc1e92-d4e9-4fe8-96ac-59cee8dd69bb",
+        "email": "fai@gmail.com",
+        "username": "fai"
+    },
+    {
+        "password": "62f73707683b924b65bf4636f2e0ebc312c20f9e42fc763af9b608bafb38f532",
+        "dateOfBirth": "12/33/2024",
+        "isOnline": true,
+        "userId": "1f0bc425-ce97-4cbf-8b36-e063887e64c7",
+        "email": "razannn@gmail.com",
+        "username": "raaa"
     }
 ]
