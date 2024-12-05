@@ -15,13 +15,14 @@ Post post;
      */
     public ViewPost(String userid) {
         initComponents();
-      this.post=post.getpost(userid);
+      this.post=post.returnpost(userid)
       updateposts();
         
         
     }
     public void updateposts(){ 
         postcontent.setText(post.getContent());
+        
         
     }
 

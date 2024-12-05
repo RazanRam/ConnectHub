@@ -21,15 +21,15 @@ import org.json.JSONObject;
  */
 public class Post extends ContentCreation {
 
-  ReadWrite getarray=new ReadWrite();
-  ArrayList<Post> Posts=getarray.getpost();
+ ReadWrite getarray=new ReadWrite();
+ private  ArrayList<Post> Posts=getarray.getpost();
     
     public Post() {
     }
 
     
 
-    public Post getpost(String userid) {
+    public Post returnpost(String userid) {
         for (Post post : Posts) {
             if (post.getAuthorid().equals(userid)) {
                 return post;
@@ -41,6 +41,8 @@ public class Post extends ContentCreation {
     }
 
     public void addpost() {
+        
+        
     }
 
     public void deletepost() {

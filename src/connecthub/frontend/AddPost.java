@@ -6,17 +6,29 @@ package connecthub.frontend;
 
 import connecthub.ContentFactory;
 import connecthub.Post;
+import connecthub.ReadWrite;
+import connecthub.User;
+import connecthub.UserDatabase;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.UUID;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author hp
  */
 public class AddPost extends javax.swing.JFrame {
+     ReadWrite array=new ReadWrite();
+     private ArrayList<Post> postsarray=array.getpost();
+    
 
     /**
      * Creates new form AddPost
      */
     public AddPost() {
+       
+        
         initComponents();
     }
 
@@ -64,18 +76,17 @@ public class AddPost extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Sharebutton)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(201, Short.MAX_VALUE))
+                    .addComponent(Sharebutton)
+                    .addComponent(jButton2))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,9 +113,18 @@ public class AddPost extends javax.swing.JFrame {
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
         ContentFactory F= new ContentFactory();
-        String content = jTextArea1.getSelectedText();
+        User user= UserDatabase.getCurrentuser();
+       String content = jTextArea1.getSelectedText();
+       if(user==null)
+       {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
+       
        Post p = (Post) F.createpoststory("post");
        p.setContent(content);
+       p.setTimeStamp(LocalDateTime.now());
+       p.setAuthorid(user.getUserId());
+       p.setContentid(UUID.randomUUID().toString());
+       postsarray.add(p);
+       
        
         
     }//GEN-LAST:event_SharebuttonActionPerformed
