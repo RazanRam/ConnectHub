@@ -42,15 +42,15 @@ public class User {
 //    }
     public static class UserBuilder {
         
-    private String Bio;
+    private String Bio="";
     private String userId;
     private String email;
     private String username;
     private String Password;
     private String dateOfBirth;
     private boolean isOnline;
-    private String ProfilePhotoPath;
-    private String CoverPhotoPath;
+    private String ProfilePhotoPath="DefaultProfilePhoto.jpg";
+    private String CoverPhotoPath="DefaultCoverPhoto.jpg";
    
     public UserBuilder setBio(String Bio) {
         this.Bio = Bio;

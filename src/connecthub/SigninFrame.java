@@ -4,6 +4,9 @@
  */
 package connecthub;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 /**
  *
  * @author Raz_RAMADAN
@@ -32,10 +35,10 @@ public class SigninFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
-        dateofbirthTextField = new javax.swing.JTextField();
         emailTextField = new javax.swing.JTextField();
         usernameTextField = new javax.swing.JTextField();
         EntersigninButtom = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sign-in  Frame");
@@ -59,12 +62,6 @@ public class SigninFrame extends javax.swing.JFrame {
         PasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PasswordFieldActionPerformed(evt);
-            }
-        });
-
-        dateofbirthTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateofbirthTextFieldActionPerformed(evt);
             }
         });
 
@@ -104,9 +101,9 @@ public class SigninFrame extends javax.swing.JFrame {
                         .addGap(78, 78, 78)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(PasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                            .addComponent(dateofbirthTextField)
                             .addComponent(emailTextField)
-                            .addComponent(usernameTextField)))
+                            .addComponent(usernameTextField)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -128,9 +125,9 @@ public class SigninFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateofbirthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
@@ -153,19 +150,15 @@ public class SigninFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordFieldActionPerformed
 
-    private void dateofbirthTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateofbirthTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateofbirthTextFieldActionPerformed
-
     private void EntersigninButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntersigninButtomActionPerformed
         // TODO add your handling code here:
         String username=usernameTextField.getText();
         String email=emailTextField.getText();
         String pass=PasswordField.getText();
-        String birthdate=dateofbirthTextField.getText();
+        LocalDate date = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
        
          userdata.isemailvalid(email);
-         userdata.signin(username, email, pass, birthdate);
+         userdata.signin(username, email, pass, date.toString());
          
         NewsFeed frame = new NewsFeed();
         frame.setVisible(true);
@@ -181,8 +174,8 @@ public class SigninFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EntersigninButtom;
     private javax.swing.JPasswordField PasswordField;
-    private javax.swing.JTextField dateofbirthTextField;
     private javax.swing.JTextField emailTextField;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
