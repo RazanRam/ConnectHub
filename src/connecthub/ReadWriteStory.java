@@ -5,8 +5,6 @@
 package connecthub;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,40 +21,37 @@ import org.json.JSONObject;
  *
  * @author hp
  */
-public class ReadWrite {
-
-    private ArrayList<Post> posts = new ArrayList();
-
-    public void createfile(ArrayList<Post> posts) {
-        ArrayList<Post> oldPosts=loadpost();
-        oldPosts.addAll(posts);
-        JSONArray arrposts = new JSONArray();
-
-        for (Post p : oldPosts) {
+public class ReadWriteStory {
+    
+    private ArrayList<Story> Story= new ArrayList();
+    public void WriteStoryInFile(ArrayList<Story> stories){
+         JSONArray arrstories = new JSONArray();
+         for (Story st : stories) {
             JSONObject jp = new JSONObject();
-            jp.put("contentid", p.getContentid());
-            jp.put("authorID", p.getAuthorid());
-            jp.put("content", p.getContent());
-            jp.put("timeStamp", p.getTimeStamp());
-            jp.put("imagePath", p.getImagepath());
-            arrposts.put(jp);
+            jp.put("contentid",st.getContentid());
+            jp.put("authorID", st.getAuthorid());
+            jp.put("content", st.getContent());
+            jp.put("timeStamp", st.getTimeStamp());
+            jp.put("imagePath", st.getImagepath());
+            arrstories.put(jp);
         }
         FileWriter file;
         try {
-            file = new FileWriter("posts.json");
-             file.write(arrposts.toString(4));
+            file = new FileWriter("stories.json");
+            file.write(arrstories.toString(4));
             file.close();
         } catch (IOException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }
-
-    public ArrayList<Post>loadpost() {
+        
+        
+}
+    public ArrayList<Story>loadStories() {
         String S, content = new String();
         FileReader fr;
         try {
-            fr = new FileReader("posts.json");
+            fr = new FileReader("stories.json");
             BufferedReader br = new BufferedReader(fr);
             while ((S = br.readLine()) != null) {
                 content += S;
@@ -70,27 +65,25 @@ public class ReadWrite {
         JSONArray arr = new JSONArray(content);
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
         for (int i = 0; i < arr.length(); i++) {
-            JSONObject post = arr.getJSONObject(i);
-            String contentid = post.getString("contentid");
-            String name = post.getString("name");
-            int id = post.getInt("id");
-            String txtpost = post.getString("postcontent");
-            String timeStamp = post.getString("timeStamp");
-            String imagePath = post.getString("imagePath");
+            JSONObject St = arr.getJSONObject(i);
+            String contentid = St.getString("contentid");
+            String name = St.getString("name");
+            int id = St.getInt("id");
+            String txtpost = St.getString("storycontent");
+            String timeStamp = St.getString("timeStamp");
+            String imagePath = St.getString("imagePath");
             ContentFactory F = new ContentFactory();
-            Post p = (Post) F.createpoststory("post");
-            p.setContentid(contentid);
-            p.setAuthorid(String.valueOf(id));
-            p.setContent(txtpost);
+            Story s = (Story) F.createpoststory("story");
+            s.setContentid(contentid);
+            s.setAuthorid(String.valueOf(id));
+            s.setContent(txtpost);
             LocalDateTime.parse(timeStamp, formatter);
 
-            posts.add(p);
+            Story.add(s);
 
         }
-        return posts;
+        return Story;
 
     }
-
-   
-
+    
 }

@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class AddPost extends javax.swing.JFrame {
      ReadWrite array=new ReadWrite();
-     private ArrayList<Post> postsarray=array.getpost();
+     private ArrayList<Post> postsarray=array.loadpost();
     
 
     /**
