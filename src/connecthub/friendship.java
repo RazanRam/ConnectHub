@@ -33,5 +33,10 @@ public class friendship {
         this.UserID2 = UserID2;
     }
     
+    public boolean hasUser(String userid){
+        if(userid.equals(UserID1)|| userid.equals(UserID2))
+            return true;
+        return false;
+    }
 
 }

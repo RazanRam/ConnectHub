@@ -53,7 +53,7 @@ public class FriendsDatabase extends Database{
     public void LoadDATAbase(){
         JSONArray frArr=loadDatabase(filename);
         for(int i=0;i<frArr.length();i++){
-            JSONObject fObj=new JSONObject(i);
+            JSONObject fObj=frArr.getJSONObject(i);
             String u1=fObj.getString("UserID1");
             String u2=fObj.getString("UserID2");
             friendship f=new friendship(u1, u2);
@@ -99,9 +99,13 @@ public class FriendsDatabase extends Database{
     
     //user1 accept a friend request from user2
     public void AcceptRrquest(String user1,String user2){
+        for(friendship f:FriendRqustes){
+            if(f.getUserID1().equals(user2)){
+                FriendRqustes.remove(f);
+                break;
+            }
+        }
         friendship f=new friendship(user2, user1);
-        int i=FriendRqustes.indexOf(f);
-        FriendRqustes.remove(i);
         Friends.add(f);
         
         filename=friendsrequestsFILE;
@@ -114,9 +118,12 @@ public class FriendsDatabase extends Database{
     
     //user1 decline a friend request from user2
     public void DeclineRequest(String user1,String user2){
-        friendship f=new friendship(user2, user1);
-        int i=FriendRqustes.indexOf(f);
-        FriendRqustes.remove(i);
+        for(friendship f:FriendRqustes){
+            if(f.getUserID1().equals(user2)){
+                FriendRqustes.remove(f);
+                break;
+            }
+        }
         
         filename=friendsrequestsFILE;
         array=FriendRqustes;
@@ -125,10 +132,13 @@ public class FriendsDatabase extends Database{
     
     //user1 blocks user2
     public void Block(String user1,String user2){
+        for(friendship f:Friends){
+            if(f.hasUser(user2)&&f.hasUser(user1)){
+                Friends.remove(f);
+                break;
+            }
+        }
         friendship f=new friendship(user1, user2);
-        friendship fr=new friendship(user2, user1);
-        if(Friends.contains(f))Friends.remove(f);
-        else if(Friends.contains(fr))Friends.remove(fr);
         Blocks.add(f);
         
         filename=blocksFILE;
@@ -141,10 +151,12 @@ public class FriendsDatabase extends Database{
     
     //user1 removes user2
     public void Remove(String user1,String user2){
-        friendship f=new friendship(user1, user2);
-        friendship fr=new friendship(user2, user1);
-        if(Friends.contains(f))Friends.remove(f);
-        else if(Friends.contains(fr))Friends.remove(fr);
+        for(friendship f:Friends){
+            if(f.hasUser(user2)&&f.hasUser(user1)){
+                Friends.remove(f);
+                break;
+            }
+        }
         
         filename=friendsFILE;
         array=Friends;
@@ -208,5 +220,6 @@ public class FriendsDatabase extends Database{
         }
         return U1SuggestedFriends;
     }
+    
     
 }
