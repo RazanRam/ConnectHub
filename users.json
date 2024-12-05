@@ -1,10 +1,11 @@
 [{
-    "CoverPhotoPath": "user_PP/coverPhoto_Edit/12345_PP.jpg",
-    "password": "25aa34070a75ce79dcf2496484ad2301de3daa2b80581c9b265eaadb79685303",
-    "Bio": "hi bor3y :) ",
-    "isOnline": false,
-    "userId": "12345",
-    "email": "testuser@example.com",
-    "ProfilePhotoPath": "user_PP/profilePhoto_Edit/12345_PP.jpg",
-    "username": "TestUser"
+    "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "Bio": "",
+    "dateOfBirth": "2024-12-05",
+    "isOnline": true,
+    "userId": "ef784fa0-7e6c-406c-b935-1aa3aab084dd",
+    "email": "malak@gmail.com",
+    "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+    "username": "malak"
 }]

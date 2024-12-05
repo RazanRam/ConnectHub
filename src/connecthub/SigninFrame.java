@@ -4,8 +4,10 @@
  */
 package connecthub;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -155,7 +157,37 @@ public class SigninFrame extends javax.swing.JFrame {
         String username=usernameTextField.getText();
         String email=emailTextField.getText();
         String pass=PasswordField.getText();
-        LocalDate date = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+         java.util.Date selectedDate = jDateChooser1.getDate();
+    
+    if (selectedDate != null) {
+        // If a date is selected, proceed with the conversion
+        LocalDate date = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Instant instant = date.atStartOfDay(ZoneId.systemDefault()).toInstant(); 
+         if (userdata.isemailvalid(email)) {
+            boolean success = userdata.signin(username, email, pass, date.toString());
+            
+            if (success) {
+                // Proceed with the next steps if sign-in is successful
+                NewsFeed frame = new NewsFeed();
+                frame.setVisible(true);
+                this.dispose();
+            } else {
+                // Handle the case where signin failed (e.g., invalid credentials)
+                JOptionPane.showMessageDialog(null, "Signin failed. Please check your details.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } else {
+        // Handle the case where no date is selected
+        JOptionPane.showMessageDialog(null, "Please select a date.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+        /*LocalDate date = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+         if (date != null) {
+        // Convert date to Instant or whatever you need
+        Instant instant = date.toInstant();
+        // Proceed with your logic using the instant date
+    } else {
+        // Handle the case where no date is selected
+        JOptionPane.showMessageDialog(null, "Please select a date.", "Error", JOptionPane.ERROR_MESSAGE);
        
          userdata.isemailvalid(email);
          userdata.signin(username, email, pass, date.toString());
@@ -163,6 +195,9 @@ public class SigninFrame extends javax.swing.JFrame {
         NewsFeed frame = new NewsFeed();
         frame.setVisible(true);
                 this.dispose();
+    */
+    
+    
     }//GEN-LAST:event_EntersigninButtomActionPerformed
 
     /**

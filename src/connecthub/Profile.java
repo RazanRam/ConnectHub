@@ -8,12 +8,14 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
+
 /**
  *
  * @author Raz_RAMADAN
  */
 public class Profile extends javax.swing.JFrame {
-UserDatabase userdata;
+    ProfileManagement profile = new ProfileManagement();
+    UserDatabase userDatabase = UserDatabase.getInstance();
 //private User user;
 //ppAvatar ppAvatar1 = new ppAvatar();
 
@@ -22,7 +24,7 @@ UserDatabase userdata;
      * Creates new form Profile
      */
    
-    public Profile(UserDatabase userdata,User user ) {
+    public Profile() {
         initComponents();
         //this.user=user;
         //this.userdata=UserDatabase.getInstance();
@@ -121,10 +123,10 @@ UserDatabase userdata;
         //    updateProfile.updateProfileImage(imagePath);
             this.ppAvatar1.setImage(new ImageIcon(imagePath));
             this.ppAvatar1.repaint();
-            ProfileManagement profile=new ProfileManagement();
-            profile.editProfilePhoto(user.getUserId(), chosenFile);
             
-            userdata.saveDatabase();
+            profile.editProfilePhoto(userDatabase.getCurrentuser().getUserId(), chosenFile);
+            
+            userDatabase.saveDatabase();
         }
     }//GEN-LAST:event_camButton1ActionPerformed
 
@@ -141,12 +143,15 @@ UserDatabase userdata;
             this.cpAvater1.setImage(new ImageIcon(imagePath));
             this.cpAvater1.repaint();
            //  userdata.saveDatabase();
+           profile.editCoverPhoto(userDatabase.getCurrentuser().getUserId(), chosenFile);
+            
+            userDatabase.saveDatabase();
         }
     }//GEN-LAST:event_camButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        userdata.saveDatabase();
+        userDatabase.saveDatabase();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
