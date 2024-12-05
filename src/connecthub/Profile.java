@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
  * @author Raz_RAMADAN
  */
 public class Profile extends javax.swing.JFrame {
-
+UserDatabase userdata=UserDatabase.getInstance();
     /**
      * Creates new form Profile
      */
@@ -36,6 +36,7 @@ public class Profile extends javax.swing.JFrame {
         ppAvatar1 = new connecthub.ppAvatar();
         camButton2 = new javax.swing.JButton();
         camButton1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,17 +64,30 @@ public class Profile extends javax.swing.JFrame {
         cpAvater1.add(camButton1);
         camButton1.setBounds(140, 150, 30, 31);
 
+        jButton1.setText("save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(cpAvater1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(cpAvater1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 221, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -93,7 +107,7 @@ public class Profile extends javax.swing.JFrame {
         //    updateProfile.updateProfileImage(imagePath);
             this.ppAvatar1.setImage(new ImageIcon(imagePath));
             this.ppAvatar1.repaint();
-            
+          //  userdata.saveDatabase();
         }
     }//GEN-LAST:event_camButton1ActionPerformed
 
@@ -109,9 +123,15 @@ public class Profile extends javax.swing.JFrame {
        //     updateProfile.updateCoverimage(imagePath);
             this.cpAvater1.setImage(new ImageIcon(imagePath));
             this.cpAvater1.repaint();
-            
+           //  userdata.saveDatabase();
         }
     }//GEN-LAST:event_camButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        userdata.saveDatabase();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,6 +172,7 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JButton camButton1;
     private javax.swing.JButton camButton2;
     private connecthub.cpAvater cpAvater1;
+    private javax.swing.JButton jButton1;
     private connecthub.ppAvatar ppAvatar1;
     // End of variables declaration//GEN-END:variables
 }
