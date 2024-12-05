@@ -92,7 +92,7 @@ public class UserDatabase extends Database {
                 jsonUser.put("dateOfBirth", user.getDateOfBirth());
                 jsonUser.put("isOnline", user.isIsOnline());
                 jsonUser.put("ProfilePhotoPath", user.getProfilePhotoPath());
-                jsonUser.put("ProfilePhotoPath", user.getCoverPhotoPath());
+                jsonUser.put("CoverPhotoPath", user.getCoverPhotoPath());
                 
 
                 jsonArray.put(jsonUser);
@@ -252,6 +252,11 @@ public class UserDatabase extends Database {
             }
             return null;
         }
+
+    public List<User> getUsers() {
+        return users;
+    }
+    
        
     }
          
