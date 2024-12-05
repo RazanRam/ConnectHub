@@ -107,6 +107,7 @@ UserDatabase userdata=UserDatabase.getInstance();
         String pass=jPasswordField1.getText();
          userdata.isemailvalid(email);
          userdata.login( email, pass);
+         
 //         NewsFeed frame = new NewsFeed();
 //        frame.setVisible(true);
 //                this.dispose();

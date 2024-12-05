@@ -12,6 +12,8 @@ import connecthub.UserDatabase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,6 +48,7 @@ public class AddPost extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         Sharebutton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        Image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,13 +82,16 @@ public class AddPost extends javax.swing.JFrame {
                 .addGap(111, 111, 111)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Sharebutton)
-                    .addComponent(jButton2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Image, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Sharebutton)
+                            .addComponent(jButton2))))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -100,7 +106,9 @@ public class AddPost extends javax.swing.JFrame {
                         .addComponent(Sharebutton)
                         .addGap(53, 53, 53)
                         .addComponent(jButton2)))
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Image, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -113,17 +121,42 @@ public class AddPost extends javax.swing.JFrame {
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
         ContentFactory F= new ContentFactory();
-        User user= UserDatabase.getCurrentuser();
+         Post p = (Post) F.createpoststory("Post");
+       User user= UserDatabase.getCurrentuser();
        String content = jTextArea1.getSelectedText();
        if(user==null)
        {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
        
-       Post p = (Post) F.createpoststory("post");
+       
+       String imagePath=null;
+       int result =JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?","Add Photo",JOptionPane.YES_NO_OPTION);
+       if(result==JOptionPane.YES_OPTION)
+       { JFileChooser filechooser=new JFileChooser();
+       filechooser.setDialogTitle(imagePath);
+       filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files","jpg","png","jpeg"));
+       int fileResult=filechooser.showOpenDialog(this);
+       if(fileResult==JFileChooser.APPROVE_OPTION){
+           imagePath=filechooser.getSelectedFile().getAbsolutePath();
+          ImageIcon imageIcon = new ImageIcon(imagePath);
+        Image.setIcon(imageIcon);   
+       }
+       
+       }
+      
        p.setContent(content);
        p.setTimeStamp(LocalDateTime.now());
        p.setAuthorid(user.getUserId());
        p.setContentid(UUID.randomUUID().toString());
+       if(imagePath!=null)
+       {p.setimage(imagePath);}
        postsarray.add(p);
+       JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+       p.addPost(p);
+       
+       
+       
+       
+       
        
        
         
@@ -165,6 +198,7 @@ public class AddPost extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Image;
     private javax.swing.JButton Sharebutton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

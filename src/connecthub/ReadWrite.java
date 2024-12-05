@@ -27,7 +27,7 @@ public class ReadWrite {
 
     private ArrayList<Post> posts = new ArrayList();
 
-    public void createfile() {
+    public void createfile(ArrayList<Post> posts) {
         JSONArray arrposts = new JSONArray();
 
         for (Post p : posts) {

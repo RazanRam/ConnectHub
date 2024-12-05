@@ -135,6 +135,7 @@ public class UserDatabase extends Database {
        for(User x: users){
            if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
                x.setIsOnline(true);
+               UserDatabase.setCurrentuser(x);
                saveDatabase();
                return true;
            }

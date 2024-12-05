@@ -167,7 +167,7 @@ public class SigninFrame extends javax.swing.JFrame {
          userdata.isemailvalid(email);
          userdata.signin(username, email, pass, birthdate);
          
-        NewsFeed frame = new NewsFeed();
+        LoginFrame frame = new LoginFrame();
         frame.setVisible(true);
                 this.dispose();
     }//GEN-LAST:event_EntersigninButtomActionPerformed

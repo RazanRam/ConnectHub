@@ -16,6 +16,7 @@ public abstract class ContentCreation {
     private String contentid;
     private String content;
     private LocalDateTime timeStamp;
+    private String imagepath;
 
     /*public ContentCreation(int authorid, int contentid, String content, LocalDateTime timeStamp) {
         this.authorid = authorid;
@@ -55,6 +56,10 @@ public abstract class ContentCreation {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+    public void setimage(String imagepath){
+        this.imagepath=imagepath;
+        
     }
 
 }
