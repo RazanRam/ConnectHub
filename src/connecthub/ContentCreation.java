@@ -62,4 +62,8 @@ public abstract class ContentCreation {
         
     }
 
+    public String getImagepath() {
+        return imagepath;
+    }
+
 }

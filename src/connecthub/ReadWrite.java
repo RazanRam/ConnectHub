@@ -36,6 +36,7 @@ public class ReadWrite {
             jp.put("authorID", p.getAuthorid());
             jp.put("content", p.getContent());
             jp.put("timeStamp", p.getTimeStamp());
+            jp.put("imagePath", p.getImagepath());
             arrposts.put(jp);
         }
         FileWriter file;
@@ -73,6 +74,7 @@ public class ReadWrite {
             int id = post.getInt("id");
             String txtpost = post.getString("postcontent");
             String timeStamp = post.getString("timeStamp");
+            String imagePath = post.getString("imagePath");
             ContentFactory F = new ContentFactory();
             Post p = (Post) F.createpoststory("post");
             p.setContentid(contentid);
