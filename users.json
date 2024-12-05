@@ -1,0 +1,10 @@
+[{
+    "CoverPhotoPath": "user_PP/coverPhoto_Edit/12345_PP.jpg",
+    "password": "25aa34070a75ce79dcf2496484ad2301de3daa2b80581c9b265eaadb79685303",
+    "Bio": "hi bor3y :) ",
+    "isOnline": false,
+    "userId": "12345",
+    "email": "testuser@example.com",
+    "ProfilePhotoPath": "user_PP/profilePhoto_Edit/12345_PP.jpg",
+    "username": "TestUser"
+}]

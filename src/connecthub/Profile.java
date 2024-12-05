@@ -13,13 +13,20 @@ import javax.swing.JFileChooser;
  * @author Raz_RAMADAN
  */
 public class Profile extends javax.swing.JFrame {
-UserDatabase userdata=UserDatabase.getInstance();
+UserDatabase userdata;
+//private User user;
+//ppAvatar ppAvatar1 = new ppAvatar();
+
+// Set a real image (if available)
     /**
      * Creates new form Profile
      */
    
-    public Profile() {
+    public Profile(UserDatabase userdata,User user ) {
         initComponents();
+        //this.user=user;
+        //this.userdata=UserDatabase.getInstance();
+        
         
     }
 
@@ -34,35 +41,42 @@ UserDatabase userdata=UserDatabase.getInstance();
 
         cpAvater1 = new connecthub.cpAvater();
         ppAvatar1 = new connecthub.ppAvatar();
+        jLabel1 = new javax.swing.JLabel();
         camButton2 = new javax.swing.JButton();
         camButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cpAvater1.setImage(new javax.swing.ImageIcon("C:\\pics & videos\\Camera A Ramadan\\IMG_20160207_163913.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/placeholder user.jpg"))); // NOI18N
+        ppAvatar1.add(jLabel1);
+        jLabel1.setBounds(-30, -10, 180, 150);
 
-        ppAvatar1.setImage(new javax.swing.ImageIcon("C:\\omar\\omar.jpg")); // NOI18N
         cpAvater1.add(ppAvatar1);
-        ppAvatar1.setBounds(10, 70, 140, 130);
+        ppAvatar1.setBounds(20, 80, 130, 120);
 
-        camButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Raz_RAMADAN\\Downloads\\camera.png")); // NOI18N
         camButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 camButton2ActionPerformed(evt);
             }
         });
         cpAvater1.add(camButton2);
-        camButton2.setBounds(530, 150, 30, 31);
+        camButton2.setBounds(470, 180, 72, 30);
 
-        camButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Raz_RAMADAN\\Downloads\\camera.png")); // NOI18N
         camButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 camButton1ActionPerformed(evt);
             }
         });
         cpAvater1.add(camButton1);
-        camButton1.setBounds(140, 150, 30, 31);
+        camButton1.setBounds(160, 180, 40, 30);
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/placeholder.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        cpAvater1.add(jLabel2);
+        jLabel2.setBounds(20, 0, 540, 160);
 
         jButton1.setText("save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -84,8 +98,8 @@ UserDatabase userdata=UserDatabase.getInstance();
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(cpAvater1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addComponent(cpAvater1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(31, 31, 31))
         );
@@ -107,7 +121,10 @@ UserDatabase userdata=UserDatabase.getInstance();
         //    updateProfile.updateProfileImage(imagePath);
             this.ppAvatar1.setImage(new ImageIcon(imagePath));
             this.ppAvatar1.repaint();
-          //  userdata.saveDatabase();
+            ProfileManagement profile=new ProfileManagement();
+            profile.editProfilePhoto(user.getUserId(), chosenFile);
+            
+            userdata.saveDatabase();
         }
     }//GEN-LAST:event_camButton1ActionPerformed
 
@@ -173,6 +190,8 @@ UserDatabase userdata=UserDatabase.getInstance();
     private javax.swing.JButton camButton2;
     private connecthub.cpAvater cpAvater1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private connecthub.ppAvatar ppAvatar1;
     // End of variables declaration//GEN-END:variables
 }
