@@ -18,8 +18,8 @@ import org.json.JSONObject;
  *
  * @author janaf
  */
-public class FriendsDatabase extends Database{
-    public static FriendsDatabase fdb=null;
+public class FriendsManagment extends Database{
+    public static FriendsManagment fdb=null;
     
     private static String friendsFILE="friends.json";
     private static String friendsrequestsFILE="friendsrequests.json";
@@ -31,7 +31,7 @@ public class FriendsDatabase extends Database{
     private ArrayList<friendship> Blocks=new ArrayList<>();
     private ArrayList<friendship> array;
     
-    private FriendsDatabase() {
+    private FriendsManagment() {
         filename=friendsFILE;
         array=Friends;
         LoadDATAbase();
@@ -43,9 +43,9 @@ public class FriendsDatabase extends Database{
         LoadDATAbase();
     }
     
-    public static FriendsDatabase getInstance(){
+    public static FriendsManagment getInstance(){
         if(fdb==null){
-            fdb=new FriendsDatabase();
+            fdb=new FriendsManagment();
         }
         return fdb;
     }
@@ -81,7 +81,7 @@ public class FriendsDatabase extends Database{
                 BW.close();
             
         } catch (IOException ex) {
-            Logger.getLogger(FriendsDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FriendsManagment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

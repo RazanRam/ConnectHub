@@ -14,14 +14,14 @@ import java.util.HashMap;
 public class Suggestions extends javax.swing.JFrame {
     Friends f;
     User me;
-    FriendsDatabase fdb;
+    FriendsManagment fdb;
     UserDatabase udb;
     HashMap<Integer, String> map=new HashMap<>();
 
     /**
      * Creates new form Suggestions
      */
-    public Suggestions(User me,FriendsDatabase fdb,UserDatabase udb,Friends f) {
+    public Suggestions(User me,FriendsManagment fdb,UserDatabase udb,Friends f) {
         initComponents();
         this.me=me;
         this.fdb=fdb;

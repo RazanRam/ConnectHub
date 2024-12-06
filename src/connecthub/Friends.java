@@ -13,7 +13,7 @@ import java.util.HashMap;
  * @author janaf
  */
 public class Friends extends javax.swing.JFrame {
-    FriendsDatabase fdb=FriendsDatabase.getInstance();
+    FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
     HashMap<Integer, String> map=new HashMap<>();
