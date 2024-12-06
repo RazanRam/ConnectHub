@@ -7,8 +7,8 @@ package connecthub.frontend;
 import connecthub.ContentFactory;
 import connecthub.Post;
 import connecthub.ReadWrite;
-//import connecthub.User;
-//import connecthub.UserDatabase;
+import connecthub.User;
+import connecthub.UserDatabase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -122,9 +122,9 @@ public class AddPost extends javax.swing.JFrame {
         // TODO add your handling code here:
         ContentFactory F= new ContentFactory();
          Post p = (Post) F.createpoststory("Post");
-       //User user= UserDatabase.getCurrentuser();
+       User user= UserDatabase.getCurrentuser();
        String content = jTextArea1.getSelectedText();
-      // if(user==null)
+       if(user==null)
        {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
        
        
@@ -145,7 +145,7 @@ public class AddPost extends javax.swing.JFrame {
       
        p.setContent(content);
        p.setTimeStamp(LocalDateTime.now());
-      // p.setAuthorid(user.getUserId());
+       p.setAuthorid(user.getUserId());
        p.setContentid(UUID.randomUUID().toString());
        if(imagePath!=null)
        {p.setimage(imagePath);}

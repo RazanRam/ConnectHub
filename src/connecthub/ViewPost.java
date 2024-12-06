@@ -14,9 +14,9 @@ Post post;
      * Creates new form ViewPost
      */
     public ViewPost(String userid) {
-      /*  initComponents();
+        initComponents();
       this.post=post.returnpost(userid)
-      updateposts();*/
+      updateposts();
         
         
     }
