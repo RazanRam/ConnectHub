@@ -3,7 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/users.json</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/MainWindow.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/Profile.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/LoginFrame.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/hashedPass.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/NewsFeed.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/SigninFrame.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/ppAvatar.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/cpAvater.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/User.java</file>
+            <file>file:/C:/Users/Raz_RAMADAN/Documents/GitHub/ConnectHub/src/connecthub/UserDatabase.java</file>
         </group>
     </open-files>
 </project-private>
