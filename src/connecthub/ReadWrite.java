@@ -28,11 +28,9 @@ public class ReadWrite {
     private ArrayList<Post> posts = new ArrayList();
 
     public void createfile(ArrayList<Post> posts) {
-        ArrayList<Post> oldPosts=loadpost();
-        oldPosts.addAll(posts);
         JSONArray arrposts = new JSONArray();
 
-        for (Post p : oldPosts) {
+        for (Post p : posts) {
             JSONObject jp = new JSONObject();
             jp.put("contentid", p.getContentid());
             jp.put("authorID", p.getAuthorid());
@@ -52,7 +50,7 @@ public class ReadWrite {
         
     }
 
-    public ArrayList<Post>loadpost() {
+    public void loadpost() {
         String S, content = new String();
         FileReader fr;
         try {
@@ -87,10 +85,12 @@ public class ReadWrite {
             posts.add(p);
 
         }
-        return posts;
 
     }
 
-   
+    public ArrayList<Post> getpost() {
+        return posts;
+
+    }
 
 }
