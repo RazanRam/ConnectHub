@@ -236,8 +236,8 @@ public class UserDatabase extends Database {
             return null;
         }
 
-    public static void setCurrentuser(User currentuser) {
-        UserDatabase.currentuser = currentuser;
+    public static void setCurrentuser(User user) {
+        currentuser=user;
     }
 
     public static User getCurrentuser() {
