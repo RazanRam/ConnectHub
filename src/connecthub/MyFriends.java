@@ -14,18 +14,15 @@ import java.util.HashMap;
 
 public class MyFriends extends javax.swing.JFrame {
     Friends f;
-    User me;
-    FriendsManagment fdb;
-    UserDatabase udb;
+    User me=getCurrentuser();
+    FriendsManagment fdb=FriendsManagment.getInstance();
+    UserDatabase udb=UserDatabase.getInstance();
     HashMap<Integer, String> map=new HashMap<>();
     /**
      * Creates new form MyFriends
      */
-    public MyFriends(User me,FriendsManagment fdb,UserDatabase udb,Friends f) {
+    public MyFriends(Friends f) {
         initComponents();
-        this.me=me;
-        this.fdb=fdb;
-        this.udb=udb;
         this.f=f;
         showFriends();
     }

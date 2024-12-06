@@ -133,13 +133,13 @@ public class Friends extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void suggestionsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suggestionsBActionPerformed
-        Suggestions s=new Suggestions(me, fdb, udb,this);
+        Suggestions s=new Suggestions(this);
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_suggestionsBActionPerformed
 
     private void yourFriendsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourFriendsBActionPerformed
-        MyFriends mf=new MyFriends(me, fdb, udb,this);
+        MyFriends mf=new MyFriends(this);
         mf.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_yourFriendsBActionPerformed
