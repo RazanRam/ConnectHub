@@ -7,6 +7,8 @@ package connecthub.frontend;
 import connecthub.ContentFactory;
 import connecthub.Post;
 import connecthub.ReadWrite;
+import connecthub.User;
+import connecthub.UserDatabase;
 import java.awt.Image;
 import java.io.IOException;
 //import connecthub.User;
@@ -120,15 +122,15 @@ public class AddPost extends javax.swing.JFrame {
         // TODO add your handling code here:
        try{ ContentFactory F = new ContentFactory();
         Post p = (Post) F.createpoststory("Post");
-        // User user= UserDatabase.getCurrentuser();
+         User user= UserDatabase.getCurrentuser();
         String content = jTextArea1.getText();
         if (content == null || content.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Content cannot be empty" , "Error", JOptionPane.ERROR_MESSAGE);
             return;
             
         }
-        //if(user==null)
-        // {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
+        if(user==null)
+         {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
         String imagePath = null;
         int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?", "Add Photo", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
@@ -148,7 +150,7 @@ public class AddPost extends javax.swing.JFrame {
         }
         p.setContent(content);
         p.setTimeStamp(LocalDateTime.now());
-        //p.setAuthorid(user.getUserId());
+        p.setAuthorid(user.getUserId());
         p.setContentid(UUID.randomUUID().toString());
         if (imagePath != null) {
             p.setimage(imagePath);

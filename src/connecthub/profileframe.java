@@ -5,9 +5,18 @@
 package connecthub;
 
 import connecthub.UserDatabase;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -20,13 +29,13 @@ public class profileframe extends javax.swing.JFrame {
     private ProfileManagement profile;
     private NewsFeed frame;
     private String BIO;
-
+    private ArrayList<Post> Posts;
     /**
      * Creates new form profileframe
      */
     public profileframe(UserDatabase database, User user, ProfileManagement profile, NewsFeed frame) {
         initComponents();
-
+       
         this.database = database;
         this.user = user;
         this.profile = profile;
@@ -35,7 +44,62 @@ public class profileframe extends javax.swing.JFrame {
         jLabel4.setText(BIO);
          profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
          coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+     this.Posts=
+      displayPosts();
+    }
+    private void displayPosts() {
 
+    JPanel postPanel = new JPanel();
+    postPanel.setLayout(new BoxLayout(postPanel,BoxLayout.Y_AXIS)); 
+    postPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
+
+    for (Post post :Posts ) {
+        if (post.getAuthorid().equals(user.getUserId())) {
+            // Create a panel for each story
+            JPanel singlePostPanel = new JPanel();
+            singlePostPanel.setLayout(new BorderLayout());
+            singlePostPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+            singlePostPanel.setPreferredSize(new Dimension(150, 200));
+
+          
+            JLabel contentLabel = new JLabel("Content: " + post.getContent());
+            contentLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
+            singlePostPanel.add(contentLabel, BorderLayout.NORTH);
+
+            JLabel timestampLabel = new JLabel("Time: " + post.getTimeStamp());
+            timestampLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            singlePostPanel.add(timestampLabel, BorderLayout.SOUTH);
+
+            File imageFile = new File(post.getImagepath());
+            if (imageFile.exists()) {
+                ImageIcon imageIcon = resizeImage(post.getImagepath(), 120, 120); // Resize for a smaller image
+                JLabel imageLabel = new JLabel(imageIcon);
+                singlePostPanel.add(imageLabel, BorderLayout.CENTER);
+            } else {
+                JLabel noImageLabel = new JLabel("No image available.");
+                noImageLabel.setHorizontalAlignment(JLabel.CENTER);
+                singlePostPanel.add(noImageLabel, BorderLayout.CENTER);
+            }
+
+            postPanel.add(singlePostPanel);
+            postPanel.add(Box.createRigidArea(new Dimension(10, 0))); // Add spacing between stories
+        }
+    }
+
+   scrollPane1.setViewportView(postPanel);
+   postPanel.revalidate();
+   postPanel.repaint();
+          
+}
+    private ImageIcon resizeImage(String path, int width, int height) {
+        // Create ImageIcon from file path
+        ImageIcon imageIcon = new ImageIcon(path);
+        // Get the Image from the ImageIcon
+        Image image = imageIcon.getImage();
+        // Scale the image to fit the specified width and height
+        Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        // Return the new ImageIcon with the resized image
+        return new ImageIcon(newImage);
     }
 
     /* if (user != null) {

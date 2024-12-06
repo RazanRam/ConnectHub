@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 public class UserDatabase extends Database {
     private static User currentuser;
-     public static UserDatabase u =null;
+    public static UserDatabase u =null;
    private static final String filename="users.json";
  //   private Map<String, User> users =new HashMap<>();
  //  private ObjectMapper objectmapper = new ObjectMapper();
