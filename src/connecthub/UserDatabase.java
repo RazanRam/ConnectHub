@@ -10,11 +10,14 @@ import connecthub.hashedPass;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,9 +29,9 @@ import org.json.JSONObject;
  * @author Raz_RAMADAN
  */
 
-public class UserDatabase extends Database {
+public class UserDatabase{
     private static User currentuser;
-    public static UserDatabase u =null;
+     public static UserDatabase u =null;
    private static final String filename="users.json";
  //   private Map<String, User> users =new HashMap<>();
  //  private ObjectMapper objectmapper = new ObjectMapper();
@@ -46,9 +49,27 @@ public class UserDatabase extends Database {
    
     //read json file 
      public void LoadDatabase() {
-         
+         File file = new File(filename);
+        JSONArray jsonArray=new JSONArray();
+         if (file.exists()) 
+         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                StringBuilder jsonString = new StringBuilder();
+
+              String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonString.append(line);
+                }
+
                 // Parse the JSON array
-                JSONArray jsonArray = loadDatabase(filename);
+                JSONArray jsoNArray = new JSONArray(jsonString.toString());
+                jsonArray=jsoNArray;
+    reader.close();
+}        catch (FileNotFoundException ex) {
+             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
+         }
+                // Parse the JSON array
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonUser = jsonArray.getJSONObject(i);
 
@@ -69,13 +90,14 @@ public class UserDatabase extends Database {
             
                     user.setIsOnline(isOnline);
                     users.add(user);
+                    
+                    System.out.println("email: "+email);
                 }
          //    users = objectmapper.readValue(file, new TypeReference<Map<String, User>>(){} );
              //Map.class
          
     }
      
-     @Override
       public void saveDatabase() {
        //   objectmapper.writeValue(new File(filename), users);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
@@ -133,19 +155,18 @@ public class UserDatabase extends Database {
     }
         
        for(User x: users){
-           if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
-               x.setIsOnline(true);
-               saveDatabase();
-               setCurrentuser(x);
-               return true;
+           System.out.println("checking user: "+x.getEmail());
+           if(x.getEmail().equalsIgnoreCase(email)){
+               System.out.println("Entered password(hashed): "+hashedPass.hashPassword(Password));
+               System.out.println("Stored password(hashed): "+x.getHashedPassword());
+               if(x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
+                   x.setIsOnline(true);
+                   setCurrentuser(x);
+                   return true;
+               }
            }
-               else {
-                JOptionPane.showMessageDialog(null, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
-                return false;}
-               
-           
-           
        }
+        JOptionPane.showMessageDialog(null, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
        return false;
     }
     
@@ -160,19 +181,22 @@ public class UserDatabase extends Database {
         return false;
     }
     public boolean signin(String username,String email,String Password,String dateOfBirth){
+       if (username.isEmpty() || email.isEmpty() || Password.isEmpty() || dateOfBirth.isEmpty()) {
+              return false;
+       }
+        
         for(User x : users) {
             if (x.getEmail().equals(email)) {
                 return false;
             }
-             if (username.isEmpty() || email.isEmpty() || Password.isEmpty() || dateOfBirth.isEmpty()) {
-              return false;
-       }
+             
         } 
         String hashedPassword = hashedPass.hashPassword(Password);
         User newUser = new User.UserBuilder().setUsername(username).setUserId(UUID.randomUUID().toString()).setEmail(email).setIsOnline(true).setDateOfBirth(dateOfBirth).setPassword(hashedPassword).build();
       // User newUser = new User(UUID.randomUUID().toString(), username, email, hashedPassword, dateOfBirth);
      
         users.add(newUser);
+        //System.out.println(users.getLast().getEmail());
         setCurrentuser(newUser);
         saveDatabase();
        return true;
