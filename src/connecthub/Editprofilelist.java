@@ -8,20 +8,34 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author malok
  */
 public class Editprofilelist extends javax.swing.JFrame {
-private JLabel pp=new JLabel();
-private JLabel cp=new JLabel();
+private JLabel pp;
+private JLabel cp;
+private UserDatabase database;
+private User user;
+private String Bio;
+private profileframe frame;
+private ProfileManagement profile;
+
 
     /**
      * Creates new form Editprofilelist
      */
-    public Editprofilelist() {
+    public Editprofilelist(UserDatabase database,User user,profileframe frame,JLabel pp,JLabel cp,ProfileManagement profile) {
         initComponents();
+        this.database=database;
+         this.user=user;
+        this.Bio=user.getBio();
+        this.frame=frame;
+        this.pp=pp;
+        this.cp=cp;
+        this.profile=profile;
     }
 
     /**
@@ -37,6 +51,7 @@ private JLabel cp=new JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +70,11 @@ private JLabel cp=new JLabel();
         });
 
         jButton3.setText("Edit Bio");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Edit Password");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -63,17 +83,29 @@ private JLabel cp=new JLabel();
             }
         });
 
+        jButton5.setText("Back");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jButton5)))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -87,7 +119,9 @@ private JLabel cp=new JLabel();
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,9 +142,9 @@ private JLabel cp=new JLabel();
             //this.ppAvatar1.setImage(new ImageIcon(imagePath));
            // this.ppAvatar1.repaint();
             
-            profile.editProfilePhoto(userDatabase.getCurrentuser().getUserId(), chosenFile);
+            profile.editProfilePhoto(database.getCurrentuser().getUserId(), chosenFile);
             
-            userDatabase.saveDatabase();
+            database.saveDatabase();
         }
         
         
@@ -118,6 +152,13 @@ private JLabel cp=new JLabel();
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
+        String password = JOptionPane.showInputDialog(this, "Enter New Password:");
+        if (password == null) {
+            return;
+        }
+        profile.editPassword(user.getUserId(), password);
+        database.saveDatabase();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -133,13 +174,32 @@ private JLabel cp=new JLabel();
            // this.cpAvater1.setImage(new ImageIcon(imagePath));
             //this.cpAvater1.repaint();
            //  userdata.saveDatabase();
-           profile.editCoverPhoto(userDatabase.getCurrentuser().getUserId(), chosenFile);
+           profile.editCoverPhoto(database.getCurrentuser().getUserId(), chosenFile);
             
-            userDatabase.saveDatabase();
+            database.saveDatabase();
         }
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        String bio = JOptionPane.showInputDialog(this, "Enter New Bio:");
+        if (bio == null) {
+            return;
+        }
+        profile.editBio(user.getUserId(), bio);
+        database.saveDatabase();
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        frame.setVisible(true);
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,7 +231,7 @@ private JLabel cp=new JLabel();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Editprofilelist().setVisible(true);
+               // new Editprofilelist().setVisible(true);
             }
         });
     }
@@ -181,5 +241,6 @@ private JLabel cp=new JLabel();
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
 }

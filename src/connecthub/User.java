@@ -49,8 +49,8 @@ public class User {
     private String Password;
     private String dateOfBirth;
     private boolean isOnline;
-    private String ProfilePhotoPath="DefaultProfilePhoto.jpg";
-    private String CoverPhotoPath="DefaultCoverPhoto.jpg";
+    private String ProfilePhotoPath="C:\\Users\\malok\\OneDrive\\Pictures\\user default.jpg";
+    private String CoverPhotoPath="C:\\Users\\malok\\OneDrive\\Pictures\\background.jpg";
    
     public UserBuilder setBio(String Bio) {
         this.Bio = Bio;

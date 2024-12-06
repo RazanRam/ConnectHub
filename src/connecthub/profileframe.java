@@ -3,32 +3,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package connecthub;
+
 import connecthub.UserDatabase;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author malok
  */
 public class profileframe extends javax.swing.JFrame {
-private UserDatabase database;
-private User user;
-private ProfileManagement profile;
-private NewsFeed frame;
 
+    private UserDatabase database;
+    private User user;
+    private ProfileManagement profile;
+    private NewsFeed frame;
+    private String BIO;
 
     /**
      * Creates new form profileframe
      */
     public profileframe(UserDatabase database, User user, ProfileManagement profile, NewsFeed frame) {
         initComponents();
-        
-        this.database=database;
-        this.user=user;
-        this.profile=profile;
-        this.frame=frame;
-        System.out.println(user);
-        jLabel4.setText(user.getBio());
+
+        this.database = database;
+        this.user = user;
+        this.profile = profile;
+        this.frame = frame;
+        this.BIO = user.getBio();
+        jLabel4.setText(BIO);
+         profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
+         coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+
     }
-   /* if (user != null) {
+
+    /* if (user != null) {
         String bio = user.getBio(); // Safely access the user's bio
         // Proceed with the rest of the logic
     } else {
@@ -46,8 +56,8 @@ private NewsFeed frame;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        coverphoto = new javax.swing.JLabel();
+        profilephoto = new javax.swing.JLabel();
         editButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,9 +68,9 @@ private NewsFeed frame;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Profile Management");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/background.jpg"))); // NOI18N
+        coverphoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/background.jpg"))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/user default.png"))); // NOI18N
+        profilephoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/connecthub/user default.png"))); // NOI18N
 
         editButton.setText("Edit Profile");
         editButton.addActionListener(new java.awt.event.ActionListener() {
@@ -115,10 +125,10 @@ private NewsFeed frame;
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(profilephoto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(coverphoto)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(editButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -135,12 +145,12 @@ private NewsFeed frame;
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(coverphoto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editButton)
                             .addComponent(viewButton)))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(profilephoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -155,20 +165,27 @@ private NewsFeed frame;
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
-        Editprofilelist frame1 = new Editprofilelist();
-        frame.setVisible(true);
+        Editprofilelist frame1 = new Editprofilelist(database, user, this, profilephoto, coverphoto, profile);
+        frame1.setVisible(true);
         this.dispose();
-       
         
+        ImageIcon icon = new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH));
+        profilephoto.setIcon(icon);
+        ImageIcon icon2;
+        icon2 = new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH));
+        coverphoto.setIcon(icon2);
+       jLabel4.setText(user.getBio());
+       
+
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         // TODO add your handling code here:
         ViewFriends frame2 = new ViewFriends();
-        frame.setVisible(true);
+        frame2.setVisible(true);
         this.dispose();
-        
-        
+
+
     }//GEN-LAST:event_viewButtonActionPerformed
 
     /**
@@ -207,12 +224,12 @@ private NewsFeed frame;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel coverphoto;
     private javax.swing.JButton editButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel profilephoto;
     private java.awt.ScrollPane scrollPane1;
     private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
