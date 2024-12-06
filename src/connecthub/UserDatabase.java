@@ -136,6 +136,7 @@ public class UserDatabase extends Database {
            if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
                x.setIsOnline(true);
                saveDatabase();
+               setCurrentuser(x);
                return true;
            }
                else {
@@ -172,6 +173,7 @@ public class UserDatabase extends Database {
       // User newUser = new User(UUID.randomUUID().toString(), username, email, hashedPassword, dateOfBirth);
      
         users.add(newUser);
+        setCurrentuser(newUser);
         saveDatabase();
        return true;
 
@@ -237,8 +239,8 @@ public class UserDatabase extends Database {
             return null;
         }
 
-    public static void setCurrentuser(User currentuser) {
-        UserDatabase.currentuser = currentuser;
+    public static void setCurrentuser(User user) {
+        currentuser = user;
     }
 
     public static User getCurrentuser() {

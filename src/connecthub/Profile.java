@@ -121,8 +121,8 @@ public class Profile extends javax.swing.JFrame {
             String imagePath = chosenFile.getAbsolutePath();
             System.out.println(imagePath);
         //    updateProfile.updateProfileImage(imagePath);
-            this.ppAvatar1.setImage(new ImageIcon(imagePath));
-            this.ppAvatar1.repaint();
+            //this.ppAvatar1.setImage(new ImageIcon(imagePath));
+           // this.ppAvatar1.repaint();
             
             profile.editProfilePhoto(userDatabase.getCurrentuser().getUserId(), chosenFile);
             

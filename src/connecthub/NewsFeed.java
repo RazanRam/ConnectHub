@@ -3,19 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package connecthub;
-
+import connecthub.UserDatabase;
 /**
  *
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
-
+private UserDatabase database;
+private User user;
+private ProfileManagement profile;
     /**
      * Creates new form NewsFeed
      */
-    public NewsFeed() {
+    public NewsFeed(UserDatabase database, User user) {
         initComponents();
-        
+        this.database=database;
+        this.user=user;
+        profile=new ProfileManagement();
+        System.out.println(user);
     }
 
     /**
@@ -92,7 +97,7 @@ public class NewsFeed extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Profile frame = new Profile();
+        profileframe frame = new profileframe(database,user,profile,this);
         frame.setVisible(true);
                 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -127,7 +132,7 @@ public class NewsFeed extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewsFeed().setVisible(true);
+               // new NewsFeed(UserDatabase database, User user).setVisible(true);
             }
         });
     }

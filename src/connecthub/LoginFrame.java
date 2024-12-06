@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package connecthub;
-
+import connecthub.UserDatabase;
 /**
  *
  * @author Raz_RAMADAN
@@ -109,12 +109,12 @@ UserDatabase userdata=UserDatabase.getInstance();
          userdata.login( email, pass);
 //         NewsFeed frame = new NewsFeed();
 //        frame.setVisible(true);
-//                this.dispose();
 boolean loginSuccessful = userdata.login(email, pass);
     if (loginSuccessful) {
         // Open the NewsFeed on successful login
-       
-        NewsFeed frame = new NewsFeed();
+       User user=userdata.getCurrentuser();
+        NewsFeed frame = new NewsFeed(userdata,user);
+        System.out.println(user);
         frame.setVisible(true);
         this.dispose(); // Close
     }//GEN-LAST:event_enterloginButtonActionPerformed

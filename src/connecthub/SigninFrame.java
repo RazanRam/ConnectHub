@@ -168,7 +168,7 @@ public class SigninFrame extends javax.swing.JFrame {
             
             if (success) {
                 // Proceed with the next steps if sign-in is successful
-                NewsFeed frame = new NewsFeed();
+                NewsFeed frame = new NewsFeed(userdata,userdata.getCurrentuser());
                 frame.setVisible(true);
                 this.dispose();
             } else {
