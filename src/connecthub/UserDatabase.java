@@ -10,11 +10,14 @@ import connecthub.hashedPass;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +29,7 @@ import org.json.JSONObject;
  * @author Raz_RAMADAN
  */
 
-public class UserDatabase extends Database {
+public class UserDatabase{
     private static User currentuser;
      public static UserDatabase u =null;
    private static final String filename="users.json";
@@ -46,9 +49,27 @@ public class UserDatabase extends Database {
    
     //read json file 
      public void LoadDatabase() {
-         
+         File file = new File(filename);
+        JSONArray jsonArray=new JSONArray();
+         if (file.exists()) 
+         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                StringBuilder jsonString = new StringBuilder();
+
+              String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonString.append(line);
+                }
+
                 // Parse the JSON array
-                JSONArray jsonArray = loadDatabase(filename);
+                JSONArray jsoNArray = new JSONArray(jsonString.toString());
+                jsonArray=jsoNArray;
+    reader.close();
+}        catch (FileNotFoundException ex) {
+             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+         }
+                // Parse the JSON array
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonUser = jsonArray.getJSONObject(i);
 
@@ -75,7 +96,6 @@ public class UserDatabase extends Database {
          
     }
      
-     @Override
       public void saveDatabase() {
        //   objectmapper.writeValue(new File(filename), users);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
