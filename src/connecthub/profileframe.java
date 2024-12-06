@@ -5,6 +5,7 @@
 package connecthub;
 
 import connecthub.UserDatabase;
+import connecthub.Post;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,6 +30,7 @@ public class profileframe extends javax.swing.JFrame {
     private ProfileManagement profile;
     private NewsFeed frame;
     private String BIO;
+    
     private ArrayList<Post> Posts;
     /**
      * Creates new form profileframe
@@ -44,8 +46,8 @@ public class profileframe extends javax.swing.JFrame {
         jLabel4.setText(BIO);
          profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
          coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
-     this.Posts=
-      displayPosts();
+         this.Posts=getPost(user.getUserId());
+         displayPosts();
     }
     private void displayPosts() {
 

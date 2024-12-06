@@ -37,7 +37,7 @@ private   ArrayList<Post> allPosts=getarray.loadpost();
         getarray.createfile(allPosts);
     }
 
-   public ArrayList<Post> getPost(String userid){
+   public  ArrayList<Post> getPost(String userid){
        ArrayList<Post> listofpost = new ArrayList();
        for(Post u:allPosts){
            if(u.getAuthorid().equals(userid)){
