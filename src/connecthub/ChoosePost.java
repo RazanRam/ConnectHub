@@ -14,7 +14,7 @@ import javax.swing.JList;
  */
 public class ChoosePost extends javax.swing.JFrame {
  Post post;
- ArrayList<Post>arr= post.getarray.getpost();
+ //ArrayList<Post>arr= post.getarray.getpost();
     /**
      * Creates new form ChoosePost
      */
@@ -25,9 +25,9 @@ public class ChoosePost extends javax.swing.JFrame {
     public void postlist(){
         DefaultListModel<String> model=new DefaultListModel();
         
-        for(Post p:arr)
-        {   String username=getusername(p.getAuthorid());
-            model.addElement(username);
+       // for(Post p:arr)
+        {   //String username=getusername(p.getAuthorid());
+            //model.addElement(username);
         }
         JList<String> list=new JList<>(model);
         ScrollPane.setViewportView(list);
