@@ -4,86 +4,40 @@
  */
 package connecthub;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 
 /**
  *
  * @author janaf
  */
-public class FriendsManagment extends Database{
-    public static FriendsManagment fdb=null;
+public class FriendsManagment{
+    public static FriendsManagment fm=null;
+    
+    friendDataBase fdb=friendDataBase.getInstance();
     
     private static String friendsFILE="friends.json";
     private static String friendsrequestsFILE="friendsrequests.json";
     private static String blocksFILE="blocks.json";
-    private String filename;
 
     private ArrayList<friendship> Friends=new ArrayList<>();
     private ArrayList<friendship> FriendRqustes=new ArrayList<>();
     private ArrayList<friendship> Blocks=new ArrayList<>();
-    private ArrayList<friendship> array;
     
     private FriendsManagment() {
-        filename=friendsFILE;
-        array=Friends;
-        LoadDATAbase();
-        filename=friendsrequestsFILE;
-        array=FriendRqustes;
-        LoadDATAbase();
-        filename=blocksFILE;
-        array=Blocks;
-        LoadDATAbase();
+        Friends=fdb.LoadDATAbase(friendsFILE);
+        FriendRqustes=fdb.LoadDATAbase(friendsrequestsFILE);
+        Blocks=fdb.LoadDATAbase(blocksFILE);
     }
     
     public static FriendsManagment getInstance(){
-        if(fdb==null){
-            fdb=new FriendsManagment();
+        if(fm==null){
+            fm=new FriendsManagment();
         }
-        return fdb;
+        return fm;
     }
     
-    public void LoadDATAbase(){
-        JSONArray frArr=loadDatabase(filename);
-        for(int i=0;i<frArr.length();i++){
-            JSONObject fObj=frArr.getJSONObject(i);
-            String u1=fObj.getString("UserID1");
-            String u2=fObj.getString("UserID2");
-            friendship f=new friendship(u1, u2);
-            array.add(f);
-        }
-    }
-    @Override
-    public void saveDatabase(){
-        JSONArray frArr=new JSONArray();
-        for(friendship f:array){
-            JSONObject fObj=new JSONObject();
-            fObj.put("UserID1", f.getUserID1());
-            fObj.put("UserID2", f.getUserID2());
-            frArr.put(fObj);
-        }
-        
-        File f=new File(filename);
-        try {
-            f.createNewFile();
-            FileWriter fw = new FileWriter(f);
-                BufferedWriter BW = new BufferedWriter(fw);
-                
-                BW.write(frArr.toString(2));
-                BW.flush();
-                BW.close();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(FriendsManagment.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
     
     //user1 sent a friend request to user2
     //user1 sender
@@ -92,9 +46,7 @@ public class FriendsManagment extends Database{
         friendship f=new friendship(user1, user2);
         FriendRqustes.add(f);
         
-        filename=friendsrequestsFILE;
-        array=FriendRqustes;
-        saveDatabase();
+        fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
     }
     
     //user1 accept a friend request from user2
@@ -108,12 +60,8 @@ public class FriendsManagment extends Database{
         friendship f=new friendship(user2, user1);
         Friends.add(f);
         
-        filename=friendsrequestsFILE;
-        array=FriendRqustes;
-        saveDatabase();
-        filename=friendsFILE;
-        array=Friends;
-        saveDatabase();
+        fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
+        fdb.saveDatabase(friendsFILE,Friends);
     }
     
     //user1 decline a friend request from user2
@@ -125,9 +73,8 @@ public class FriendsManagment extends Database{
             }
         }
         
-        filename=friendsrequestsFILE;
-        array=FriendRqustes;
-        saveDatabase();
+        fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
+
     }
     
     //user1 blocks user2
@@ -141,12 +88,8 @@ public class FriendsManagment extends Database{
         friendship f=new friendship(user1, user2);
         Blocks.add(f);
         
-        filename=blocksFILE;
-        array=Blocks;
-        saveDatabase();
-        filename=friendsFILE;
-        array=Friends;
-        saveDatabase();
+        fdb.saveDatabase(blocksFILE,Blocks);
+        fdb.saveDatabase(friendsFILE,Friends);
     }
     
     //user1 removes user2
@@ -158,9 +101,7 @@ public class FriendsManagment extends Database{
             }
         }
         
-        filename=friendsFILE;
-        array=Friends;
-        saveDatabase();
+        fdb.saveDatabase(friendsFILE,Friends);
     }
 
     public ArrayList<String> getFriendsof(String user1){
@@ -204,6 +145,7 @@ public class FriendsManagment extends Database{
     2)not Blocked by user1
     3)not already in suggestions list
     4)not in friendRequests list
+    5)not the current user 
     */
     public ArrayList<String> getSuggestedTo(String user1){
         ArrayList<String> U1SuggestedFriends=new ArrayList<>();
@@ -216,7 +158,7 @@ public class FriendsManagment extends Database{
             
             ArrayList<String> FriendsofFriend=getFriendsof(Friend);
             for(String person:FriendsofFriend){
-                if(!U1Friends.contains(person) && !U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person)){
+                if(!U1Friends.contains(person) && !U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person) && !person.contains(user1)){
                     U1SuggestedFriends.add(person);
                 }
             }
