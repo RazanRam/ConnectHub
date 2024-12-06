@@ -57,6 +57,7 @@ public class Friends extends javax.swing.JFrame {
         requests = new javax.swing.JList<>();
         acceptButton = new javax.swing.JButton();
         declineButton = new javax.swing.JButton();
+        requesting = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Friends");
@@ -93,25 +94,36 @@ public class Friends extends javax.swing.JFrame {
             }
         });
 
+        requesting.setText("Add friends");
+        requesting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(acceptButton)
+                                .addGap(47, 47, 47)
+                                .addComponent(declineButton))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(requesting)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(suggestionsB)
                         .addGap(74, 74, 74)
-                        .addComponent(yourFriendsB))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(acceptButton)
-                            .addGap(47, 47, 47)
-                            .addComponent(declineButton))))
+                        .addComponent(yourFriendsB)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -120,7 +132,8 @@ public class Friends extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suggestionsB)
-                    .addComponent(yourFriendsB))
+                    .addComponent(yourFriendsB)
+                    .addComponent(requesting))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,6 +171,12 @@ public class Friends extends javax.swing.JFrame {
         fdb.DeclineRequest(me.getUserId(),id);
     }//GEN-LAST:event_declineButtonActionPerformed
 
+    private void requestingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestingActionPerformed
+        requestingFrame r=new requestingFrame(this);
+        r.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_requestingActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,6 +186,7 @@ public class Friends extends javax.swing.JFrame {
     private javax.swing.JButton declineButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton requesting;
     private javax.swing.JList<String> requests;
     private javax.swing.JButton suggestionsB;
     private javax.swing.JButton yourFriendsB;

@@ -7,6 +7,8 @@ package connecthub;
 import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 /**
  *
@@ -107,6 +109,7 @@ public class Suggestions extends javax.swing.JFrame {
         int i=suggList.getSelectedIndex();
         String id=map.get(i);
         fdb.FriendRequest(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "requested", "message", PLAIN_MESSAGE);
     }//GEN-LAST:event_reqButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
