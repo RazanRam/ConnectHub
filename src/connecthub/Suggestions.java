@@ -4,6 +4,7 @@
  */
 package connecthub;
 
+import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import java.util.HashMap;
 

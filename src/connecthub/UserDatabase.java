@@ -90,6 +90,8 @@ public class UserDatabase{
             
                     user.setIsOnline(isOnline);
                     users.add(user);
+                    
+                    System.out.println("email: "+email);
                 }
          //    users = objectmapper.readValue(file, new TypeReference<Map<String, User>>(){} );
              //Map.class
@@ -153,19 +155,18 @@ public class UserDatabase{
     }
         
        for(User x: users){
-           if(x.getEmail().equals(email)&&x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
-               x.setIsOnline(true);
-               saveDatabase();
-               setCurrentuser(x);
-               return true;
+           System.out.println("checking user: "+x.getEmail());
+           if(x.getEmail().equalsIgnoreCase(email)){
+               System.out.println("Entered password(hashed): "+hashedPass.hashPassword(Password));
+               System.out.println("Stored password(hashed): "+x.getHashedPassword());
+               if(x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
+                   x.setIsOnline(true);
+                   setCurrentuser(x);
+                   return true;
+               }
            }
-               else {
-                JOptionPane.showMessageDialog(null, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
-                return false;}
-               
-           
-           
        }
+        JOptionPane.showMessageDialog(null, "Incorrect password!", "Login Error", JOptionPane.ERROR_MESSAGE);
        return false;
     }
     
@@ -180,19 +181,22 @@ public class UserDatabase{
         return false;
     }
     public boolean signin(String username,String email,String Password,String dateOfBirth){
+       if (username.isEmpty() || email.isEmpty() || Password.isEmpty() || dateOfBirth.isEmpty()) {
+              return false;
+       }
+        
         for(User x : users) {
             if (x.getEmail().equals(email)) {
                 return false;
             }
-             if (username.isEmpty() || email.isEmpty() || Password.isEmpty() || dateOfBirth.isEmpty()) {
-              return false;
-       }
+             
         } 
         String hashedPassword = hashedPass.hashPassword(Password);
         User newUser = new User.UserBuilder().setUsername(username).setUserId(UUID.randomUUID().toString()).setEmail(email).setIsOnline(true).setDateOfBirth(dateOfBirth).setPassword(hashedPassword).build();
       // User newUser = new User(UUID.randomUUID().toString(), username, email, hashedPassword, dateOfBirth);
      
         users.add(newUser);
+        //System.out.println(users.getLast().getEmail());
         setCurrentuser(newUser);
         saveDatabase();
        return true;

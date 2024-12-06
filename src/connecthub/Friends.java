@@ -17,11 +17,13 @@ public class Friends extends javax.swing.JFrame {
     UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
     HashMap<Integer, String> map=new HashMap<>();
+    NewsFeed n;
     /**
      * Creates new form Friends
      */
-    public Friends() {
+    public Friends(NewsFeed n) {
         initComponents();
+        this.n=n;
         showRequests();
     }
     public void showRequests(){

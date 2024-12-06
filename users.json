@@ -1,0 +1,35 @@
+[
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+        "Bio": "",
+        "dateOfBirth": "2024-12-06",
+        "isOnline": true,
+        "userId": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f",
+        "email": "jana@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "jana"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "1d28c120568c10e19b9d8abe8b66d0983fa3d2e11ee7751aca50f83c6f4a43aa",
+        "Bio": "",
+        "dateOfBirth": "2024-12-06",
+        "isOnline": true,
+        "userId": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
+        "email": "arwa@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "arwa"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "ff2ccb6ba423d356bd549ed4bfb76e96976a0dcde05a09996a1cdb9f83422ec4",
+        "Bio": "",
+        "dateOfBirth": "2024-12-07",
+        "isOnline": true,
+        "userId": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
+        "email": "manal@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "manal"
+    }
+]
