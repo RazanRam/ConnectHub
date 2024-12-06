@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  * @author malok
  */
 public class profileframe extends javax.swing.JFrame {
-
+ private postStoryManagment pst=new postStoryManagment();
     private UserDatabase database;
     private User user;
     private ProfileManagement profile;
@@ -47,7 +47,7 @@ public class profileframe extends javax.swing.JFrame {
         jLabel4.setText(BIO);
          profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
          coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
-         this.Posts=post.getPost(user.getUserId());
+         this.Posts=pst.getPost(user.getUserId());5
          displayPosts();
     }
     private void displayPosts() {
