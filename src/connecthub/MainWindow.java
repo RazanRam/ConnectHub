@@ -9,12 +9,20 @@ package connecthub;
  * @author Raz_RAMADAN
  */
 public class MainWindow extends javax.swing.JFrame {
+        public static MainWindow fdb=null;
     UserDatabase userdata=UserDatabase.getInstance();
     /**
      * Creates new form MainWindow
      */
-    public MainWindow() {
+    private MainWindow() {
         initComponents();
+    }
+
+    public static MainWindow getInstance(){
+        if(fdb==null){
+            fdb=new MainWindow();
+        }
+        return fdb;
     }
 
     /**

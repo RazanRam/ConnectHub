@@ -22,7 +22,8 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddStoryFrame extends javax.swing.JFrame {
-   
+       NewsFeed n=NewsFeed.getInstance();
+
 
     /**
      * Creates new form AddStoryFrame
@@ -46,6 +47,11 @@ public class AddStoryFrame extends javax.swing.JFrame {
         Sharebutton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -141,6 +147,11 @@ public class AddStoryFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_SharebuttonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+setVisible(false);
+        n.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

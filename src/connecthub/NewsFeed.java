@@ -10,8 +10,10 @@ import java.util.ArrayList;
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
-private UserDatabase database;
-private User user;
+            public static NewsFeed fn=null;
+
+private UserDatabase database=UserDatabase.getInstance();
+private User user=UserDatabase.getCurrentuser();
 private ProfileManagement profile;
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -21,7 +23,7 @@ private ProfileManagement profile;
     /**
      * Creates new form NewsFeed
      */
-    public NewsFeed(UserDatabase database, User user) {
+    private NewsFeed() {
         initComponents();
         this.database=database;
         this.user=user;
@@ -30,6 +32,13 @@ private ProfileManagement profile;
         showFriends();
         showSuggest();
     }
+    public static NewsFeed getInstance(){
+        if(fn==null){
+            fn=new NewsFeed();
+        }
+        return fn;
+    }
+
     public void showFriends(){
         ArrayList<String> friendsUserIDs=fdb.getFriendsof(user.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
@@ -81,6 +90,8 @@ private ProfileManagement profile;
         stories = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         posts = new javax.swing.JList<>();
+        addpost = new javax.swing.JButton();
+        addstory = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -119,6 +130,20 @@ private ProfileManagement profile;
 
         jScrollPane4.setViewportView(posts);
 
+        addpost.setText("Add Post");
+        addpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addpostActionPerformed(evt);
+            }
+        });
+
+        addstory.setText("Add Story");
+        addstory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addstoryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,6 +157,10 @@ private ProfileManagement profile;
                         .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addpost)
+                        .addGap(18, 18, 18)
+                        .addComponent(addstory)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(23, 23, 23)
@@ -152,7 +181,9 @@ private ProfileManagement profile;
                     .addComponent(LogOutButton)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(friendspage))
+                    .addComponent(friendspage)
+                    .addComponent(addpost)
+                    .addComponent(addstory))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
@@ -169,7 +200,8 @@ private ProfileManagement profile;
 
     private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
         // TODO add your handling code here:
-        MainWindow frame=new MainWindow();
+        database.logout(user.getEmail());
+        MainWindow frame=MainWindow.getInstance();
                 frame.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_LogOutButtonActionPerformed
@@ -187,44 +219,28 @@ private ProfileManagement profile;
         setVisible(false);
     }//GEN-LAST:event_friendspageActionPerformed
 
+    private void addpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addpostActionPerformed
+        AddPost a=new AddPost();
+        a.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_addpostActionPerformed
+
+    private void addstoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addstoryActionPerformed
+        AddStoryFrame a=new AddStoryFrame();
+        a.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_addstoryActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewsFeed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewsFeed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewsFeed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewsFeed.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               //new NewsFeed(UserDatabase database, User user).setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogOutButton;
     private javax.swing.JList<String> MyFriendsList;
+    private javax.swing.JButton addpost;
+    private javax.swing.JButton addstory;
     private javax.swing.JButton friendspage;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

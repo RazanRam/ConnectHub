@@ -13,11 +13,11 @@ import java.util.HashMap;
  * @author janaf
  */
 public class Friends extends javax.swing.JFrame {
+    NewsFeed n=NewsFeed.getInstance();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
     HashMap<Integer, String> map=new HashMap<>();
-    NewsFeed n;
     /**
      * Creates new form Friends
      */
@@ -61,6 +61,11 @@ public class Friends extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Friends");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         suggestionsB.setText("Suggestions");
         suggestionsB.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +181,11 @@ public class Friends extends javax.swing.JFrame {
         r.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_requestingActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        setVisible(false);
+        n.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
