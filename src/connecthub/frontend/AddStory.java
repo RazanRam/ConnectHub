@@ -2,40 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package connecthub;
-
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
+package connecthub.frontend;
 
 /**
  *
  * @author hp
  */
-public class ChoosePost extends javax.swing.JFrame {
- Post post;
- ArrayList<Post>arr= post.getarray.getpost();
+public class AddStory extends javax.swing.JFrame {
+
     /**
-     * Creates new form ChoosePost
+     * Creates new form AddStory
      */
-    public ChoosePost() {
+    public AddStory() {
         initComponents();
-        
-    }
-    public void postlist(){
-        DefaultListModel<String> model=new DefaultListModel();
-        
-        for(Post p:arr)
-        {   String username=getusername(p.getAuthorid());
-            model.addElement(username);
-        }
-        JList<String> list=new JList<>(model);
-        ScrollPane.setViewportView(list);
-        String value=list.getSelectedValue();
-        ViewPost view=new ViewPost(value);
-        view.setVisible(true);
-        this.setVisible(false);
-        
     }
 
     /**
@@ -47,33 +26,17 @@ public class ChoosePost extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ScrollPane = new javax.swing.JScrollPane();
-        postlist = new javax.swing.JList<>();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        postlist.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        ScrollPane.setViewportView(postlist);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -96,26 +59,24 @@ public class ChoosePost extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChoosePost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChoosePost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChoosePost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChoosePost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddStory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChoosePost().setVisible(true);
+                new AddStory().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane ScrollPane;
-    private javax.swing.JList<String> postlist;
     // End of variables declaration//GEN-END:variables
 }

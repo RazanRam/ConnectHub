@@ -22,27 +22,19 @@ import org.json.JSONObject;
 public class Post extends ContentCreation {
 
  ReadWrite getarray=new ReadWrite();
- private ArrayList<Post> postList = getarray.getpost();
+ private ArrayList<Post> listofpost = getarray.loadpost();
 
     public void addPost(Post p) {
-        postList.add(p);
-        getarray.createfile(postList);
+        listofpost.add(p);
+        getarray.createfile(listofpost);
     }
     public void deletePost(Post p) {
-        postList.remove(p);
-        getarray.createfile(postList);
+        listofpost.remove(p);
+        getarray.createfile(listofpost);
     }
 
    public ArrayList<Post> getPost(){
-       
-       
-       for (Post p : postList) {
-            postList.add(p);
-        }
-
-       
-       
-       return postList;
+        return listofpost;
    }
    }
 
