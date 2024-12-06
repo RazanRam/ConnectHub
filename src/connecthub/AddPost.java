@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package connecthub.frontend;
+package connecthub;
 
 import connecthub.ContentFactory;
 import connecthub.Post;
@@ -119,8 +119,9 @@ public class AddPost extends javax.swing.JFrame {
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
        try{ ContentFactory F = new ContentFactory();
+       postStoryManagment psm=new postStoryManagment();
         Post p = (Post) F.createpoststory("Post");
-        // User user= UserDatabase.getCurrentuser();
+         User user= UserDatabase.getCurrentuser();
         String content = jTextArea1.getText();
         if (content == null || content.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Content cannot be empty" , "Error", JOptionPane.ERROR_MESSAGE);
@@ -148,7 +149,7 @@ public class AddPost extends javax.swing.JFrame {
         }
         p.setContent(content);
         p.setTimeStamp(LocalDateTime.now());
-        //p.setAuthorid(user.getUserId());
+        p.setAuthorid(user.getUserId());
         p.setContentid(UUID.randomUUID().toString());
         if (imagePath != null) {
             p.setimage(imagePath);
@@ -157,7 +158,7 @@ public class AddPost extends javax.swing.JFrame {
             p.setimage(null);
         }
         JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        p.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        psm.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
@@ -167,37 +168,7 @@ public class AddPost extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddPost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddPost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddPost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddPost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddPost().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Sharebutton;

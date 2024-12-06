@@ -20,21 +20,6 @@ import org.json.JSONObject;
  * @author hp
  */
 public class Post extends ContentCreation {
-
- ReadWrite getarray=new ReadWrite();
- private ArrayList<Post> listofpost = new ArrayList();
-
-    public void addPost(Post p) {
-        listofpost.add(p);
-        getarray.createfile(listofpost);
-    }
-    public void deletePost(Post p) {
-        listofpost.remove(p);
-        getarray.createfile(listofpost);
-    }
-
-   public ArrayList<Post> getPost(){
-        return listofpost;
-   }
-   }
+    
+}
 

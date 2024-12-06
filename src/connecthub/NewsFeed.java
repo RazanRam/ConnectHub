@@ -4,6 +4,7 @@
  */
 package connecthub;
 import connecthub.UserDatabase;
+import java.util.ArrayList;
 /**
  *
  * @author Raz_RAMADAN
@@ -12,6 +13,11 @@ public class NewsFeed extends javax.swing.JFrame {
 private UserDatabase database;
 private User user;
 private ProfileManagement profile;
+    FriendsManagment fdb=FriendsManagment.getInstance();
+    UserDatabase udb=UserDatabase.getInstance();
+    postStoryManagment psm=new postStoryManagment();
+    NewsfeedService nf=new NewsfeedService();
+
     /**
      * Creates new form NewsFeed
      */
@@ -21,8 +27,39 @@ private ProfileManagement profile;
         this.user=user;
         profile=new ProfileManagement();
         System.out.println(user);
+        showFriends();
+        showSuggest();
     }
-
+    public void showFriends(){
+        ArrayList<String> friendsUserIDs=fdb.getFriendsof(user.getUserId());
+        ArrayList<String> friendsUsernames=new ArrayList<>();
+        int i=0;
+        for(String id:friendsUserIDs){
+            User u=udb.getUserById(id);
+            friendsUsernames.add(u.getUsername());
+        }
+        String []arr1=new String[friendsUsernames.size()];
+        String[]arr2=friendsUsernames.toArray(arr1);
+        MyFriendsList.setListData(arr2);
+    }
+    public void showSuggest(){
+        ArrayList<String> friendsUserIDs=fdb.getSuggestedTo(user.getUserId());
+        ArrayList<String> friendsUsernames=new ArrayList<>();
+        for(String id:friendsUserIDs){
+            User u=udb.getUserById(id);
+            friendsUsernames.add(u.getUsername());
+        }
+        String []arr1=new String[friendsUsernames.size()];
+        String[]arr2=friendsUsernames.toArray(arr1);
+        suggList.setListData(arr2);
+    }
+    public void showStories(){ 
+        ArrayList<Story> stories=(ArrayList<Story>) nf.getfriendsStories();
+        
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,6 +73,14 @@ private ProfileManagement profile;
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         friendspage = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MyFriendsList = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        suggList = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        stories = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        posts = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -66,22 +111,38 @@ private ProfileManagement profile;
             }
         });
 
+        jScrollPane1.setViewportView(MyFriendsList);
+
+        jScrollPane2.setViewportView(suggList);
+
+        jScrollPane3.setViewportView(stories);
+
+        jScrollPane4.setViewportView(posts);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
-                .addComponent(LogOutButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(23, 23, 23)
+                        .addComponent(friendspage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LogOutButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(friendspage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,12 +150,18 @@ private ProfileManagement profile;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LogOutButton)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(97, 97, 97)
-                .addComponent(jButton1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(friendspage))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(friendspage)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -109,7 +176,7 @@ private ProfileManagement profile;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        /*profileframe frame = new profileframe(database,user,profile,this);
+       /*profileframe frame = new profileframe(database,user,profile,this);
         frame.setVisible(true);
                 this.dispose();*/
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -150,15 +217,23 @@ private ProfileManagement profile;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new NewsFeed(UserDatabase database, User user).setVisible(true);
+               //new NewsFeed(UserDatabase database, User user).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogOutButton;
+    private javax.swing.JList<String> MyFriendsList;
     private javax.swing.JButton friendspage;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JList<String> posts;
+    private javax.swing.JList<String> stories;
+    private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables
 }
