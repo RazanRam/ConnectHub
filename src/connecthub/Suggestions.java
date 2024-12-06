@@ -5,30 +5,39 @@
 package connecthub;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author janaf
  */
 public class Suggestions extends javax.swing.JFrame {
+    Friends f;
     User me;
     FriendsDatabase fdb;
     UserDatabase udb;
+    HashMap<Integer, String> map=new HashMap<>();
+
     /**
      * Creates new form Suggestions
      */
-    public Suggestions(User me,FriendsDatabase fdb,UserDatabase udb) {
+    public Suggestions(User me,FriendsDatabase fdb,UserDatabase udb,Friends f) {
         initComponents();
         this.me=me;
         this.fdb=fdb;
         this.udb=udb;
+        this.f=f;
+        showSuggest();
     }
     public void showSuggest(){
         ArrayList<String> friendsUserIDs=fdb.getSuggestedTo(me.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
+        int i=0;
         for(String id:friendsUserIDs){
             User u=udb.getUserById(id);
             friendsUsernames.add(u.getUsername());
+            map.put(i, id);
+            i++;
         }
         String []arr1=new String[friendsUsernames.size()];
         String[]arr2=friendsUsernames.toArray(arr1);
@@ -46,13 +55,26 @@ public class Suggestions extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         suggList = new javax.swing.JList<>();
+        reqButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Suggestions");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("People you may know");
 
         jScrollPane1.setViewportView(suggList);
+
+        reqButton.setText("SendRequest");
+        reqButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reqButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,14 +84,19 @@ public class Suggestions extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(reqButton)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reqButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -77,6 +104,17 @@ public class Suggestions extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqButtonActionPerformed
+        int i=suggList.getSelectedIndex();
+        String id=map.get(i);
+        fdb.FriendRequest(me.getUserId(),id);
+    }//GEN-LAST:event_reqButtonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        setVisible(false);
+        f.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -86,6 +124,7 @@ public class Suggestions extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton reqButton;
     private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables
 }

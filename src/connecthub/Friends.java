@@ -4,17 +4,19 @@
  */
 package connecthub;
 
+import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+import java.util.HashMap;
 
 /**
  *
  * @author janaf
  */
 public class Friends extends javax.swing.JFrame {
-    User me;
     FriendsDatabase fdb=FriendsDatabase.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
+    User me=getCurrentuser();
+    HashMap<Integer, String> map=new HashMap<>();
     /**
      * Creates new form Friends
      */
@@ -25,13 +27,17 @@ public class Friends extends javax.swing.JFrame {
     public void showRequests(){
         ArrayList<String> friendsUserIDs=fdb.getFriendRequestsof(me.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
+        int i=0;
         for(String id:friendsUserIDs){
             User u=udb.getUserById(id);
             friendsUsernames.add(u.getUsername());
+            map.put(i, id);
+            i++;
         }
         String []arr1=new String[friendsUsernames.size()];
         String[]arr2=friendsUsernames.toArray(arr1);
         requests.setListData(arr2);
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,7 +73,7 @@ public class Friends extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Friend Requests");
+        jLabel1.setText("Friend Requests (Pending)");
 
         jScrollPane1.setViewportView(requests);
 
@@ -90,23 +96,20 @@ public class Friends extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(declineButton)
-                                .addGap(74, 74, 74))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(suggestionsB)
+                        .addGap(74, 74, 74)
+                        .addComponent(yourFriendsB))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(acceptButton)
-                            .addComponent(suggestionsB))
-                        .addGap(18, 18, 18)
-                        .addComponent(yourFriendsB)))
+                            .addGap(47, 47, 47)
+                            .addComponent(declineButton))))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,59 +133,32 @@ public class Friends extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void suggestionsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suggestionsBActionPerformed
-        Suggestions s=new Suggestions(me, fdb, udb);
+        Suggestions s=new Suggestions(me, fdb, udb,this);
         s.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_suggestionsBActionPerformed
 
     private void yourFriendsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourFriendsBActionPerformed
-        MyFriends mf=new MyFriends(me, fdb, udb);
+        MyFriends mf=new MyFriends(me, fdb, udb,this);
         mf.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_yourFriendsBActionPerformed
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-        String name=requests.getSelectedValue();
-        //User f=
-        //fdb.AcceptRrquest(me.getUserId(), );
+        int i=requests.getSelectedIndex();
+        String id=map.get(i);
+        fdb.AcceptRrquest(me.getUserId(),id);
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void declineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineButtonActionPerformed
-        
+        int i=requests.getSelectedIndex();
+        String id=map.get(i);
+        fdb.DeclineRequest(me.getUserId(),id);
     }//GEN-LAST:event_declineButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Friends.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Friends.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Friends.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Friends.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Friends().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;

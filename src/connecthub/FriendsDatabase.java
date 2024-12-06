@@ -203,17 +203,20 @@ public class FriendsDatabase extends Database{
     1)not already a friend
     2)not Blocked by user1
     3)not already in suggestions list
+    4)not in friendRequests list
     */
     public ArrayList<String> getSuggestedTo(String user1){
         ArrayList<String> U1SuggestedFriends=new ArrayList<>();
         ArrayList<String> U1Blocks=getBlocksof(user1);
+        ArrayList<String> U1req=getFriendRequestsof(user1);
+        
         
         ArrayList<String> U1Friends=getFriendsof(user1);
         for(String Friend:U1Friends){
             
             ArrayList<String> FriendsofFriend=getFriendsof(Friend);
             for(String person:FriendsofFriend){
-                if(!U1Friends.contains(person) && !U1Blocks.contains(person) && !U1SuggestedFriends.contains(person)){
+                if(!U1Friends.contains(person) && !U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person)){
                     U1SuggestedFriends.add(person);
                 }
             }

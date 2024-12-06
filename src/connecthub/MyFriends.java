@@ -5,30 +5,39 @@
 package connecthub;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author janaf
  */
+
 public class MyFriends extends javax.swing.JFrame {
+    Friends f;
     User me;
     FriendsDatabase fdb;
     UserDatabase udb;
+    HashMap<Integer, String> map=new HashMap<>();
     /**
      * Creates new form MyFriends
      */
-    public MyFriends(User me,FriendsDatabase fdb,UserDatabase udb) {
+    public MyFriends(User me,FriendsDatabase fdb,UserDatabase udb,Friends f) {
         initComponents();
         this.me=me;
         this.fdb=fdb;
         this.udb=udb;
+        this.f=f;
+        showFriends();
     }
-    public void showRequests(){
+    public void showFriends(){
         ArrayList<String> friendsUserIDs=fdb.getFriendsof(me.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
+        int i=0;
         for(String id:friendsUserIDs){
             User u=udb.getUserById(id);
             friendsUsernames.add(u.getUsername());
+            map.put(i, id);
+            i++;
         }
         String []arr1=new String[friendsUsernames.size()];
         String[]arr2=friendsUsernames.toArray(arr1);
@@ -46,12 +55,33 @@ public class MyFriends extends javax.swing.JFrame {
         labelfriends = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MyFriendsList = new javax.swing.JList<>();
+        blockbutton = new javax.swing.JButton();
+        removebutton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         labelfriends.setText("Your friends");
 
         jScrollPane1.setViewportView(MyFriendsList);
+
+        blockbutton.setText("Block");
+        blockbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockbuttonActionPerformed(evt);
+            }
+        });
+
+        removebutton.setText("Remove");
+        removebutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removebuttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,15 +90,25 @@ public class MyFriends extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelfriends, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelfriends, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(blockbutton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removebutton)
+                        .addGap(42, 42, 42))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelfriends, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelfriends, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blockbutton)
+                    .addComponent(removebutton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -77,6 +117,23 @@ public class MyFriends extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void blockbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockbuttonActionPerformed
+        int i=MyFriendsList.getSelectedIndex();
+        String id=map.get(i);
+        fdb.Block(me.getUserId(),id);
+    }//GEN-LAST:event_blockbuttonActionPerformed
+
+    private void removebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removebuttonActionPerformed
+        int i=MyFriendsList.getSelectedIndex();
+        String id=map.get(i);
+        fdb.Remove(me.getUserId(),id);
+    }//GEN-LAST:event_removebuttonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        setVisible(false);
+        f.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -84,7 +141,9 @@ public class MyFriends extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> MyFriendsList;
+    private javax.swing.JButton blockbutton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelfriends;
+    private javax.swing.JButton removebutton;
     // End of variables declaration//GEN-END:variables
 }
