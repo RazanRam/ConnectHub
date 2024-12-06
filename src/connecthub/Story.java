@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Story extends ContentCreation {
 
     ReadWriteStory story = new ReadWriteStory();
-    ArrayList<Story> st = story.loadStories();
+    ArrayList<Story> st = new ArrayList();
     ArrayList<Story> updatedstories = new ArrayList();
 
     public void addStory(Story s) {

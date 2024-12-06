@@ -15,7 +15,7 @@ Post post;
      */
     public ViewPost(String userid) {
         initComponents();
-      this.post=post.returnpost(userid)
+      //this.post=post.returnpost(userid)
       updateposts();
         
         

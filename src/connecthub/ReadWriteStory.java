@@ -5,6 +5,7 @@
 package connecthub;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -25,21 +26,29 @@ public class ReadWriteStory {
     
     private ArrayList<Story> Story= new ArrayList();
     public void WriteStoryInFile(ArrayList<Story> stories){
+        ArrayList<Story>oldstories=loadStories();
+        oldstories.addAll(stories);
+        
          JSONArray arrstories = new JSONArray();
-         for (Story st : stories) {
+         for (Story st : oldstories) {
             JSONObject jp = new JSONObject();
             jp.put("contentid",st.getContentid());
             jp.put("authorID", st.getAuthorid());
             jp.put("content", st.getContent());
             jp.put("timeStamp", st.getTimeStamp());
-            jp.put("imagePath", st.getImagepath());
+            String imagePath=st.getImagepath();
+            if(imagePath!=null){ jp.put("imagePath",imagePath);
+            }else{jp.put("imagePath", "null");}
             arrstories.put(jp);
         }
-        FileWriter file;
-        try {
-            file = new FileWriter("stories.json");
-            file.write(arrstories.toString(4));
-            file.close();
+        FileWriter writer;
+        try {File file=new File("stories.json");
+        if(!file.exists()){
+        file.createNewFile();}
+        
+            writer = new FileWriter(file);
+            writer.write(arrstories.toString(4));
+            writer.close();
         } catch (IOException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,36 +57,39 @@ public class ReadWriteStory {
         
 }
     public ArrayList<Story>loadStories() {
-        String S, content = new String();
-        FileReader fr;
-        try {
-            fr = new FileReader("stories.json");
-            BufferedReader br = new BufferedReader(fr);
-            while ((S = br.readLine()) != null) {
-                content += S;
+        String content = "";
+        File file = new File("stories.json");
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                content += line;
             }
-            br.close();
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         }
         JSONArray arr = new JSONArray(content);
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         for (int i = 0; i < arr.length(); i++) {
             JSONObject St = arr.getJSONObject(i);
             String contentid = St.getString("contentid");
-            String name = St.getString("name");
-            int id = St.getInt("id");
-            String txtpost = St.getString("storycontent");
+           // String authorID = St.getString("authorID");
+            String txtpost = St.getString("content");              
             String timeStamp = St.getString("timeStamp");
             String imagePath = St.getString("imagePath");
             ContentFactory F = new ContentFactory();
             Story s = (Story) F.createpoststory("story");
             s.setContentid(contentid);
-            s.setAuthorid(String.valueOf(id));
+            //s.setAuthorid(authorID);
             s.setContent(txtpost);
-            LocalDateTime.parse(timeStamp, formatter);
+            s.setTimeStamp(LocalDateTime.parse(timeStamp, formatter));
+            s.setimage(imagePath);
+            
 
             Story.add(s);
 

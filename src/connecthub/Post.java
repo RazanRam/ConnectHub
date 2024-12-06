@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class Post extends ContentCreation {
 
  ReadWrite getarray=new ReadWrite();
- private ArrayList<Post> listofpost = getarray.loadpost();
+ private ArrayList<Post> listofpost = new ArrayList();
 
     public void addPost(Post p) {
         listofpost.add(p);

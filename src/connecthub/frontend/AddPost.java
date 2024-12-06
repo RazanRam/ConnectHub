@@ -7,8 +7,10 @@ package connecthub.frontend;
 import connecthub.ContentFactory;
 import connecthub.Post;
 import connecthub.ReadWrite;
-import connecthub.User;
-import connecthub.UserDatabase;
+import java.awt.Image;
+import java.io.IOException;
+//import connecthub.User;
+//import connecthub.UserDatabase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -21,16 +23,12 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddPost extends javax.swing.JFrame {
-     ReadWrite array=new ReadWrite();
-     private ArrayList<Post> postsarray=array.loadpost();
-    
 
     /**
      * Creates new form AddPost
      */
     public AddPost() {
-       
-        
+
         initComponents();
     }
 
@@ -48,7 +46,7 @@ public class AddPost extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         Sharebutton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        Image = new javax.swing.JLabel();
+        jImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,7 +83,7 @@ public class AddPost extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Image, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jImage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
@@ -107,7 +105,7 @@ public class AddPost extends javax.swing.JFrame {
                         .addGap(53, 53, 53)
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Image, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addComponent(jImage, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addGap(27, 27, 27))
         );
 
@@ -120,46 +118,50 @@ public class AddPost extends javax.swing.JFrame {
 
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
-        ContentFactory F= new ContentFactory();
-         Post p = (Post) F.createpoststory("Post");
-       User user= UserDatabase.getCurrentuser();
-       String content = jTextArea1.getSelectedText();
-       if(user==null)
-       {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
-       
-       
-       String imagePath=null;
-       int result =JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?","Add Photo",JOptionPane.YES_NO_OPTION);
-       if(result==JOptionPane.YES_OPTION)
-       { JFileChooser filechooser=new JFileChooser();
-       filechooser.setDialogTitle(imagePath);
-       filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files","jpg","png","jpeg"));
-       int fileResult=filechooser.showOpenDialog(this);
-       if(fileResult==JFileChooser.APPROVE_OPTION){
-           imagePath=filechooser.getSelectedFile().getAbsolutePath();
-          ImageIcon imageIcon = new ImageIcon(imagePath);
-        Image.setIcon(imageIcon);   
-       }
-       
-       }
-      
-       p.setContent(content);
-       p.setTimeStamp(LocalDateTime.now());
-       p.setAuthorid(user.getUserId());
-       p.setContentid(UUID.randomUUID().toString());
-       if(imagePath!=null)
-       {p.setimage(imagePath);}
-       postsarray.add(p);
-       JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-       p.addPost(p);
-       
-       
-       
-       
-       
-       
-       
-        
+       try{ ContentFactory F = new ContentFactory();
+        Post p = (Post) F.createpoststory("Post");
+        // User user= UserDatabase.getCurrentuser();
+        String content = jTextArea1.getText();
+        if (content == null || content.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Content cannot be empty" , "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            
+        }
+        //if(user==null)
+        // {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
+        String imagePath = null;
+        int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?", "Add Photo", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            JFileChooser filechooser = new JFileChooser();
+            filechooser.setDialogTitle(imagePath);
+            filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+            int fileResult = filechooser.showOpenDialog(this);
+            if (fileResult == JFileChooser.APPROVE_OPTION) {
+                imagePath = filechooser.getSelectedFile().getAbsolutePath();
+                ImageIcon imageIcon = new ImageIcon(imagePath);
+                Image img = imageIcon.getImage();
+                Image scaledImg = img.getScaledInstance(jImage.getWidth(), jImage.getHeight(), Image.SCALE_AREA_AVERAGING);
+                imageIcon = new ImageIcon(scaledImg);
+                jImage.setIcon(imageIcon);
+            }
+
+        }
+        p.setContent(content);
+        p.setTimeStamp(LocalDateTime.now());
+        //p.setAuthorid(user.getUserId());
+        p.setContentid(UUID.randomUUID().toString());
+        if (imagePath != null) {
+            p.setimage(imagePath);
+            
+        } else {
+            p.setimage(null);
+        }
+        JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        p.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_SharebuttonActionPerformed
 
     /**
@@ -198,9 +200,9 @@ public class AddPost extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Image;
     private javax.swing.JButton Sharebutton;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

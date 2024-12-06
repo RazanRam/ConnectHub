@@ -28,61 +28,66 @@ public class ReadWrite {
     private ArrayList<Post> posts = new ArrayList();
 
     public void createfile(ArrayList<Post> posts) {
-        ArrayList<Post> oldPosts=loadpost();
-        oldPosts.addAll(posts);
+     ArrayList<Post> oldPosts = loadpost();
+      oldPosts.addAll(posts);
         JSONArray arrposts = new JSONArray();
 
         for (Post p : oldPosts) {
             JSONObject jp = new JSONObject();
             jp.put("contentid", p.getContentid());
-            jp.put("authorID", p.getAuthorid());
-            jp.put("content", p.getContent());
+            //jp.put("authorID", p.getAuthorid());
+            jp.put("postcontent", p.getContent());
             jp.put("timeStamp", p.getTimeStamp());
-            jp.put("imagePath", p.getImagepath());
+            String imagePath=p.getImagepath();
+            if(imagePath!=null){ jp.put("imagePath",imagePath);
+            }else{jp.put("imagePath", "null");}
             arrposts.put(jp);
         }
         FileWriter file;
         try {
             file = new FileWriter("posts.json");
-             file.write(arrposts.toString(4));
+            file.write(arrposts.toString(4));
             file.close();
         } catch (IOException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
-    public ArrayList<Post>loadpost() {
-        String S, content = new String();
-        FileReader fr;
-        try {
-            fr = new FileReader("posts.json");
-            BufferedReader br = new BufferedReader(fr);
-            while ((S = br.readLine()) != null) {
-                content += S;
+    public ArrayList<Post> loadpost() {
+        String content = "";
+        File file = new File("posts.json");
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                content += line;
             }
-            br.close();
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ReadWrite.class.getName()).log(Level.SEVERE, null, ex);
         }
         JSONArray arr = new JSONArray(content);
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         for (int i = 0; i < arr.length(); i++) {
             JSONObject post = arr.getJSONObject(i);
             String contentid = post.getString("contentid");
-            String name = post.getString("name");
-            int id = post.getInt("id");
             String txtpost = post.getString("postcontent");
             String timeStamp = post.getString("timeStamp");
             String imagePath = post.getString("imagePath");
+           // System.out.println("Loaded post: " + contentid + ", " + txtpost + ", " + timeStamp + ", " + imagePath); 
+            //String authorID = post.getString("authorID");
             ContentFactory F = new ContentFactory();
-            Post p = (Post) F.createpoststory("post");
+            Post p = (Post) F.createpoststory("Post");
             p.setContentid(contentid);
-            p.setAuthorid(String.valueOf(id));
+            //p.setAuthorid(authorID);
             p.setContent(txtpost);
-            LocalDateTime.parse(timeStamp, formatter);
+            p.setTimeStamp(LocalDateTime.parse(timeStamp, formatter));
+            p.setimage(imagePath);
 
             posts.add(p);
 
@@ -90,7 +95,5 @@ public class ReadWrite {
         return posts;
 
     }
-
-   
 
 }
