@@ -9,6 +9,7 @@ import connecthub.Post;
 import connecthub.ReadWrite;
 import connecthub.ReadWriteStory;
 import connecthub.Story;
+import connecthub.postStoryManagment;
 import java.awt.Image;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddStoryFrame extends javax.swing.JFrame {
-   
+   postStoryManagment pst=new postStoryManagment();
 
     /**
      * Creates new form AddStoryFrame
@@ -135,7 +136,7 @@ public class AddStoryFrame extends javax.swing.JFrame {
         if(imagePath!=null)
         {s.setimage(imagePath);}
         JOptionPane.showMessageDialog(this, "Story shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        s.addStory(s);
+        pst.addStory(s);
 
         
         

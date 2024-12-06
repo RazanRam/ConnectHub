@@ -20,33 +20,5 @@ import org.json.JSONObject;
  * @author hp
  */
 public class Post extends ContentCreation {
- 
-    ReadWrite getarray=new ReadWrite();
-private   ArrayList<Post> allPosts=getarray.loadpost();
-
-    public void addPost(Post p) {
-        allPosts.add(p);
-        getarray.createfile(allPosts);
-    }
-    public void deletePost(Post p) {
-        for(Post u:allPosts){
-           if(u.getContentid().equals(p.getContentid())){
-           allPosts.remove(p);
-           }
-       }
-        getarray.createfile(allPosts);
-    }
-
-   public  ArrayList<Post> getPost(String userid){
-       ArrayList<Post> listofpost = new ArrayList();
-       for(Post u:allPosts){
-           if(u.getAuthorid().equals(userid)){
-               listofpost.add(u);
-           }
-       }
-               return listofpost
-
-        ;
-   }
-   }
+  }
 

@@ -9,6 +9,7 @@ import connecthub.Post;
 import connecthub.ReadWrite;
 import connecthub.User;
 import connecthub.UserDatabase;
+import connecthub.postStoryManagment;
 import java.awt.Image;
 import java.io.IOException;
 //import connecthub.User;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddPost extends javax.swing.JFrame {
+    postStoryManagment pst=new postStoryManagment();
 
     /**
      * Creates new form AddPost
@@ -120,6 +122,7 @@ public class AddPost extends javax.swing.JFrame {
 
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
+        
        try{ ContentFactory F = new ContentFactory();
         Post p = (Post) F.createpoststory("Post");
          User user= UserDatabase.getCurrentuser();
@@ -159,7 +162,7 @@ public class AddPost extends javax.swing.JFrame {
             p.setimage(null);
         }
         JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        p.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        pst.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 

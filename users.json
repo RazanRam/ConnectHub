@@ -2,7 +2,7 @@
     {
         "CoverPhotoPath": "C:\\Users\\malok\\OneDrive\\Pictures\\background.jpg",
         "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-        "Bio": "",
+        "Bio": "hi guys",
         "dateOfBirth": "2024-12-06",
         "isOnline": true,
         "userId": "e9f824e9-f02d-42a2-b0dd-d019f78ac5ef",
@@ -13,12 +13,23 @@
     {
         "CoverPhotoPath": "C:\\Users\\malok\\OneDrive\\Pictures\\background.jpg",
         "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-        "Bio": "",
+        "Bio": "hi",
         "dateOfBirth": "2024-12-05",
         "isOnline": true,
         "userId": "5b290be8-aa45-4385-a853-535081f1d4b8",
         "email": "arwa@gmail.com",
-        "ProfilePhotoPath": "C:\\Users\\malok\\OneDrive\\Pictures\\user default.jpg",
+        "ProfilePhotoPath": "user_PP/profilePhoto_Edit/5b290be8-aa45-4385-a853-535081f1d4b8_PP.jpg",
         "username": "arwa"
+    },
+    {
+        "CoverPhotoPath": "C:\\Users\\malok\\OneDrive\\Pictures\\background.jpg",
+        "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+        "Bio": "-",
+        "dateOfBirth": "2024-12-05",
+        "isOnline": true,
+        "userId": "ffea0c8e-f4c2-41a2-9890-3d24482cd78a",
+        "email": "jana@gmail.com",
+        "ProfilePhotoPath": "C:\\Users\\malok\\OneDrive\\Pictures\\user default.jpg",
+        "username": "jana"
     }
 ]

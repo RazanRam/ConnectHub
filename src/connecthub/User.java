@@ -42,7 +42,7 @@ public class User {
 //    }
     public static class UserBuilder {
         
-    private String Bio="";
+    private String Bio=" ";
     private String userId;
     private String email;
     private String username;

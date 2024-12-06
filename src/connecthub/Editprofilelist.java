@@ -54,6 +54,7 @@ private ProfileManagement profile;
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Edit Profile");
 
         jButton1.setText("Edit Profile Photo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
