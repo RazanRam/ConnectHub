@@ -65,9 +65,9 @@ public class UserDatabase{
                 jsonArray=jsoNArray;
     reader.close();
 }        catch (FileNotFoundException ex) {
-             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
          } catch (IOException ex) {
-             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
          }
                 // Parse the JSON array
                 for (int i = 0; i < jsonArray.length(); i++) {
