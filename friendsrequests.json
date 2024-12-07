@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "UserID1": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
+    "UserID2": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1"
+  },
+  {
+    "UserID1": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
+    "UserID2": "455745ff-56e6-454b-b8e3-cbf209b427f5"
+  },
+  {
+    "UserID1": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
+    "UserID2": "e006bdca-007d-47d8-b28e-6b9832cf13d5"
+  }
+]

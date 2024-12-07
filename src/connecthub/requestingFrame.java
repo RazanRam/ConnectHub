@@ -5,6 +5,7 @@
 package connecthub;
 
 import static connecthub.UserDatabase.getCurrentuser;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
@@ -13,16 +14,16 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  * @author janaf
  */
 public class requestingFrame extends javax.swing.JFrame {
-    Friends f;
+    Friends f=Friends.getInstance();
     FriendsManagment fdb=FriendsManagment.getInstance();
+    UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
 
     /**
      * Creates new form requestingFrame
      */
-    public requestingFrame(Friends f) {
+    public requestingFrame() {
         initComponents();
-        this.f=f;
     }
 
     /**
@@ -86,7 +87,21 @@ public class requestingFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqActionPerformed
+        if(IDenter.getText()==null||IDenter.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(this, "you need to enter a valid id", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         String id= IDenter.getText();
+        ArrayList<User> users=(ArrayList<User>) udb.getUsers();
+        boolean flag=false;
+        for(User u:users){
+            if(u.getUserId().equals(id))
+                flag=true;
+        }
+        if(flag==false){
+            JOptionPane.showMessageDialog(this, "you need to enter a existing id", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         fdb.FriendRequest(me.getUserId(),id);
         JOptionPane.showMessageDialog(this, "requested", "message", PLAIN_MESSAGE);
         IDenter.setText("");

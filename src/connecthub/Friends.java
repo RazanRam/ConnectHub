@@ -7,12 +7,16 @@ package connecthub;
 import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 /**
  *
  * @author janaf
  */
 public class Friends extends javax.swing.JFrame {
+    public static Friends frd=null;
+    
     NewsFeed n=NewsFeed.getInstance();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -21,10 +25,15 @@ public class Friends extends javax.swing.JFrame {
     /**
      * Creates new form Friends
      */
-    public Friends(NewsFeed n) {
+    private Friends() {
         initComponents();
-        this.n=n;
         showRequests();
+    }
+    public static Friends getInstance(){
+        if(frd==null){
+            frd=new Friends();
+        }
+        return frd;
     }
     public void showRequests(){
         ArrayList<String> friendsUserIDs=fdb.getFriendRequestsof(me.getUserId());
@@ -59,7 +68,7 @@ public class Friends extends javax.swing.JFrame {
         declineButton = new javax.swing.JButton();
         requesting = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Friends");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -153,31 +162,43 @@ public class Friends extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void suggestionsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suggestionsBActionPerformed
-        Suggestions s=new Suggestions(this);
+        Suggestions s=new Suggestions();
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_suggestionsBActionPerformed
 
     private void yourFriendsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourFriendsBActionPerformed
-        MyFriends mf=new MyFriends(this);
+        MyFriends mf=new MyFriends();
         mf.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_yourFriendsBActionPerformed
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
+        if(requests.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=requests.getSelectedIndex();
         String id=map.get(i);
         fdb.AcceptRrquest(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "Accepted", "message", PLAIN_MESSAGE);
+        showRequests();
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void declineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineButtonActionPerformed
+        if(requests.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=requests.getSelectedIndex();
         String id=map.get(i);
         fdb.DeclineRequest(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "Declined", "message", PLAIN_MESSAGE);
+        showRequests();
     }//GEN-LAST:event_declineButtonActionPerformed
 
     private void requestingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestingActionPerformed
-        requestingFrame r=new requestingFrame(this);
+        requestingFrame r=new requestingFrame();
         r.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_requestingActionPerformed

@@ -15,6 +15,7 @@ public class FriendsManagment{
     public static FriendsManagment fm=null;
     
     friendDataBase fdb=friendDataBase.getInstance();
+    UserDatabase udb=UserDatabase.getInstance();
     
     private static String friendsFILE="friends.json";
     private static String friendsrequestsFILE="friendsrequests.json";
@@ -43,9 +44,9 @@ public class FriendsManagment{
     //user1 sender
     //user2 reciever
     public void FriendRequest(String user1,String user2){
+        
         friendship f=new friendship(user1, user2);
         FriendRqustes.add(f);
-        
         fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
     }
     
@@ -158,7 +159,7 @@ public class FriendsManagment{
             
             ArrayList<String> FriendsofFriend=getFriendsof(Friend);
             for(String person:FriendsofFriend){
-                if(!U1Friends.contains(person) ||!U1Blocks.contains(person) || !U1SuggestedFriends.contains(person) || !U1req.contains(person) || !person.contains(user1)){
+                if(!U1Friends.contains(person) &&!U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person) && !person.contains(user1)){
                     U1SuggestedFriends.add(person);
                 }
             }

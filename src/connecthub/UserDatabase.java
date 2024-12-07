@@ -162,6 +162,7 @@ public class UserDatabase{
                if(x.getHashedPassword().equals(hashedPass.hashPassword(Password))){
                    x.setIsOnline(true);
                    setCurrentuser(x);
+                   saveDatabase();
                    return true;
                }
            }

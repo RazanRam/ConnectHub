@@ -39,7 +39,7 @@
                           <Component id="PasswordField" pref="123" max="32767" attributes="0"/>
                           <Component id="emailTextField" max="32767" attributes="0"/>
                           <Component id="usernameTextField" max="32767" attributes="0"/>
-                          <Component id="jDateChooser1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jDateChooser1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">

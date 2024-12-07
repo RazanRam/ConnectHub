@@ -17,9 +17,7 @@ import javax.swing.JList;
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
-            public static NewsFeed fn=null;
-            
-
+    public static NewsFeed fn=null;
 private UserDatabase database=UserDatabase.getInstance();
 private User user=UserDatabase.getCurrentuser();
 private ProfileManagement profile;
@@ -256,7 +254,7 @@ private ProfileManagement profile;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void friendspageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendspageActionPerformed
-        Friends f=new Friends(this);
+        Friends f=Friends.getInstance();
         f.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_friendspageActionPerformed

@@ -7,6 +7,8 @@ package connecthub;
 import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.util.HashMap;
  */
 
 public class MyFriends extends javax.swing.JFrame {
-    Friends f;
+    Friends f=Friends.getInstance();
     User me=getCurrentuser();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -22,9 +24,8 @@ public class MyFriends extends javax.swing.JFrame {
     /**
      * Creates new form MyFriends
      */
-    public MyFriends(Friends f) {
+    public MyFriends() {
         initComponents();
-        this.f=f;
         showFriends();
     }
     public void showFriends(){
@@ -116,15 +117,27 @@ public class MyFriends extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blockbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blockbuttonActionPerformed
+        if(MyFriendsList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=MyFriendsList.getSelectedIndex();
         String id=map.get(i);
         fdb.Block(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "Blocked", "message", PLAIN_MESSAGE);
+        showFriends();
     }//GEN-LAST:event_blockbuttonActionPerformed
 
     private void removebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removebuttonActionPerformed
+        if(MyFriendsList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=MyFriendsList.getSelectedIndex();
         String id=map.get(i);
         fdb.Remove(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "Removed", "message", PLAIN_MESSAGE);
+        showFriends();
     }//GEN-LAST:event_removebuttonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

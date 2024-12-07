@@ -15,7 +15,7 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  * @author janaf
  */
 public class Suggestions extends javax.swing.JFrame {
-    Friends f;
+    Friends f=Friends.getInstance();
     User me=getCurrentuser();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -24,9 +24,8 @@ public class Suggestions extends javax.swing.JFrame {
     /**
      * Creates new form Suggestions
      */
-    public Suggestions(Friends f) {
+    public Suggestions() {
         initComponents();
-        this.f=f;
         showSuggest();
     }
     public void showSuggest(){
@@ -106,10 +105,15 @@ public class Suggestions extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void reqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqButtonActionPerformed
+        if(suggList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=suggList.getSelectedIndex();
         String id=map.get(i);
         fdb.FriendRequest(me.getUserId(),id);
         JOptionPane.showMessageDialog(this, "requested", "message", PLAIN_MESSAGE);
+        showSuggest();
     }//GEN-LAST:event_reqButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
