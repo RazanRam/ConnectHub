@@ -4,13 +4,21 @@
  */
 package connecthub;
 import connecthub.UserDatabase;
+import java.awt.Component;
+import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
 /**
  *
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
             public static NewsFeed fn=null;
+            
 
 private UserDatabase database=UserDatabase.getInstance();
 private User user=UserDatabase.getCurrentuser();
@@ -62,10 +70,44 @@ private ProfileManagement profile;
         String[]arr2=friendsUsernames.toArray(arr1);
         suggList.setListData(arr2);
     }
-    public void showStories(){ 
-        ArrayList<Story> stories=(ArrayList<Story>) nf.getfriendsStories();
-        
+    public void showStories() {
+    // Fetch stories from the NewsfeedService
+    ArrayList<Story> stories = (ArrayList<Story>) nf.getfriendsStories();
+
+    // Use a DefaultListModel to populate the list
+    DefaultListModel<Story> storyListModel = new DefaultListModel<>();
+    for (Story story : stories) {
+        storyListModel.addElement(story);
     }
+
+    // Ensure jstories is a JList<Story> and set the model
+    JList<Story> storyList = new JList<>(storyListModel);
+
+    // Set a custom cell renderer to display images and text
+    storyList.setCellRenderer(new DefaultListCellRenderer() {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value instanceof Story) {
+                Story story = (Story) value;
+
+                // Load and scale the image
+                ImageIcon icon = new ImageIcon(story.getImagepath());
+                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Adjust size as needed
+                icon = new ImageIcon(img);
+
+                // Set the label with the image and story content
+                label.setIcon(icon);
+                label.setText(story.getContent());
+                label.setHorizontalTextPosition(JLabel.RIGHT);
+            }
+            return label;
+        }
+    });
+
+    // Add the story list to a scroll pane for display
+    jScrollPane3.setViewportView(storyList);
+}
     
     
     
@@ -87,9 +129,9 @@ private ProfileManagement profile;
         jScrollPane2 = new javax.swing.JScrollPane();
         suggList = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        stories = new javax.swing.JList<>();
+        jstories = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        posts = new javax.swing.JList<>();
+        jposts = new javax.swing.JList<>();
         addpost = new javax.swing.JButton();
         addstory = new javax.swing.JButton();
 
@@ -126,9 +168,9 @@ private ProfileManagement profile;
 
         jScrollPane2.setViewportView(suggList);
 
-        jScrollPane3.setViewportView(stories);
+        jScrollPane3.setViewportView(jstories);
 
-        jScrollPane4.setViewportView(posts);
+        jScrollPane4.setViewportView(jposts);
 
         addpost.setText("Add Post");
         addpost.addActionListener(new java.awt.event.ActionListener() {
@@ -248,8 +290,8 @@ private ProfileManagement profile;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JList<String> posts;
-    private javax.swing.JList<String> stories;
+    private javax.swing.JList<String> jposts;
+    private javax.swing.JList<String> jstories;
     private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables
 }

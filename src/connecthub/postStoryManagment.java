@@ -58,10 +58,10 @@ public class postStoryManagment {
         } story.WriteStoryInFile(updatedstories);
     }
     
-    public ArrayList<Story> getstories(String userid) {
+    public ArrayList<Story> getstories(String personid) {
         ArrayList<Story> listofstories = new ArrayList();
        for(Story u:allstories){
-           if(u.getAuthorid().equals(userid)){
+           if(u.getAuthorid().equals(personid)){
                listofstories.add(u);
            }
        }
