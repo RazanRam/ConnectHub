@@ -18,87 +18,96 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
  * @author malok
  */
 public class profileframe extends javax.swing.JFrame {
- private postStoryManagment pst=new postStoryManagment();
+
+    private postStoryManagment pst = new postStoryManagment();
     private UserDatabase database;
     private User user;
     private ProfileManagement profile;
     private NewsFeed frame;
     private String BIO;
-    
-    private ArrayList<Post> Posts;
-    private Post post=new Post();
+
+    PostMangmentt pm = new PostMangmentt();
+
     /**
      * Creates new form profileframe
      */
     public profileframe(UserDatabase database, User user, ProfileManagement profile, NewsFeed frame) {
         initComponents();
-       
+
         this.database = database;
         this.user = user;
         this.profile = profile;
         this.frame = frame;
         this.BIO = user.getBio();
         jLabel4.setText(BIO);
-        if(user.getProfilePhotoPath().equals("Default.jpg")||user.getCoverPhotoPath().equals("Default.jpg")){
-    profilephoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/user default.png")));
-    coverphoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/background.jpg")));
-        
-        }else{
-         profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
-         coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));}
-         this.Posts=pst.getPost(user.getUserId());
-         displayPosts();
+        if (user.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg") && user.getCoverPhotoPath().equals("DefaultCoverPhoto.jpg")) {
+            profilephoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/user default.png")));
+            coverphoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/background.jpg")));
+
+        } 
+        else if (user.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+            profilephoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/user default.png")));
+            coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+
+        } 
+        else if (user.getCoverPhotoPath().equals("DefaultCoverPhoto.jpg")) {
+            coverphoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/background.jpg")));
+            profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
+
+        } 
+        else {
+            profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
+            coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+        }
+        displayPosts();
     }
+
     private void displayPosts() {
+        JSONArray Posts = pm.getpostbyuserid(user.getUserId());
+        System.out.println(Posts);
+        if (Posts != null) {
+            for (int j = 0; j < Posts.length(); j++) {
+                JSONObject post = Posts.getJSONObject(j);
+                JPanel singlePostPanel = new JPanel();
+                singlePostPanel.setLayout(new BorderLayout());
+                singlePostPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                singlePostPanel.setPreferredSize(new Dimension(150, 200));
+                // Create a new label for the post
+                JLabel postLabel = new JLabel();
+                postLabel.setText(post.getString("content"));
+                postLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                singlePostPanel.add(postLabel, BorderLayout.NORTH);
 
-    
-    postPanel.setLayout(new BoxLayout(postPanel,BoxLayout.Y_AXIS)); 
-    postPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
+                if (post.has("imagePath")) {
+                    ImageIcon imageIcon = resizeImage(post.getString("imagePath"), 120, 150); // Resize for a smaller image
+                    JLabel imageLabel = new JLabel(imageIcon);
+                    singlePostPanel.add(imageLabel, BorderLayout.CENTER);
+                } else {
+                    JLabel noImageLabel = new JLabel("No image available.");
+                    noImageLabel.setHorizontalAlignment(JLabel.CENTER);
+                    singlePostPanel.add(noImageLabel, BorderLayout.CENTER);
+                }
 
-    for (Post post :Posts ) {
-        if (post.getAuthorid().equals(user.getUserId())) {
-            // Create a panel for each story
-            JPanel singlePostPanel = new JPanel();
-            singlePostPanel.setLayout(new BorderLayout());
-            singlePostPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
-            singlePostPanel.setPreferredSize(new Dimension(150, 200));
-
-          
-            JLabel contentLabel = new JLabel("Content: " + post.getContent());
-            contentLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); 
-            singlePostPanel.add(contentLabel, BorderLayout.NORTH);
-
-            JLabel timestampLabel = new JLabel("Time: " + post.getTimeStamp());
-            timestampLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            singlePostPanel.add(timestampLabel, BorderLayout.SOUTH);
-
-            File imageFile = new File(post.getImagepath());
-            if (imageFile.exists()) {
-                ImageIcon imageIcon = resizeImage(post.getImagepath(), 120, 120); // Resize for a smaller image
-                JLabel imageLabel = new JLabel(imageIcon);
-                singlePostPanel.add(imageLabel, BorderLayout.CENTER);
-            } else {
-                JLabel noImageLabel = new JLabel("No image available.");
-                noImageLabel.setHorizontalAlignment(JLabel.CENTER);
-                singlePostPanel.add(noImageLabel, BorderLayout.CENTER);
+                //postPanel.add(postLabel); // Add label to the panel
+                postPanel.add(singlePostPanel);
+                // postPanel.add(Box.createRigidArea(new Dimension(10, 0)));
             }
 
-            postPanel.add(singlePostPanel);
-            postPanel.add(Box.createRigidArea(new Dimension(10, 0))); // Add spacing between stories
         }
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+        postPanel.revalidate();
+        postPanel.repaint();
+
     }
 
-  jScrollPane1.setViewportView(postPanel);
-   postPanel.revalidate();
-   postPanel.repaint();
-          
-}
     private ImageIcon resizeImage(String path, int width, int height) {
         // Create ImageIcon from file path
         ImageIcon imageIcon = new ImageIcon(path);
@@ -118,7 +127,6 @@ public class profileframe extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "No user is logged in.", "Error", JOptionPane.ERROR_MESSAGE);
         dispose(); // Close the frame if necessary
     }*/
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,11 +139,11 @@ public class profileframe extends javax.swing.JFrame {
         editButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         viewButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         postPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         profilephoto = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -162,14 +170,20 @@ public class profileframe extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel3)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 48, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         viewButton.setText("View Friends");
@@ -185,6 +199,11 @@ public class profileframe extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        postPanel.setBackground(new java.awt.Color(255, 255, 255));
+        postPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout postPanelLayout = new javax.swing.GroupLayout(postPanel);
         postPanel.setLayout(postPanelLayout);
@@ -246,9 +265,7 @@ public class profileframe extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton1)))
@@ -263,7 +280,7 @@ public class profileframe extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -281,9 +298,7 @@ public class profileframe extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -300,20 +315,34 @@ public class profileframe extends javax.swing.JFrame {
         Editprofilelist frame1 = new Editprofilelist(database, user, this, profilephoto, coverphoto, profile);
         frame1.setVisible(true);
         this.dispose();
-        
-        ImageIcon icon = new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH));
-        profilephoto.setIcon(icon);
-        ImageIcon icon2;
-        icon2 = new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH));
-        coverphoto.setIcon(icon2);
-       jLabel4.setText(user.getBio());
-       
+
+        if (user.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg") && user.getCoverPhotoPath().equals("DefaultCoverPhoto.jpg")) {
+            profilephoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/user default.png")));
+            coverphoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/background.jpg")));
+
+        } 
+        else if (user.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+            profilephoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/user default.png")));
+                    coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+
+        } 
+        else if (user.getCoverPhotoPath().equals("DefaultCoverPhoto.jpg")) {
+            coverphoto.setIcon(new ImageIcon(getClass().getResource("/connecthub/background.jpg")));
+            profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
+
+        } 
+        else {
+            profilephoto.setIcon(new ImageIcon(new ImageIcon(user.getProfilePhotoPath()).getImage().getScaledInstance(profilephoto.getWidth(), profilephoto.getHeight(), Image.SCALE_SMOOTH)));
+            coverphoto.setIcon(new ImageIcon(new ImageIcon(user.getCoverPhotoPath()).getImage().getScaledInstance(coverphoto.getWidth(), coverphoto.getHeight(), Image.SCALE_SMOOTH)));
+        }
+        jLabel4.setText(user.getBio());
+
 
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         // TODO add your handling code here:
-        ViewFriends frame2 = new ViewFriends(database,user,this);
+        ViewFriends frame2 = new ViewFriends(database, user, this);
         frame2.setVisible(true);
         this.dispose();
 
@@ -322,10 +351,10 @@ public class profileframe extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
         frame.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

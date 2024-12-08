@@ -139,10 +139,7 @@ private ProfileManagement profile;
             File chosenFile = fileChooser.getSelectedFile();
             String imagePath = chosenFile.getAbsolutePath();
             System.out.println(imagePath);
-        //    updateProfile.updateProfileImage(imagePath);
-            //this.ppAvatar1.setImage(new ImageIcon(imagePath));
-           // this.ppAvatar1.repaint();
-            
+     
             profile.editProfilePhoto(database.getCurrentuser().getUserId(), chosenFile);
             
             database.saveDatabase();
@@ -171,10 +168,7 @@ private ProfileManagement profile;
         if(result == JFileChooser.APPROVE_OPTION){
             File chosenFile = fileChooser.getSelectedFile();
             String imagePath = chosenFile.getAbsolutePath();
-       //     updateProfile.updateCoverimage(imagePath);
-           // this.cpAvater1.setImage(new ImageIcon(imagePath));
-            //this.cpAvater1.repaint();
-           //  userdata.saveDatabase();
+      
            profile.editCoverPhoto(database.getCurrentuser().getUserId(), chosenFile);
             
             database.saveDatabase();
@@ -198,7 +192,11 @@ private ProfileManagement profile;
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        frame.setVisible(true);
+        
+        profileframe frame1 = new profileframe(database,user,profile,new NewsFeed());
+        frame1.setVisible(true);
+                
+
         
     }//GEN-LAST:event_jButton5ActionPerformed
 

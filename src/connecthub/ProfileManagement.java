@@ -109,7 +109,9 @@ public class ProfileManagement {
         if (user == null) {
             System.err.println("User not found.");
         } else {
-            user.setHashedPassword(hashedPass.hashPassword(user.getHashedPassword()));
+            String hashedPassword = hashedPass.hashPassword(password);
+
+            user.setPassword(hashedPassword);
             userDatabase.saveDatabase();
         }
 

@@ -300,9 +300,9 @@ private ProfileManagement profile;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       /*profileframe frame = new profileframe(database,user,profile,this);
+       profileframe frame = new profileframe(database,user,profile,this);
         frame.setVisible(true);
-                this.dispose();*/
+                this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void friendspageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendspageActionPerformed

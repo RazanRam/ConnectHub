@@ -16,7 +16,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private MainWindow() {
         initComponents();
-    }
+                  }
 
     public static MainWindow getInstance(){
         if(fdb==null){
@@ -122,12 +122,15 @@ public class MainWindow extends javax.swing.JFrame {
       SigninFrame frame=new SigninFrame();
       frame.setVisible(true);
      this.dispose();
+     
+     
     }//GEN-LAST:event_SigninButtonActionPerformed
 
     private void LoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBtnActionPerformed
         // TODO add your handling code here:
         LoginFrame frame =new LoginFrame();
         frame.setVisible(true);
+
         this.dispose();
     }//GEN-LAST:event_LoginBtnActionPerformed
 
