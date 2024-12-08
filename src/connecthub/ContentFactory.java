@@ -20,6 +20,8 @@ public class ContentFactory {
         { return new Story();}
         if(str.equals("newpost"))
         {return new PostMangmentt();}
+        if(str.equals("newstory"))
+        {return new StoryManagment();}
             
         
         return null;

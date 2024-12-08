@@ -6,6 +6,7 @@ package connecthub;
 import connecthub.UserDatabase;
 import java.awt.Component;
 import java.awt.Image;
+import java.time.Instant;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -24,6 +25,7 @@ private UserDatabase database=UserDatabase.getInstance();
 private User user=UserDatabase.getCurrentuser();
 private ProfileManagement profile;
     PostMangmentt pm=new PostMangmentt();
+    StoryManagment sm=new StoryManagment();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
     postStoryManagment psm=new postStoryManagment();
@@ -41,6 +43,7 @@ private ProfileManagement profile;
         showFriends();
         showSuggest();
         showFriendsPosts();
+        showStories();
     }
     
     public void showFriends(){
@@ -67,42 +70,42 @@ private ProfileManagement profile;
         suggList.setListData(arr2);
     }
     public void showStories() {
-    // Fetch stories from the NewsfeedService
-    ArrayList<Story> stories = (ArrayList<Story>) nf.getfriendsStories();
+         System.out.println("1234");
+        ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
+    for (String friendId : friendsUserIDs) {
+        JSONArray friendstories = sm.getstorytbyuserid(friendId);
+        System.out.println(friendstories);
+         System.out.println("1234");
+        long currenttime=Instant.now().toEpochMilli();
+        
+        if (friendstories != null) {
+            for (int j = 0; j < friendstories.length(); j++) {
+                JSONObject story = friendstories.getJSONObject(j);
+                long timestamp=story.optLong("timestamp",-1);
+                if(timestamp!=-1){
+                    long difference=(currenttime-timestamp)/(1000*60*60);
+                    System.out.println("Time difference (hours): " + difference);
 
-    // Use a DefaultListModel to populate the list
-    DefaultListModel<Story> storyListModel = new DefaultListModel<>();
-    for (Story story : stories) {
-        storyListModel.addElement(story);
-    }
 
-    // Ensure jstories is a JList<Story> and set the model
-    JList<Story> storyList = new JList<>(storyListModel);
-
-    // Set a custom cell renderer to display images and text
-    storyList.setCellRenderer(new DefaultListCellRenderer() {
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (value instanceof Story) {
-                Story story = (Story) value;
-
-                // Load and scale the image
-                ImageIcon icon = new ImageIcon(story.getImagepath());
-                Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Adjust size as needed
-                icon = new ImageIcon(img);
-
-                // Set the label with the image and story content
-                label.setIcon(icon);
-                label.setText(story.getContent());
-                label.setHorizontalTextPosition(JLabel.RIGHT);
-            }
-            return label;
+                // Create a new label for the post
+                if(difference<=24){
+                JLabel storyLabel = new JLabel();
+                storyLabel.setText(story.getString("content"));
+                
+                if (story.has("imagePath")) {
+                    ImageIcon postImage = new ImageIcon(story.getString("imagePath"));
+                    storyLabel.setIcon(postImage); // Add image
+                }
+                
+                storiespanel.add(storyLabel);// Add label to the panel
+            }}}
         }
-    });
+    }
+    storiespanel.setLayout(new BoxLayout(storiespanel, BoxLayout.Y_AXIS));
+    storiespanel.revalidate();
+    storiespanel.repaint();
 
-    // Add the story list to a scroll pane for display
-    jScrollPane3.setViewportView(storyList);
+    // Add the panel to the frame with scrolling
 }
     public void showFriendsPosts() {
     ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
@@ -158,12 +161,12 @@ private ProfileManagement profile;
         MyFriendsList = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         suggList = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jstories = new javax.swing.JList<>();
         addpost = new javax.swing.JButton();
         addstory = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         postspanel = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        storiespanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -203,8 +206,6 @@ private ProfileManagement profile;
 
         jScrollPane2.setViewportView(suggList);
 
-        jScrollPane3.setViewportView(jstories);
-
         addpost.setText("Add Post");
         addpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +236,21 @@ private ProfileManagement profile;
 
         jScrollPane5.setViewportView(postspanel);
 
+        storiespanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout storiespanelLayout = new javax.swing.GroupLayout(storiespanel);
+        storiespanel.setLayout(storiespanelLayout);
+        storiespanelLayout.setHorizontalGroup(
+            storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 574, Short.MAX_VALUE)
+        );
+        storiespanelLayout.setVerticalGroup(
+            storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 146, Short.MAX_VALUE)
+        );
+
+        jScrollPane3.setViewportView(storiespanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -242,6 +258,7 @@ private ProfileManagement profile;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -259,9 +276,7 @@ private ProfileManagement profile;
                         .addGap(18, 18, 18)
                         .addComponent(LogOutButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane5)
                         .addGap(3, 3, 3)))
                 .addContainerGap())
         );
@@ -280,8 +295,8 @@ private ProfileManagement profile;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5)
                 .addContainerGap())
@@ -318,7 +333,7 @@ private ProfileManagement profile;
     }//GEN-LAST:event_addpostActionPerformed
 
     private void addstoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addstoryActionPerformed
-        AddStoryFrame a=new AddStoryFrame(this);
+        AddStory a=new AddStory(this);
         a.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addstoryActionPerformed
@@ -344,8 +359,8 @@ private ProfileManagement profile;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JList<String> jstories;
     private javax.swing.JPanel postspanel;
+    private javax.swing.JPanel storiespanel;
     private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables
 }
