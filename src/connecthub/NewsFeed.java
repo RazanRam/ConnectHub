@@ -7,6 +7,7 @@ import connecthub.UserDatabase;
 import java.awt.Component;
 import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -39,6 +40,7 @@ private ProfileManagement profile;
         System.out.println(user);
         showFriends();
         showSuggest();
+        showFriendsPosts();
     }
     
     public void showFriends(){
@@ -109,6 +111,7 @@ private ProfileManagement profile;
 
     for (String friendId : friendsUserIDs) {
         JSONArray friendPosts = pm.getpostbyuserid(friendId);
+        System.out.println(friendPosts);
         if (friendPosts != null) {
             for (int j = 0; j < friendPosts.length(); j++) {
                 JSONObject post = friendPosts.getJSONObject(j);
@@ -121,11 +124,12 @@ private ProfileManagement profile;
                     ImageIcon postImage = new ImageIcon(post.getString("imagePath"));
                     postLabel.setIcon(postImage); // Add image
                 }
-
+                
                 postspanel.add(postLabel); // Add label to the panel
             }
         }
     }
+    postspanel.setLayout(new BoxLayout(postspanel, BoxLayout.Y_AXIS));
     postspanel.revalidate();
     postspanel.repaint();
 
@@ -216,6 +220,7 @@ private ProfileManagement profile;
         });
 
         postspanel.setBackground(new java.awt.Color(255, 255, 255));
+        postspanel.setToolTipText("");
 
         javax.swing.GroupLayout postspanelLayout = new javax.swing.GroupLayout(postspanel);
         postspanel.setLayout(postspanelLayout);
@@ -255,9 +260,9 @@ private ProfileManagement profile;
                         .addComponent(LogOutButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(3, 3, 3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
