@@ -53,5 +53,60 @@
         "email": "raghad@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
         "username": "raghad"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "Bio": "",
+        "dateOfBirth": "2007-12-19",
+        "isOnline": true,
+        "userId": "64c92e71-2e2b-499e-96da-c35160e370a4",
+        "email": "alaa@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "alaa"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "Bio": "",
+        "dateOfBirth": "2024-12-04",
+        "isOnline": false,
+        "userId": "010dbdb5-c1e3-4f02-b9f7-0991e9bebb65",
+        "email": "mazen@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "mazen"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+        "Bio": "",
+        "dateOfBirth": "2024-12-04",
+        "isOnline": false,
+        "userId": "652e86d0-af55-4b00-9552-ac8127c66f92",
+        "email": "hamza@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "hamza"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+        "Bio": "",
+        "dateOfBirth": "2024-12-10",
+        "isOnline": false,
+        "userId": "89ddfc24-b081-4067-8c88-e80ba5553229",
+        "email": "mohamed@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "mohamed"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+        "Bio": "",
+        "dateOfBirth": "2024-12-17",
+        "isOnline": true,
+        "userId": "bbcd120e-6452-450b-97cb-6bbdf7c1ebff",
+        "email": "ali@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "ali"
     }
 ]

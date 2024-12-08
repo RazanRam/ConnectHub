@@ -4,6 +4,7 @@
  */
 package connecthub;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,39 +18,67 @@ import org.json.JSONObject;
  *
  * @author hp
  */
-public class PostMangmentt {
-    private static final String FILE_NAME ="posts.json";
-    public void addPostinfile(String userid,String content,String imagepath){
+public class PostMangmentt extends ContentCreation {
+   
+
+    public PostMangmentt() {
+        
+    }
+    
+            private static final String FILE_NAME ="newposts.json";
+    public void addPostinfile() {
+        //System.out.println("Author ID: " + getAuthorid());
+         //System.out.println("Author ID: " + userid);
+        
+
         try {
-            FileReader fr=new FileReader(FILE_NAME);
-            StringBuilder jsonfilecontent =new StringBuilder();
-            int i; 
-            while((i=fr.read())!=-1){
-                jsonfilecontent.append((char)i);
+            // Ensure the file exists; if not, create it with an empty JSON object
+            File file = new File(FILE_NAME);
+            if (!file.exists()|| file.length() == 0) {
+                //file.createNewFile();
+                try (FileWriter writer = new FileWriter(file)) {
+                    writer.write("{}"); // Initialize with an empty JSON object
+                }
+            }
+
+            // Read the current contents of the file
+            FileReader fr = new FileReader(FILE_NAME);
+            StringBuilder jsonfilecontent = new StringBuilder();
+            int i;
+            while ((i = fr.read()) != -1) {
+                jsonfilecontent.append((char) i);
             }
             fr.close();
-            JSONObject Dataofposts =new JSONObject(jsonfilecontent.toString());
-            JSONArray userarrayofposts=Dataofposts.optJSONArray(userid);
-            if(userarrayofposts==null){
-                userarrayofposts=new JSONArray();
-                Dataofposts.put(userid, userarrayofposts);
+
+            // Parse the JSON data
+            JSONObject Dataofposts = new JSONObject(jsonfilecontent.toString());
+
+            // Get the user's posts array or create a new one if it doesn't exist
+            JSONArray userarrayofposts = Dataofposts.optJSONArray(getAuthorid());
+            if (userarrayofposts == null) {
+                userarrayofposts = new JSONArray();
+                Dataofposts.put(getAuthorid(), userarrayofposts);
             }
-            JSONObject newpost=new JSONObject();
-            newpost.put("postid",System.currentTimeMillis());
-            newpost.put("content",content);
-            newpost.put("timestamo", System.currentTimeMillis());
-            if(imagepath!=null&&!imagepath.isEmpty()){ newpost.put("imagePath", imagepath);}
+
+            // Create a new post and add it to the array
+            JSONObject newpost = new JSONObject();
+            newpost.put("postid", System.currentTimeMillis());
+            newpost.put("content", getContent());
+            newpost.put("timestamp", System.currentTimeMillis());
+            if (getImagepath() != null && !getImagepath().isEmpty()) {
+                newpost.put("imagePath", getImagepath());
+            }
             userarrayofposts.put(newpost);
+
+            // Write the updated data back to the file
             FileWriter writer = new FileWriter(FILE_NAME);
-            writer.write(Dataofposts.toString());
+            writer.write(Dataofposts.toString(4));
             writer.close();
-            
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PostMangmentt.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (IOException ex) {
-            ex.printStackTrace();
-        }}
+            Logger.getLogger(PostMangmentt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
         public JSONArray getpostbyuserid(String userid){
             try {
         FileReader file = new FileReader(FILE_NAME);

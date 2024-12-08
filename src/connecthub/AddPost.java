@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class AddPost extends javax.swing.JFrame {
     NewsFeed n;
+    
 
     /**
      * Creates new form AddPost
@@ -119,14 +120,15 @@ public class AddPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+setVisible(false);
+        n.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
        try{ ContentFactory F = new ContentFactory();
-       postStoryManagment psm=new postStoryManagment();
-        Post p = (Post) F.createpoststory("Post");
+       
+        PostMangmentt p = (PostMangmentt) F.createpoststory("newpost");
          User user= UserDatabase.getCurrentuser();
         String content = jTextArea1.getText();
         if (content == null || content.trim().isEmpty()) {
@@ -134,8 +136,8 @@ public class AddPost extends javax.swing.JFrame {
             return;
             
         }
-        //if(user==null)
-        // {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
+        if(user==null)
+        {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
         String imagePath = null;
         int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?", "Add Photo", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
@@ -154,9 +156,9 @@ public class AddPost extends javax.swing.JFrame {
 
         }
         p.setContent(content);
-        p.setTimeStamp(LocalDateTime.now());
+       // p.setTimeStamp(LocalDateTime.now());
         p.setAuthorid(user.getUserId());
-        p.setContentid(UUID.randomUUID().toString());
+       // p.setContentid(UUID.randomUUID().toString());
         if (imagePath != null) {
             p.setimage(imagePath);
             
@@ -164,7 +166,8 @@ public class AddPost extends javax.swing.JFrame {
             p.setimage(null);
         }
         JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        psm.addPost(p);} catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        p.addPostinfile();
+       } catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
