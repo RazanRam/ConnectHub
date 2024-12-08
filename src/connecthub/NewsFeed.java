@@ -315,8 +315,8 @@ private ProfileManagement profile;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       profileframe frame = new profileframe(database,user,profile,this);
-        frame.setVisible(true);
+       profileframe proframe = new profileframe(database,user,profile,this);
+        proframe.setVisible(true);
                 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

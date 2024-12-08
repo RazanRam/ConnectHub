@@ -119,5 +119,16 @@
         "email": "malak@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/60588051-051e-4c59-a600-da77c7f138e7_PP.jpg",
         "username": "malak"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "1df1854015e31ca286d015345eaff29a6c6073f70984a3a746823d4cac16b075",
+        "Bio": "annyo",
+        "dateOfBirth": "2006-02-14",
+        "isOnline": true,
+        "userId": "743c7389-3fbc-4a89-967b-e56126d343dd",
+        "email": "ashashsheko@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "username": "eshesh"
     }
 ]

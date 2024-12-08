@@ -72,7 +72,6 @@ public class profileframe extends javax.swing.JFrame {
 
     private void displayPosts() {
         JSONArray Posts = pm.getpostbyuserid(user.getUserId());
-        System.out.println(Posts);
         if (Posts != null) {
             for (int j = 0; j < Posts.length(); j++) {
                 JSONObject post = Posts.getJSONObject(j);
@@ -80,6 +79,8 @@ public class profileframe extends javax.swing.JFrame {
                 singlePostPanel.setLayout(new BorderLayout());
                 singlePostPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 singlePostPanel.setPreferredSize(new Dimension(150, 200));
+                singlePostPanel.setBackground(Color.WHITE);
+
                 // Create a new label for the post
                 JLabel postLabel = new JLabel();
                 postLabel.setText(post.getString("content"));
@@ -96,12 +97,13 @@ public class profileframe extends javax.swing.JFrame {
                     singlePostPanel.add(noImageLabel, BorderLayout.CENTER);
                 }
 
-                //postPanel.add(postLabel); // Add label to the panel
                 postPanel.add(singlePostPanel);
-                // postPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+                 postPanel.add(Box.createRigidArea(new Dimension(10, 0)));
             }
 
         }
+        postPanel.setBackground(Color.WHITE);
+
         postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
         postPanel.revalidate();
         postPanel.repaint();
@@ -119,14 +121,7 @@ public class profileframe extends javax.swing.JFrame {
         return new ImageIcon(newImage);
     }
 
-    /* if (user != null) {
-        String bio = user.getBio(); // Safely access the user's bio
-        // Proceed with the rest of the logic
-    } else {
-        // Handle the case where no user is logged in
-        JOptionPane.showMessageDialog(null, "No user is logged in.", "Error", JOptionPane.ERROR_MESSAGE);
-        dispose(); // Close the frame if necessary
-    }*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,6 +146,7 @@ public class profileframe extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Profile Management");
+        setBackground(new java.awt.Color(204, 204, 255));
 
         editButton.setText("Edit Profile");
         editButton.addActionListener(new java.awt.event.ActionListener() {
