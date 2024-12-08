@@ -21,9 +21,9 @@ public class FriendsManagment{
     private static String friendsrequestsFILE="friendsrequests.json";
     private static String blocksFILE="blocks.json";
 
-    private ArrayList<friendship> Friends=new ArrayList<>();
-    private ArrayList<friendship> FriendRqustes=new ArrayList<>();
-    private ArrayList<friendship> Blocks=new ArrayList<>();
+    private ArrayList<friendship> Friends;
+    private ArrayList<friendship> FriendRqustes;
+    private ArrayList<friendship> Blocks;
     
     private FriendsManagment() {
         Friends=fdb.LoadDATAbase(friendsFILE);
@@ -134,6 +134,8 @@ public class FriendsManagment{
         for(friendship f:Blocks){
             if(f.getUserID1().equals(user1)){
                 U1Blocks.add(f.getUserID2());
+            }else if(f.getUserID2().equals(user1)){
+                U1Blocks.add(f.getUserID1());
             }
         }
         return U1Blocks;

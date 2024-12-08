@@ -14,7 +14,7 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  * @author janaf
  */
 public class requestingFrame extends javax.swing.JFrame {
-    Friends f=Friends.getInstance();
+    Friends f;
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
@@ -22,8 +22,9 @@ public class requestingFrame extends javax.swing.JFrame {
     /**
      * Creates new form requestingFrame
      */
-    public requestingFrame() {
+    public requestingFrame(Friends f) {
         initComponents();
+        this.f=f;
     }
 
     /**
@@ -35,9 +36,12 @@ public class requestingFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         IDenter = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         req = new javax.swing.JButton();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -95,11 +99,15 @@ public class requestingFrame extends javax.swing.JFrame {
         ArrayList<User> users=(ArrayList<User>) udb.getUsers();
         boolean flag=false;
         for(User u:users){
-            if(u.getUserId().equals(id))
-                flag=true;
+            if(u.getUserId().equals(id)&&!id.equals(me.getUserId()))
+                if(!fdb.getFriendRequestsof(id).contains(me.getUserId()))
+                    if(!fdb.getBlocksof(id).contains(me.getUserId()))
+                        if(!fdb.getFriendsof(id).contains(me.getUserId()))
+                            flag=true;
         }
         if(flag==false){
             JOptionPane.showMessageDialog(this, "you need to enter a existing id", "warning", JOptionPane.WARNING_MESSAGE);
+            IDenter.setText("");
             return;
         }
         fdb.FriendRequest(me.getUserId(),id);
@@ -120,6 +128,7 @@ public class requestingFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IDenter;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton req;
     // End of variables declaration//GEN-END:variables
 }

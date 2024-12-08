@@ -15,7 +15,7 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  * @author janaf
  */
 public class Suggestions extends javax.swing.JFrame {
-    Friends f=Friends.getInstance();
+    Friends f;
     User me=getCurrentuser();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -24,8 +24,9 @@ public class Suggestions extends javax.swing.JFrame {
     /**
      * Creates new form Suggestions
      */
-    public Suggestions() {
+    public Suggestions(Friends f) {
         initComponents();
+        this.f=f;
         showSuggest();
     }
     public void showSuggest(){

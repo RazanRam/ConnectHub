@@ -113,7 +113,7 @@ boolean loginSuccessful = userdata.login(email, pass);
     if (loginSuccessful) {
         // Open the NewsFeed on successful login
        User user=userdata.getCurrentuser();
-        NewsFeed frame = NewsFeed.getInstance();
+        NewsFeed frame =new NewsFeed();
         System.out.println(user);
         frame.setVisible(true);
         this.dispose(); // Close

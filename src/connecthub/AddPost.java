@@ -23,13 +23,13 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddPost extends javax.swing.JFrame {
-    NewsFeed n=NewsFeed.getInstance();
+    NewsFeed n;
 
     /**
      * Creates new form AddPost
      */
-    public AddPost() {
-
+    public AddPost(NewsFeed n) {
+        this.n=n;
         initComponents();
     }
 

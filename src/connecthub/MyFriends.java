@@ -16,7 +16,7 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  */
 
 public class MyFriends extends javax.swing.JFrame {
-    Friends f=Friends.getInstance();
+    Friends f;
     User me=getCurrentuser();
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
@@ -24,8 +24,9 @@ public class MyFriends extends javax.swing.JFrame {
     /**
      * Creates new form MyFriends
      */
-    public MyFriends() {
+    public MyFriends(Friends f) {
         initComponents();
+        this.f=f;
         showFriends();
     }
     public void showFriends(){

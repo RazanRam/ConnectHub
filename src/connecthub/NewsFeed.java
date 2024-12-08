@@ -17,7 +17,6 @@ import javax.swing.JList;
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
-    public static NewsFeed fn=null;
 private UserDatabase database=UserDatabase.getInstance();
 private User user=UserDatabase.getCurrentuser();
 private ProfileManagement profile;
@@ -29,7 +28,7 @@ private ProfileManagement profile;
     /**
      * Creates new form NewsFeed
      */
-    private NewsFeed() {
+    public NewsFeed() {
         initComponents();
         this.database=database;
         this.user=user;
@@ -38,13 +37,7 @@ private ProfileManagement profile;
         showFriends();
         showSuggest();
     }
-    public static NewsFeed getInstance(){
-        if(fn==null){
-            fn=new NewsFeed();
-        }
-        return fn;
-    }
-
+    
     public void showFriends(){
         ArrayList<String> friendsUserIDs=fdb.getFriendsof(user.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
@@ -135,6 +128,11 @@ private ProfileManagement profile;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         LogOutButton.setBackground(new java.awt.Color(204, 204, 255));
         LogOutButton.setText("LogOut");
@@ -254,22 +252,26 @@ private ProfileManagement profile;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void friendspageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendspageActionPerformed
-        Friends f=Friends.getInstance();
+        Friends f=new Friends(this);
         f.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_friendspageActionPerformed
 
     private void addpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addpostActionPerformed
-        AddPost a=new AddPost();
+        AddPost a=new AddPost(this);
         a.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addpostActionPerformed
 
     private void addstoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addstoryActionPerformed
-        AddStoryFrame a=new AddStoryFrame();
+        AddStoryFrame a=new AddStoryFrame(this);
         a.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addstoryActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        database.logout(user.getEmail());
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

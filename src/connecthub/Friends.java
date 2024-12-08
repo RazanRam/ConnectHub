@@ -14,10 +14,8 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  *
  * @author janaf
  */
-public class Friends extends javax.swing.JFrame {
-    public static Friends frd=null;
-    
-    NewsFeed n=NewsFeed.getInstance();
+public class Friends extends javax.swing.JFrame {    
+    NewsFeed n;
     FriendsManagment fdb=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
@@ -25,16 +23,12 @@ public class Friends extends javax.swing.JFrame {
     /**
      * Creates new form Friends
      */
-    private Friends() {
+    public Friends(NewsFeed n) {
         initComponents();
+        this.n=n;
         showRequests();
     }
-    public static Friends getInstance(){
-        if(frd==null){
-            frd=new Friends();
-        }
-        return frd;
-    }
+    
     public void showRequests(){
         ArrayList<String> friendsUserIDs=fdb.getFriendRequestsof(me.getUserId());
         ArrayList<String> friendsUsernames=new ArrayList<>();
@@ -162,13 +156,13 @@ public class Friends extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void suggestionsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suggestionsBActionPerformed
-        Suggestions s=new Suggestions();
+        Suggestions s=new Suggestions(this);
         s.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_suggestionsBActionPerformed
 
     private void yourFriendsBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yourFriendsBActionPerformed
-        MyFriends mf=new MyFriends();
+        MyFriends mf=new MyFriends(this);
         mf.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_yourFriendsBActionPerformed
@@ -198,7 +192,7 @@ public class Friends extends javax.swing.JFrame {
     }//GEN-LAST:event_declineButtonActionPerformed
 
     private void requestingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestingActionPerformed
-        requestingFrame r=new requestingFrame();
+        requestingFrame r=new requestingFrame(this);
         r.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_requestingActionPerformed

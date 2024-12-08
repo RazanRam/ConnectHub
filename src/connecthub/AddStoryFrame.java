@@ -22,13 +22,14 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddStoryFrame extends javax.swing.JFrame {
-       NewsFeed n=NewsFeed.getInstance();
+       NewsFeed n;
 
 
     /**
      * Creates new form AddStoryFrame
      */
-    public AddStoryFrame() {
+    public AddStoryFrame(NewsFeed n) {
+        this.n=n;
         initComponents();
     }
 
