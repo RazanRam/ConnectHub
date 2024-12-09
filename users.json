@@ -125,10 +125,21 @@
         "password": "1df1854015e31ca286d015345eaff29a6c6073f70984a3a746823d4cac16b075",
         "Bio": "annyo",
         "dateOfBirth": "2006-02-14",
-        "isOnline": true,
+        "isOnline": false,
         "userId": "743c7389-3fbc-4a89-967b-e56126d343dd",
         "email": "ashashsheko@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
         "username": "eshesh"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "Bio": "",
+        "dateOfBirth": "1971-10-31",
+        "isOnline": false,
+        "userId": "698718a3-e1d9-4cf4-9d4d-451a64352f63",
+        "email": "sherifz50@gmail.com",
+        "ProfilePhotoPath": "user_PP/profilePhoto_Edit/698718a3-e1d9-4cf4-9d4d-451a64352f63_PP.jpg",
+        "username": "sheko"
     }
 ]
