@@ -2,7 +2,7 @@
     {
         "CoverPhotoPath": "user_PP/coverPhoto_Edit/b7f59ec4-ae4f-4e06-8027-7901ab9a278f_PP.jpg",
         "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-        "Bio": "bye life",
+        "Bio": "Jana Hacked the system",
         "dateOfBirth": "2024-12-06",
         "isOnline": false,
         "userId": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f",
@@ -26,7 +26,7 @@
         "password": "ff2ccb6ba423d356bd549ed4bfb76e96976a0dcde05a09996a1cdb9f83422ec4",
         "Bio": "",
         "dateOfBirth": "2024-12-07",
-        "isOnline": false,
+        "isOnline": true,
         "userId": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
         "email": "manal@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",

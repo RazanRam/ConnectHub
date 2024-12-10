@@ -128,7 +128,7 @@ public class FriendsManagment{
         return U1Friendreq;
     }
     
-    //List of people who user1 blocked
+    //List of people who user1 blocked or is blocked from
     public ArrayList<String> getBlocksof(String user1){
         ArrayList<String> U1Blocks=new ArrayList<>();
         for(friendship f:Blocks){
@@ -161,7 +161,7 @@ public class FriendsManagment{
             
             ArrayList<String> FriendsofFriend=getFriendsof(Friend);
             for(String person:FriendsofFriend){
-                if(!U1Friends.contains(person) &&!U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person) && !person.contains(user1)){
+                if(!U1Friends.contains(person) &&!U1Blocks.contains(person) && !U1SuggestedFriends.contains(person) && !U1req.contains(person) && !person.equals(user1)){
                     U1SuggestedFriends.add(person);
                 }
             }
