@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.Notification;
 import javax.swing.JOptionPane;
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,7 +47,22 @@ public class UserDatabase{
         }
         return u;
     }
-   
+   public synchronized boolean addNotificationToUser(String Id,Notifications notification){
+   User user=getUserById(Id);
+   if(user!=null){
+   user.addNotification(notification);
+   saveDatabase();
+   return true;
+   }
+   return false;
+   }
+   public List<Notifications> getUserNotifications(String userId){
+   User user=getUserById(userId);
+   if(user!=null){
+  return user.getNotifications();
+   }
+   return new ArrayList<>();
+   }
     //read json file 
      public void LoadDatabase() {
          File file = new File(filename);
@@ -87,7 +103,14 @@ public class UserDatabase{
                     
                       User user = new User.UserBuilder().setUsername(username).setUserId(userId).setEmail(email).setDateOfBirth(dateOfBirth).setPassword(password).setCoverPhotoPath(CoverPhotoPath).setProfilePhotoPath(ProfilePhotoPath).setBio(Bio).build();
             // User user = new User(userId, username, email, password, dateOfBirth);
-            
+                JSONArray jsonNotifications=jsonUser.optJSONArray("notifications");
+                if(jsonNotifications!=null){
+                for(int j=0;j<jsonNotifications.length();j++){
+                JSONObject jsonNotification = jsonNotifications.getJSONObject(j);
+                Notifications notify=new Notifications(jsonNotification.getString("type"),jsonNotification.getString("sender"),jsonNotification.getString("description"));
+                notify.Read();
+                user.addNotification(notify);
+                }}
                     user.setIsOnline(isOnline);
                     users.add(user);
                     
@@ -116,7 +139,17 @@ public class UserDatabase{
                 jsonUser.put("ProfilePhotoPath", user.getProfilePhotoPath());
                 jsonUser.put("CoverPhotoPath", user.getCoverPhotoPath());
                 
-
+                JSONArray jsonNotifications = new JSONArray();
+                for(Notifications notify:user.getNotifications()){
+                JSONObject jsonNotification = new JSONObject();
+                jsonNotification.put("type", notify.getType());
+                jsonNotification.put("sender", notify.getSender());
+                jsonNotification.put("description", notify.getDescription());
+                jsonNotification.put("timestamp", notify.getTimestamp());
+                jsonNotification.put("isRead", notify.isRead());
+                jsonNotifications.put(jsonNotification);
+                }
+                jsonUser.put("notifications", jsonNotifications);
                 jsonArray.put(jsonUser);
             }
 

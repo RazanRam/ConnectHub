@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package connecthub;
+
 import connecthub.UserDatabase;
+import glasspopup.DefaultOption;
+import glasspopup.GlassPanePopup;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.Point;
 import java.time.Instant;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
@@ -14,141 +18,144 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import net.miginfocom.layout.ComponentWrapper;
+import net.miginfocom.layout.LayoutCallback;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 /**
  *
  * @author Raz_RAMADAN
  */
 public class NewsFeed extends javax.swing.JFrame {
-private UserDatabase database=UserDatabase.getInstance();
-private User user=UserDatabase.getCurrentuser();
-private ProfileManagement profile;
-    PostMangmentt pm=new PostMangmentt();
-    StoryManagment sm=new StoryManagment();
-    FriendsManagment fdb=FriendsManagment.getInstance();
-    UserDatabase udb=UserDatabase.getInstance();
-    postStoryManagment psm=new postStoryManagment();
-    NewsfeedService nf=new NewsfeedService();
+
+    private UserDatabase database = UserDatabase.getInstance();
+    private User user = UserDatabase.getCurrentuser();
+    private ProfileManagement profile;
+    PostMangmentt pm = new PostMangmentt();
+    StoryManagment sm = new StoryManagment();
+    FriendsManagment fdb = FriendsManagment.getInstance();
+    UserDatabase udb = UserDatabase.getInstance();
+    postStoryManagment psm = new postStoryManagment();
+    NewsfeedService nf = new NewsfeedService();
 
     /**
      * Creates new form NewsFeed
      */
     public NewsFeed() {
         initComponents();
-        this.database=database;
-        this.user=user;
-        profile=new ProfileManagement();
+        this.database = database;
+        this.user = user;
+        profile = new ProfileManagement();
         System.out.println(user);
         showFriends();
         showSuggest();
         showFriendsPosts();
         showStories();
-        
+
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/connecthub/notify.png")); // Replace with your image path
-            Image resizedImage = originalIcon.getImage().getScaledInstance(jButton2.getWidth(), jButton2.getHeight(), Image.SCALE_SMOOTH); // Desired size: 50x50
-            ImageIcon resizedIcon = new ImageIcon(resizedImage);
-            jButton2.setIcon(resizedIcon);
+        Image resizedImage = originalIcon.getImage().getScaledInstance(jButton2.getWidth(), jButton2.getHeight(), Image.SCALE_SMOOTH); // Desired size: 50x50
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        jButton2.setIcon(resizedIcon);
+        GlassPanePopup.install(this);
+
     }
-    
-    public void showFriends(){
-        ArrayList<String> friendsUserIDs=fdb.getFriendsof(user.getUserId());
-        ArrayList<String> friendsUsernames=new ArrayList<>();
-        int i=0;
-        for(String id:friendsUserIDs){
-            User u=udb.getUserById(id);
+
+    public void showFriends() {
+        ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
+        ArrayList<String> friendsUsernames = new ArrayList<>();
+        int i = 0;
+        for (String id : friendsUserIDs) {
+            User u = udb.getUserById(id);
             friendsUsernames.add(u.getUsername());
         }
-        String []arr1=new String[friendsUsernames.size()];
-        String[]arr2=friendsUsernames.toArray(arr1);
+        String[] arr1 = new String[friendsUsernames.size()];
+        String[] arr2 = friendsUsernames.toArray(arr1);
         MyFriendsList.setListData(arr2);
     }
-    public void showSuggest(){
-        ArrayList<String> friendsUserIDs=fdb.getSuggestedTo(user.getUserId());
-        ArrayList<String> friendsUsernames=new ArrayList<>();
-        for(String id:friendsUserIDs){
-            User u=udb.getUserById(id);
+
+    public void showSuggest() {
+        ArrayList<String> friendsUserIDs = fdb.getSuggestedTo(user.getUserId());
+        ArrayList<String> friendsUsernames = new ArrayList<>();
+        for (String id : friendsUserIDs) {
+            User u = udb.getUserById(id);
             friendsUsernames.add(u.getUsername());
         }
-        String []arr1=new String[friendsUsernames.size()];
-        String[]arr2=friendsUsernames.toArray(arr1);
+        String[] arr1 = new String[friendsUsernames.size()];
+        String[] arr2 = friendsUsernames.toArray(arr1);
         suggList.setListData(arr2);
     }
+
     public void showStories() {
-         System.out.println("1234");
+        System.out.println("1234");
         ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
-    for (String friendId : friendsUserIDs) {
-        JSONArray friendstories = sm.getstorytbyuserid(friendId);
-        System.out.println(friendstories);
-         System.out.println("1234");
-        long currenttime=Instant.now().toEpochMilli();
-        
-        if (friendstories != null) {
-            for (int j = 0; j < friendstories.length(); j++) {
-                JSONObject story = friendstories.getJSONObject(j);
-                long timestamp=story.optLong("timestamp",-1);
-                if(timestamp!=-1){
-                    long difference=(currenttime-timestamp)/(1000*60*60);
-                    System.out.println("Time difference (hours): " + difference);
+        for (String friendId : friendsUserIDs) {
+            JSONArray friendstories = sm.getstorytbyuserid(friendId);
+            System.out.println(friendstories);
+            System.out.println("1234");
+            long currenttime = Instant.now().toEpochMilli();
 
+            if (friendstories != null) {
+                for (int j = 0; j < friendstories.length(); j++) {
+                    JSONObject story = friendstories.getJSONObject(j);
+                    long timestamp = story.optLong("timestamp", -1);
+                    if (timestamp != -1) {
+                        long difference = (currenttime - timestamp) / (1000 * 60 * 60);
+                        System.out.println("Time difference (hours): " + difference);
 
-                // Create a new label for the post
-                if(difference<=24){
-                JLabel storyLabel = new JLabel();
-                storyLabel.setText(story.getString("content"));
-                
-                if (story.has("imagePath")) {
-                    ImageIcon postImage = new ImageIcon(story.getString("imagePath"));
-                    storyLabel.setIcon(postImage); // Add image
+                        // Create a new label for the post
+                        if (difference <= 24) {
+                            JLabel storyLabel = new JLabel();
+                            storyLabel.setText(story.getString("content"));
+
+                            if (story.has("imagePath")) {
+                                ImageIcon postImage = new ImageIcon(story.getString("imagePath"));
+                                storyLabel.setIcon(postImage); // Add image
+                            }
+
+                            storiespanel.add(storyLabel);// Add label to the panel
+                        }
+                    }
                 }
-                
-                storiespanel.add(storyLabel);// Add label to the panel
-            }}}
-        }
-    }
-    storiespanel.setLayout(new BoxLayout(storiespanel, BoxLayout.Y_AXIS));
-    storiespanel.revalidate();
-    storiespanel.repaint();
-
-    // Add the panel to the frame with scrolling
-}
-    public void showFriendsPosts() {
-    ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
-    
-   
-
-    for (String friendId : friendsUserIDs) {
-        JSONArray friendPosts = pm.getpostbyuserid(friendId);
-        System.out.println(friendPosts);
-        if (friendPosts != null) {
-            for (int j = 0; j < friendPosts.length(); j++) {
-                JSONObject post = friendPosts.getJSONObject(j);
-
-                // Create a new label for the post
-                JLabel postLabel = new JLabel();
-                postLabel.setText(post.getString("content"));
-                
-                if (post.has("imagePath")) {
-                    ImageIcon postImage = new ImageIcon(post.getString("imagePath"));
-                    postLabel.setIcon(postImage); // Add image
-                }
-                
-                postspanel.add(postLabel); // Add label to the panel
             }
         }
+        storiespanel.setLayout(new BoxLayout(storiespanel, BoxLayout.Y_AXIS));
+        storiespanel.revalidate();
+        storiespanel.repaint();
+
+        // Add the panel to the frame with scrolling
     }
-    postspanel.setLayout(new BoxLayout(postspanel, BoxLayout.Y_AXIS));
-    postspanel.revalidate();
-    postspanel.repaint();
 
-    // Add the panel to the frame with scrolling
-}
+    public void showFriendsPosts() {
+        ArrayList<String> friendsUserIDs = fdb.getFriendsof(user.getUserId());
 
-    
-    
-    
-    
-    
+        for (String friendId : friendsUserIDs) {
+            JSONArray friendPosts = pm.getpostbyuserid(friendId);
+            System.out.println(friendPosts);
+            if (friendPosts != null) {
+                for (int j = 0; j < friendPosts.length(); j++) {
+                    JSONObject post = friendPosts.getJSONObject(j);
+
+                    // Create a new label for the post
+                    JLabel postLabel = new JLabel();
+                    postLabel.setText(post.getString("content"));
+
+                    if (post.has("imagePath")) {
+                        ImageIcon postImage = new ImageIcon(post.getString("imagePath"));
+                        postLabel.setIcon(postImage); // Add image
+                    }
+
+                    postspanel.add(postLabel); // Add label to the panel
+                }
+            }
+        }
+        postspanel.setLayout(new BoxLayout(postspanel, BoxLayout.Y_AXIS));
+        postspanel.revalidate();
+        postspanel.repaint();
+
+        // Add the panel to the frame with scrolling
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -284,11 +291,11 @@ private ProfileManagement profile;
                         .addComponent(addstory)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(friendspage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(LogOutButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5)
@@ -325,32 +332,32 @@ private ProfileManagement profile;
     private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
         // TODO add your handling code here:
         database.logout(user.getEmail());
-        MainWindow frame=MainWindow.getInstance();
-                frame.setVisible(true);
-            this.dispose();
+        MainWindow frame = MainWindow.getInstance();
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_LogOutButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       profileframe proframe = new profileframe(database,user,profile,this);
+        profileframe proframe = new profileframe(database, user, profile, this);
         proframe.setVisible(true);
-                this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void friendspageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendspageActionPerformed
-        Friends f=new Friends(this);
+        Friends f = new Friends(this);
         f.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_friendspageActionPerformed
 
     private void addpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addpostActionPerformed
-        AddPost a=new AddPost(this);
+        AddPost a = new AddPost(this);
         a.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addpostActionPerformed
 
     private void addstoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addstoryActionPerformed
-        AddStory a=new AddStory(this);
+        AddStory a = new AddStory(this);
         a.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_addstoryActionPerformed
@@ -360,13 +367,14 @@ private ProfileManagement profile;
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        GlassPanePopup.showPopup(new NotificationPanel());
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogOutButton;
