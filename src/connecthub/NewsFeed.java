@@ -167,7 +167,6 @@ private ProfileManagement profile;
         postspanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         storiespanel = new javax.swing.JPanel();
-        searchbutton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -228,7 +227,7 @@ private ProfileManagement profile;
         postspanel.setLayout(postspanelLayout);
         postspanelLayout.setHorizontalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGap(0, 571, Short.MAX_VALUE)
         );
         postspanelLayout.setVerticalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +242,7 @@ private ProfileManagement profile;
         storiespanel.setLayout(storiespanelLayout);
         storiespanelLayout.setHorizontalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 655, Short.MAX_VALUE)
+            .addGap(0, 574, Short.MAX_VALUE)
         );
         storiespanelLayout.setVerticalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,13 +250,6 @@ private ProfileManagement profile;
         );
 
         jScrollPane3.setViewportView(storiespanel);
-
-        searchbutton.setText("search");
-        searchbutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchbuttonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,9 +271,7 @@ private ProfileManagement profile;
                         .addComponent(addstory)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchbutton)
-                        .addGap(11, 11, 11)
+                        .addGap(23, 23, 23)
                         .addComponent(friendspage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(LogOutButton))
@@ -300,8 +290,7 @@ private ProfileManagement profile;
                     .addComponent(jButton1)
                     .addComponent(friendspage)
                     .addComponent(addpost)
-                    .addComponent(addstory)
-                    .addComponent(searchbutton))
+                    .addComponent(addstory))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
@@ -326,8 +315,8 @@ private ProfileManagement profile;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       profileframe frame = new profileframe(database,user,profile,this);
-        frame.setVisible(true);
+       profileframe proframe = new profileframe(database,user,profile,this);
+        proframe.setVisible(true);
                 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -353,12 +342,6 @@ private ProfileManagement profile;
         database.logout(user.getEmail());
     }//GEN-LAST:event_formWindowClosed
 
-    private void searchbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbuttonActionPerformed
-         SearchFrame s=new SearchFrame(this);
-        s.setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_searchbuttonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -377,7 +360,6 @@ private ProfileManagement profile;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel postspanel;
-    private javax.swing.JButton searchbutton;
     private javax.swing.JPanel storiespanel;
     private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables

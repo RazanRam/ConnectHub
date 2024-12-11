@@ -44,9 +44,7 @@
                       <Component id="addstory" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="searchbutton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="friendspage" min="-2" pref="84" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="LogOutButton" min="-2" max="-2" attributes="0"/>
@@ -71,7 +69,6 @@
                   <Component id="friendspage" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addpost" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addstory" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="searchbutton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -193,7 +190,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="652" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="571" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -219,7 +216,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="655" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -231,13 +228,5 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="searchbutton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="search"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchbuttonActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>
