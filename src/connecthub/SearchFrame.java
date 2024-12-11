@@ -4,8 +4,10 @@
  */
 package connecthub;
 
+import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 /**
  *
@@ -14,6 +16,8 @@ import javax.swing.JOptionPane;
 public class SearchFrame extends javax.swing.JFrame {
     NewsFeed n;
     SearchEngine se=new SearchEngine();
+    FriendsManagment fm=FriendsManagment.getInstance();
+    User me=getCurrentuser();
     /**
      * Creates new form SearchFrame
      */
@@ -149,6 +153,11 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        fm.FriendRequest(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "requested", "message", PLAIN_MESSAGE);
+        searchActionPerformed(evt);
     }//GEN-LAST:event_SendReqbuttonActionPerformed
 
     private void RemFrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemFrButtonActionPerformed
@@ -156,6 +165,11 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        fm.Remove(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "removed", "message", PLAIN_MESSAGE);
+        searchActionPerformed(evt);
     }//GEN-LAST:event_RemFrButtonActionPerformed
 
     private void BlockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockButtonActionPerformed
@@ -163,6 +177,11 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        fm.Block(me.getUserId(),id);
+        JOptionPane.showMessageDialog(this, "Blocked", "message", PLAIN_MESSAGE);
+        searchActionPerformed(evt);
     }//GEN-LAST:event_BlockButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

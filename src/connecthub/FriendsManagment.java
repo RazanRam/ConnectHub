@@ -43,17 +43,21 @@ public class FriendsManagment{
     //user1 sent a friend request to user2
     //user1 sender
     //user2 reciever
-    public void FriendRequest(String user1,String user2){
-        
+    //if return 0-->request already exist
+    //if return -1-->a block relation exists
+    public int FriendRequest(String user1,String user2){
+        if(getBlocksof(user1).contains(user2))return -1;
         friendship f=new friendship(user1, user2);
+        if(FriendRqustes.contains(f))return 0;
         FriendRqustes.add(f);
         fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
+        return 1;
     }
     
     //user1 accept a friend request from user2
     public void AcceptRrquest(String user1,String user2){
         for(friendship f:FriendRqustes){
-            if(f.getUserID1().equals(user2)){
+            if(f.getUserID1().equals(user2) && f.getUserID2().equals(user1)){
                 FriendRqustes.remove(f);
                 break;
             }
@@ -68,7 +72,7 @@ public class FriendsManagment{
     //user1 decline a friend request from user2
     public void DeclineRequest(String user1,String user2){
         for(friendship f:FriendRqustes){
-            if(f.getUserID1().equals(user2)){
+            if(f.getUserID1().equals(user2) && f.getUserID2().equals(user1)){
                 FriendRqustes.remove(f);
                 break;
             }
@@ -79,13 +83,23 @@ public class FriendsManagment{
     }
     
     //user1 blocks user2
+    //getrid of any relation between u1&2 whether its in the friends list or friedrequests list 
     public void Block(String user1,String user2){
+        int flag=0;
         for(friendship f:Friends){
             if(f.hasUser(user2)&&f.hasUser(user1)){
                 Friends.remove(f);
+                flag=1;
                 break;
             }
         }
+        if(flag==0){
+        for(friendship f:FriendRqustes){
+            if(f.hasUser(user2)&&f.hasUser(user1)){
+                FriendRqustes.remove(f);
+                break;
+            }
+        }}
         friendship f=new friendship(user1, user2);
         Blocks.add(f);
         
@@ -94,15 +108,20 @@ public class FriendsManagment{
     }
     
     //user1 removes user2
-    public void Remove(String user1,String user2){
+    public boolean Remove(String user1,String user2){
+        int flag=0;
         for(friendship f:Friends){
             if(f.hasUser(user2)&&f.hasUser(user1)){
                 Friends.remove(f);
+                flag=1;
                 break;
             }
         }
-        
+        if(flag==1){
         fdb.saveDatabase(friendsFILE,Friends);
+        return true;
+        }
+        return false;
     }
 
     public ArrayList<String> getFriendsof(String user1){
@@ -118,11 +137,23 @@ public class FriendsManagment{
         return U1Friends;
     }
     
+    //List of people who requested to follow user1
     public ArrayList<String> getFriendRequestsof(String user1){
         ArrayList<String> U1Friendreq=new ArrayList<>();
         for(friendship f:FriendRqustes){
             if(f.getUserID2().equals(user1)){
                 U1Friendreq.add(f.getUserID1());
+            }
+        }
+        return U1Friendreq;
+    }
+    
+    //List of people who user1 requested to follow
+    public ArrayList<String> getRequestedBy(String user1){
+        ArrayList<String> U1Friendreq=new ArrayList<>();
+        for(friendship f:FriendRqustes){
+            if(f.getUserID1().equals(user1)){
+                U1Friendreq.add(f.getUserID2());
             }
         }
         return U1Friendreq;
