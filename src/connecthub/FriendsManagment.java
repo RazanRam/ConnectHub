@@ -47,7 +47,7 @@ public class FriendsManagment{
         
         friendship f=new friendship(user1, user2);
         FriendRqustes.add(f);
-        Notifications notify=new Notifications("you sent a",user1,"friend request");
+       // Notifications notify=new Notifications("you sent a",user1,"friend request");
         fdb.saveDatabase(friendsrequestsFILE,FriendRqustes);
     }
     

@@ -4,10 +4,11 @@
         "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
         "Bio": "bye life",
         "dateOfBirth": "2024-12-06",
-        "isOnline": false,
+        "isOnline": true,
         "userId": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f",
         "email": "jana@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/b7f59ec4-ae4f-4e06-8027-7901ab9a278f_PP.jpg",
+        "notifications": [],
         "username": "jana"
     },
     {
@@ -19,6 +20,7 @@
         "userId": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
         "email": "arwa@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "arwa"
     },
     {
@@ -30,6 +32,7 @@
         "userId": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
         "email": "manal@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "manal"
     },
     {
@@ -41,6 +44,7 @@
         "userId": "455745ff-56e6-454b-b8e3-cbf209b427f5",
         "email": "dareen@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "dareen"
     },
     {
@@ -52,6 +56,7 @@
         "userId": "e006bdca-007d-47d8-b28e-6b9832cf13d5",
         "email": "raghad@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "raghad"
     },
     {
@@ -63,6 +68,7 @@
         "userId": "64c92e71-2e2b-499e-96da-c35160e370a4",
         "email": "alaa@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "alaa"
     },
     {
@@ -74,6 +80,7 @@
         "userId": "010dbdb5-c1e3-4f02-b9f7-0991e9bebb65",
         "email": "mazen@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "mazen"
     },
     {
@@ -85,6 +92,7 @@
         "userId": "652e86d0-af55-4b00-9552-ac8127c66f92",
         "email": "hamza@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "hamza"
     },
     {
@@ -96,6 +104,7 @@
         "userId": "89ddfc24-b081-4067-8c88-e80ba5553229",
         "email": "mohamed@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "mohamed"
     },
     {
@@ -107,6 +116,7 @@
         "userId": "bbcd120e-6452-450b-97cb-6bbdf7c1ebff",
         "email": "ali@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "ali"
     },
     {
@@ -118,6 +128,7 @@
         "userId": "60588051-051e-4c59-a600-da77c7f138e7",
         "email": "malak@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/60588051-051e-4c59-a600-da77c7f138e7_PP.jpg",
+        "notifications": [],
         "username": "malak"
     },
     {
@@ -129,6 +140,7 @@
         "userId": "743c7389-3fbc-4a89-967b-e56126d343dd",
         "email": "ashashsheko@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
         "username": "eshesh"
     },
     {
@@ -140,6 +152,19 @@
         "userId": "698718a3-e1d9-4cf4-9d4d-451a64352f63",
         "email": "sherifz50@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/698718a3-e1d9-4cf4-9d4d-451a64352f63_PP.jpg",
+        "notifications": [],
         "username": "sheko"
+    },
+    {
+        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+        "Bio": "",
+        "dateOfBirth": "2024-12-04",
+        "isOnline": true,
+        "userId": "e2dc9f89-8fc7-4959-bc7a-5e2a676c14ec",
+        "email": "belal@gmail.com",
+        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "notifications": [],
+        "username": "belal"
     }
 ]
