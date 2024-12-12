@@ -4,6 +4,8 @@
  */
 package connecthub;
 
+import java.util.UUID;
+
 /**
  *
  * @author hp
@@ -53,8 +55,8 @@ public class CreateGroup {
         return groupid;
     }
 
-    public void setGroupid(String groupid) {
-        this.groupid = groupid;
+    public void setGroupid() {
+        this.groupid = UUID.randomUUID().toString();
     }
 
 }

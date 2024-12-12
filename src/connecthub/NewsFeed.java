@@ -167,6 +167,8 @@ private ProfileManagement profile;
         postspanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         storiespanel = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -227,11 +229,11 @@ private ProfileManagement profile;
         postspanel.setLayout(postspanelLayout);
         postspanelLayout.setHorizontalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 571, Short.MAX_VALUE)
+            .addGap(0, 953, Short.MAX_VALUE)
         );
         postspanelLayout.setVerticalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 282, Short.MAX_VALUE)
         );
 
         jScrollPane5.setViewportView(postspanel);
@@ -242,7 +244,7 @@ private ProfileManagement profile;
         storiespanel.setLayout(storiespanelLayout);
         storiespanelLayout.setHorizontalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 956, Short.MAX_VALUE)
         );
         storiespanelLayout.setVerticalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,6 +252,20 @@ private ProfileManagement profile;
         );
 
         jScrollPane3.setViewportView(storiespanel);
+
+        jButton2.setText("Create Group");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Group Manage");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,6 +285,10 @@ private ProfileManagement profile;
                         .addComponent(addpost)
                         .addGap(18, 18, 18)
                         .addComponent(addstory)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(23, 23, 23)
@@ -290,7 +310,9 @@ private ProfileManagement profile;
                     .addComponent(jButton1)
                     .addComponent(friendspage)
                     .addComponent(addpost)
-                    .addComponent(addstory))
+                    .addComponent(addstory)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
@@ -342,6 +364,20 @@ private ProfileManagement profile;
         database.logout(user.getEmail());
     }//GEN-LAST:event_formWindowClosed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        creategroupframe f=new creategroupframe(this);
+        f.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        groupmanagmentframe m=new groupmanagmentframe(this);
+                m.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -354,6 +390,8 @@ private ProfileManagement profile;
     private javax.swing.JButton addstory;
     private javax.swing.JButton friendspage;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

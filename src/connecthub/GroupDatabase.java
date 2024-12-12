@@ -32,13 +32,13 @@ public class GroupDatabase {
     public static GroupDatabase getinstance() {
         if (gdb == null) {
 
-            return new GroupDatabase();
+            gdb = new GroupDatabase();
         }
         return gdb;
     }
 
     public ArrayList<JSONObject> getfromfile(String filename) {
-         ArrayList<JSONObject> jsonObjectList = new ArrayList<>();
+        ArrayList<JSONObject> jsonObjectList = new ArrayList<>();
         File file = new File(filename);
         if (file.exists() && file.length() > 0) {
             FileReader FR;
@@ -50,11 +50,10 @@ public class GroupDatabase {
                 while ((line = reader.readLine()) != null) {
                     jsonstring.append(line);
                 }
-                JSONArray jsonarray=new JSONArray(jsonstring.toString());
-                 for (int i = 0; i < jsonarray.length(); i++) {
+                JSONArray jsonarray = new JSONArray(jsonstring.toString());
+                for (int i = 0; i < jsonarray.length(); i++) {
                     jsonObjectList.add(jsonarray.getJSONObject(i));
                 }
-                
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(GroupDatabase.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,9 +72,11 @@ public class GroupDatabase {
 
         try {
             f.createNewFile();
-            FileWriter fw = new FileWriter(f, true);
+            FileWriter fw = new FileWriter(f);
             BufferedWriter BW = new BufferedWriter(fw);
-            BW.write(array.toString());
+            JSONArray jsonArray = new JSONArray(array);
+            BW.write(jsonArray.toString(4));
+            BW.close();
         } catch (IOException ex) {
             Logger.getLogger(GroupDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
