@@ -4,13 +4,19 @@
  */
 package connecthub;
 
+import connecthub.User;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
@@ -20,6 +26,8 @@ import net.miginfocom.swing.MigLayout;
  */
 public class NotificationPanel extends javax.swing.JPanel {
 
+    private final UserDatabase udb = UserDatabase.getInstance();
+
     /**
      * Creates new form NotificationPanel
      */
@@ -28,27 +36,130 @@ public class NotificationPanel extends javax.swing.JPanel {
         setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
         jScrollPane1.setViewportBorder(null);
-        jPanel1.setLayout(new MigLayout("inset 0,fillx,wrap","[fill]"));
+        jPanel1.setLayout(new MigLayout("inset 0,fillx,wrap", "[fill]"));
         loadNotification();
     }
-    private void loadNotification(){
-        jPanel1.add(new notificationFR(new ImageIcon(getClass().getResource("/connecthub/user default.png")),"hala","10-10-2024"));
-}
+
+    private void loadNotification() {
+        User user = udb.getCurrentuser();
+        ImageIcon icon;
+        if (user == null) {
+            return;
+        }
+        /* FriendsManagment fm=FriendsManagment.getInstance();
+       ArrayList<String> friendrequests=fm.getFriendRequestsof(user.getUserId());*/
+
+        ArrayList<Notifications> userNotifications = (ArrayList<Notifications>) udb.getUserNotifications(user.getUserId());
+        for (Notifications notification : userNotifications) {
+
+            if (!notification.isRead()) {
+                NotificationType(notification);
+
+            }
+        }
+
+        // jPanel1.add(new notificationFR(new ImageIcon(getClass().getResource("/connecthub/user default.png")),"hala","10-10-2024"));
+    }
+
+    private void NotificationType(Notifications notification) {
+        String sender = extractsSenderFromDescription(notification.getDescription());
+        User user2 = udb.getUserById(sender);
+        ImageIcon icon;
+        if (user2.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+
+            icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+        } else {
+            icon = new ImageIcon(user2.getProfilePhotoPath());
+        }
+
+        String time = formatTimestamp(notification.getTimestamp());
+        switch (notification.getType()) {
+            case "Friend Request":
+                addNotification(icon, user2.getUsername(), time, notification);
+                break;
+            case "Accepted":
+                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Accepted your friend request"));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+
+
+                break;
+            case "Declined":
+                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Declined your friend request"));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+
+                break;
+            case "Friends Posts":
+                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Added a new Post"));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+                break;
+        }
+    }
+
+    private String extractsSenderFromDescription(String description) {
+
+        String[] userId = description.split(" ");
+        return userId[0];
+    }
+
+    private String formatTimestamp(long timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy HH:mm");
+        return sdf.format(new Date(timestamp));
+    }
+
+    private void addNotification(Icon icon, String username, String time, Notifications notify) {
+        notificationFR notification = new notificationFR(icon, username, time);
+        notification.getjButton1().addActionListener(e -> {
+            FriendsManagment fm = FriendsManagment.getInstance();
+            User user = udb.getCurrentuser();
+            User user2 = udb.getUserByUsername(username);
+            fm.AcceptRrquest(user.getUserId(), user2.getUserId());
+            notify.Read();
+            jPanel1.remove(notification);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        });
+        notification.getjButton2().addActionListener(e -> {
+            FriendsManagment fm = FriendsManagment.getInstance();
+            User user = udb.getCurrentuser();
+            User user2 = udb.getUserByUsername(username);
+            fm.DeclineRequest(user.getUserId(), user2.getUserId());
+            notify.Read();
+            jPanel1.remove(notification);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        });
+        jPanel1.add(notification);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
+
     @Override
-    protected void paintComponent(Graphics graphic){
-    Graphics2D g2=(Graphics2D)graphic.create();
-    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-    g2.setColor(getBackground());
-    int header=10;
-    AffineTransform trans=new AffineTransform();
-    trans.translate(getWidth()-25, 5);
-    trans.rotate(Math.toRadians(45));
-    Path2D p=new Path2D.Double(new RoundRectangle2D.Double(0,0,20,20,5,5),trans);
-    Area area=new Area(p);
-    area.add(new Area(new RoundRectangle2D.Double(0, header, getWidth(), getHeight()-header, 10, 10) ));
-    g2.fill(area);
-    g2.dispose();
-    super.paintComponent(graphic);
+    protected void paintComponent(Graphics graphic) {
+        Graphics2D g2 = (Graphics2D) graphic.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        int header = 10;
+        AffineTransform trans = new AffineTransform();
+        trans.translate(getWidth() - 25, 5);
+        trans.rotate(Math.toRadians(45));
+        Path2D p = new Path2D.Double(new RoundRectangle2D.Double(0, 0, 20, 20, 5, 5), trans);
+        Area area = new Area(p);
+        area.add(new Area(new RoundRectangle2D.Double(0, header, getWidth(), getHeight() - header, 10, 10)));
+        g2.fill(area);
+        g2.dispose();
+        super.paintComponent(graphic);
+    }
+
+    public void refreshNotifications() {
+        jPanel1.removeAll();
+        loadNotification();
+
     }
 
     /**
@@ -81,7 +192,7 @@ public class NotificationPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 219, Short.MAX_VALUE)
+            .addGap(0, 232, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

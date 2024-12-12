@@ -207,6 +207,7 @@ public class User {
     public synchronized void deleteNotifications() {
         notification.clear();
     }
+     
 
     public void setNotificationList(List<Notifications> notification) {
         this.notification = notification;

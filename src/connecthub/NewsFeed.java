@@ -131,8 +131,13 @@ public class NewsFeed extends javax.swing.JFrame {
 
         for (String friendId : friendsUserIDs) {
             JSONArray friendPosts = pm.getpostbyuserid(friendId);
+           /* Notifications newPost = new Notifications("Friends Posts", friendId + " added a new post ");
+            UserDatabase udb = UserDatabase.getInstance();
+            udb.addNotificationToUser(udb.getCurrentuser().getUserId(), newPost);
+            //udb.saveDatabase();*/
             System.out.println(friendPosts);
             if (friendPosts != null) {
+                
                 for (int j = 0; j < friendPosts.length(); j++) {
                     JSONObject post = friendPosts.getJSONObject(j);
 
@@ -367,8 +372,14 @@ public class NewsFeed extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GlassPanePopup.showPopup(new NotificationPanel());
 
+        NotificationPanel notificationPanel = new NotificationPanel();
+        GlassPanePopup.showPopup(notificationPanel);
+// When a friend request is sent or received
+//notificationPanel.refreshNotifications();
+
+// In your main frame or wherever notifications are displayed
+//add(notificationPanel);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

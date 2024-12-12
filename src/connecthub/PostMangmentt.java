@@ -4,11 +4,13 @@
  */
 package connecthub;
 
+import static connecthub.MainWindow.fdb;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -19,14 +21,14 @@ import org.json.JSONObject;
  * @author hp
  */
 public class PostMangmentt extends ContentCreation {
-   
+   FriendsManagment fdb = FriendsManagment.getInstance();
 
     public PostMangmentt() {
         
     }
     
             private static final String FILE_NAME ="newposts.json";
-    public void addPostinfile() {
+    public void addPostinfile() throws IOException {
         //System.out.println("Author ID: " + getAuthorid());
          //System.out.println("Author ID: " + userid);
         
@@ -59,7 +61,7 @@ public class PostMangmentt extends ContentCreation {
                 userarrayofposts = new JSONArray();
                 Dataofposts.put(getAuthorid(), userarrayofposts);
             }
-
+            else{
             // Create a new post and add it to the array
             JSONObject newpost = new JSONObject();
             newpost.put("postid", System.currentTimeMillis());
@@ -69,13 +71,21 @@ public class PostMangmentt extends ContentCreation {
                 newpost.put("imagePath", getImagepath());
             }
             userarrayofposts.put(newpost);
+            String userId=getAuthorid();
+            ArrayList<String> friendsUserIDs = fdb.getFriendsof(userId);
+
+        for (String friendId : friendsUserIDs) {
+            
+            Notifications newPost = new Notifications("Friends Posts", userId + " added a new post ");
+            UserDatabase udb = UserDatabase.getInstance();
+            udb.addNotificationToUser(friendId, newPost);
 
             // Write the updated data back to the file
             FileWriter writer = new FileWriter(FILE_NAME);
             writer.write(Dataofposts.toString(4));
-            writer.close();
+            writer.close();}}
 
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             Logger.getLogger(PostMangmentt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

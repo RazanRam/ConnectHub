@@ -107,8 +107,8 @@ public class UserDatabase{
                 if(jsonNotifications!=null){
                 for(int j=0;j<jsonNotifications.length();j++){
                 JSONObject jsonNotification = jsonNotifications.getJSONObject(j);
-                Notifications notify=new Notifications(jsonNotification.getString("type"),jsonNotification.getString("sender"),jsonNotification.getString("description"));
-                notify.Read();
+                Notifications notify=new Notifications(jsonNotification.getString("type"),jsonNotification.getString("description"));
+                //notify.Read();
                 user.addNotification(notify);
                 }}
                     user.setIsOnline(isOnline);
@@ -308,6 +308,13 @@ public class UserDatabase{
     public User getUserById(String id){
             for (User user : users) {
                 if(user.getUserId().equals(id))
+                    return user;
+            }
+            return null;
+        }
+    public User getUserByUsername(String username){
+            for (User user : users) {
+                if(user.getUsername().equals(username))
                     return user;
             }
             return null;

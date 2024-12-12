@@ -16,7 +16,8 @@ public class Notifications {
     private String description;
     private boolean read;
     private long timestamp;
-    public Notifications(String type, String sender, String description) {
+    
+    public Notifications(String type, String description) {
         this.type = type;
         this.sender = sender;
         this.description = description;
