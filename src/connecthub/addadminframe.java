@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 public class addadminframe extends javax.swing.JFrame {
 PrimaryAdmin prim=PrimaryAdmin.getInstance();
      CreateGroup cg =new CreateGroup();
-     NewsFeed n;
+      groupmanagmentframe f;
     /**
      * Creates new form addadminframe
      */
-    public addadminframe(NewsFeed n) {
+    public addadminframe(groupmanagmentframe f) {
         initComponents();
-        this.n=n;
+        this.f=f;
     }
     public void addadmin(){
         prim.addnewadmin(adminid.getText(),groupid.getText());
@@ -120,7 +120,7 @@ PrimaryAdmin prim=PrimaryAdmin.getInstance();
         addadmin();
          JOptionPane.showMessageDialog(this, "Admin added successfully" ,"Message", JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
-        n.setVisible(true);
+        f.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
