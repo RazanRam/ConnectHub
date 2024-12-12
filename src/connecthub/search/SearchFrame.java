@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package connecthub;
+package connecthub.search;
 
+import connecthub.*;
 import static connecthub.UserDatabase.getCurrentuser;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ public class SearchFrame extends javax.swing.JFrame {
     NewsFeed n;
     SearchEngine se=new SearchEngine();
     FriendsManagment fm=FriendsManagment.getInstance();
+    UserDatabase udb=UserDatabase.getInstance();
     User me=getCurrentuser();
     /**
      * Creates new form SearchFrame
@@ -42,6 +44,7 @@ public class SearchFrame extends javax.swing.JFrame {
         RemFrButton = new javax.swing.JButton();
         BlockButton = new javax.swing.JButton();
         profButton = new javax.swing.JButton();
+        UnBlockButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Search");
@@ -88,6 +91,13 @@ public class SearchFrame extends javax.swing.JFrame {
             }
         });
 
+        UnBlockButton.setText("UnBlock");
+        UnBlockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnBlockButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,11 +108,12 @@ public class SearchFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BlockButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RemFrButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(SendReqbutton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(profButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BlockButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(RemFrButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SendReqbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(profButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(UnBlockButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(key, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -121,13 +132,15 @@ public class SearchFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(profButton)
-                        .addGap(34, 34, 34)
+                        .addGap(18, 18, 18)
                         .addComponent(SendReqbutton)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(RemFrButton)
-                        .addGap(32, 32, 32)
-                        .addComponent(BlockButton))
-                    .addComponent(jScrollPane1))
+                        .addGap(18, 18, 18)
+                        .addComponent(BlockButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(UnBlockButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -146,6 +159,16 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedValue().endsWith("<<blocked>>")){
+            JOptionPane.showMessageDialog(this, "Can't veiw this Profile", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        User u=udb.getUserById(id);
+        Search_ViewProfile s=new Search_ViewProfile(u,this);
+        s.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_profButtonActionPerformed
 
     private void SendReqbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendReqbuttonActionPerformed
@@ -153,11 +176,17 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(!searchList.getSelectedValue().endsWith("<<suggested>>") && !searchList.getSelectedValue().endsWith(" ")){
+            JOptionPane.showMessageDialog(this, "Can't send a friend request to this person", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=searchList.getSelectedIndex();
         String id=se.getMap().get(i);
-        fm.FriendRequest(me.getUserId(),id);
+        int x=fm.FriendRequest(me.getUserId(),id);
+        if(x==1){
         JOptionPane.showMessageDialog(this, "requested", "message", PLAIN_MESSAGE);
         searchActionPerformed(evt);
+        }
     }//GEN-LAST:event_SendReqbuttonActionPerformed
 
     private void RemFrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemFrButtonActionPerformed
@@ -165,11 +194,16 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(!searchList.getSelectedValue().endsWith("<<friend>>")){
+            JOptionPane.showMessageDialog(this, "Can't remove this person from your friends", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=searchList.getSelectedIndex();
         String id=se.getMap().get(i);
-        fm.Remove(me.getUserId(),id);
-        JOptionPane.showMessageDialog(this, "removed", "message", PLAIN_MESSAGE);
+        if(fm.Remove(me.getUserId(),id)){
+            JOptionPane.showMessageDialog(this, "removed", "message", PLAIN_MESSAGE);
         searchActionPerformed(evt);
+        }
     }//GEN-LAST:event_RemFrButtonActionPerformed
 
     private void BlockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockButtonActionPerformed
@@ -177,10 +211,17 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedValue().endsWith("<<Me>>")){
+            return;
+        }
+        if(searchList.getSelectedValue().endsWith("<<blocked>>")){
+            JOptionPane.showMessageDialog(this, "Already Blocked", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         int i=searchList.getSelectedIndex();
         String id=se.getMap().get(i);
         fm.Block(me.getUserId(),id);
-        JOptionPane.showMessageDialog(this, "Blocked", "message", PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Blocked Successfully", "message", PLAIN_MESSAGE);
         searchActionPerformed(evt);
     }//GEN-LAST:event_BlockButtonActionPerformed
 
@@ -188,6 +229,25 @@ public class SearchFrame extends javax.swing.JFrame {
         setVisible(false);
         n.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void UnBlockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnBlockButtonActionPerformed
+        if(searchList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(!searchList.getSelectedValue().endsWith("<<blocked>>")){
+            JOptionPane.showMessageDialog(this, "Already not Blocked", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        if(fm.UnBlock(me.getUserId(),id)){
+            JOptionPane.showMessageDialog(this, "UnBlocked Successfully", "message", PLAIN_MESSAGE);
+        searchActionPerformed(evt);
+        }else{
+            JOptionPane.showMessageDialog(this, "you are not the one who blocked", "warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_UnBlockButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +258,7 @@ public class SearchFrame extends javax.swing.JFrame {
     private javax.swing.JButton BlockButton;
     private javax.swing.JButton RemFrButton;
     private javax.swing.JButton SendReqbutton;
+    private javax.swing.JButton UnBlockButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField key;
     private javax.swing.JButton profButton;

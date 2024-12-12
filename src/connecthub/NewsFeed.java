@@ -4,6 +4,7 @@
  */
 package connecthub;
 import connecthub.UserDatabase;
+import connecthub.search.*;
 import java.awt.Component;
 import java.awt.Image;
 import java.time.Instant;
@@ -167,6 +168,7 @@ private ProfileManagement profile;
         postspanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         storiespanel = new javax.swing.JPanel();
+        search = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -227,7 +229,7 @@ private ProfileManagement profile;
         postspanel.setLayout(postspanelLayout);
         postspanelLayout.setHorizontalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 571, Short.MAX_VALUE)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
         postspanelLayout.setVerticalGroup(
             postspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +244,7 @@ private ProfileManagement profile;
         storiespanel.setLayout(storiespanelLayout);
         storiespanelLayout.setHorizontalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 655, Short.MAX_VALUE)
         );
         storiespanelLayout.setVerticalGroup(
             storiespanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,6 +252,13 @@ private ProfileManagement profile;
         );
 
         jScrollPane3.setViewportView(storiespanel);
+
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,11 +274,13 @@ private ProfileManagement profile;
                         .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(search)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addpost)
                         .addGap(18, 18, 18)
                         .addComponent(addstory)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
                         .addGap(23, 23, 23)
                         .addComponent(friendspage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +301,8 @@ private ProfileManagement profile;
                     .addComponent(jButton1)
                     .addComponent(friendspage)
                     .addComponent(addpost)
-                    .addComponent(addstory))
+                    .addComponent(addstory)
+                    .addComponent(search))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
@@ -342,6 +354,12 @@ private ProfileManagement profile;
         database.logout(user.getEmail());
     }//GEN-LAST:event_formWindowClosed
 
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        SearchFrame sf=new SearchFrame(this);
+        sf.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_searchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,6 +378,7 @@ private ProfileManagement profile;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPanel postspanel;
+    private javax.swing.JButton search;
     private javax.swing.JPanel storiespanel;
     private javax.swing.JList<String> suggList;
     // End of variables declaration//GEN-END:variables

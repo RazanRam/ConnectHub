@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package connecthub;
+package connecthub.search;
 
+import connecthub.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +24,7 @@ public class SearchEngine {
         int i=0;
         for(User u:users){
             if(u.getUsername().contains(key)){
-                results.add(u.getUsername()+"   <<"+Iswhat(u.getUserId())+">>");
+                results.add(u.getUsername()+"   "+Iswhat(u.getUserId()));
                 map.put(i, u.getUserId());
                 i++;
             }
@@ -38,23 +39,20 @@ public class SearchEngine {
         ArrayList<String> mysuggests=fm.getSuggestedTo(me.getUserId());
         
         if(myFriends.contains(id))
-            return "friend";
+            return "<<friend>>";
         if(myRequests.contains(id))
-            return "wants to be your friend";
+            return "<<wants to be your friend>>";
         if(RequestsFromMe.contains(id))
-            return "Pending Request";
+            return "<<Pending Request>>";
         if(myBlocks.contains(id))
-            return "blocked";
+            return "<<blocked>>";
         if(mysuggests.contains(id))
-            return "suggested";
+            return "<<suggested>>";
         if(id.equals(me.getUserId()))
-            return "Me";
+            return "<<Me>>";
         return "";
     }
     
-    
-    //send a request in case you havent sent before!!!!!!!!!!!!!!!!!!!!!!!//
-
     public HashMap<Integer, String> getMap() {
         return map;
     }

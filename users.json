@@ -1,7 +1,7 @@
 [
     {
         "CoverPhotoPath": "user_PP/coverPhoto_Edit/b7f59ec4-ae4f-4e06-8027-7901ab9a278f_PP.jpg",
-        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
         "Bio": "Jana Hacked the system",
         "dateOfBirth": "2024-12-06",
         "isOnline": false,
@@ -15,7 +15,7 @@
         "password": "1d28c120568c10e19b9d8abe8b66d0983fa3d2e11ee7751aca50f83c6f4a43aa",
         "Bio": "hello everybody",
         "dateOfBirth": "2024-12-06",
-        "isOnline": false,
+        "isOnline": true,
         "userId": "402d81a2-ce1a-4244-b00b-94e9e79fde7a",
         "email": "arwa@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
@@ -31,93 +31,5 @@
         "email": "manal@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
         "username": "manal"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-        "Bio": "",
-        "dateOfBirth": "2024-12-03",
-        "isOnline": true,
-        "userId": "455745ff-56e6-454b-b8e3-cbf209b427f5",
-        "email": "dareen@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "dareen"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-        "Bio": "",
-        "dateOfBirth": "2024-12-04",
-        "isOnline": true,
-        "userId": "e006bdca-007d-47d8-b28e-6b9832cf13d5",
-        "email": "raghad@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "raghad"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-        "Bio": "",
-        "dateOfBirth": "2007-12-19",
-        "isOnline": true,
-        "userId": "64c92e71-2e2b-499e-96da-c35160e370a4",
-        "email": "alaa@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "alaa"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-        "Bio": "",
-        "dateOfBirth": "2024-12-04",
-        "isOnline": false,
-        "userId": "010dbdb5-c1e3-4f02-b9f7-0991e9bebb65",
-        "email": "mazen@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "mazen"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-        "Bio": "",
-        "dateOfBirth": "2024-12-04",
-        "isOnline": false,
-        "userId": "652e86d0-af55-4b00-9552-ac8127c66f92",
-        "email": "hamza@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "hamza"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-        "Bio": "",
-        "dateOfBirth": "2024-12-10",
-        "isOnline": false,
-        "userId": "89ddfc24-b081-4067-8c88-e80ba5553229",
-        "email": "mohamed@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "mohamed"
-    },
-    {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
-        "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-        "Bio": "",
-        "dateOfBirth": "2024-12-17",
-        "isOnline": true,
-        "userId": "bbcd120e-6452-450b-97cb-6bbdf7c1ebff",
-        "email": "ali@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "username": "ali"
-    },
-    {
-        "CoverPhotoPath": "user_PP/coverPhoto_Edit/60588051-051e-4c59-a600-da77c7f138e7_PP.jpg",
-        "password": "1234",
-        "Bio": "life is going",
-        "dateOfBirth": "2024-12-05",
-        "isOnline": false,
-        "userId": "60588051-051e-4c59-a600-da77c7f138e7",
-        "email": "malak@gmail.com",
-        "ProfilePhotoPath": "user_PP/profilePhoto_Edit/60588051-051e-4c59-a600-da77c7f138e7_PP.jpg",
-        "username": "malak"
     }
 ]
