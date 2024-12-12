@@ -23,14 +23,16 @@ import javax.swing.JOptionPane;
  * @author hp
  */
 public class AddPost extends javax.swing.JFrame {
+
+    private FriendsManagment fdb = FriendsManagment.getInstance();
+
     NewsFeed n;
-    
 
     /**
      * Creates new form AddPost
      */
     public AddPost(NewsFeed n) {
-        this.n=n;
+        this.n = n;
         initComponents();
     }
 
@@ -122,54 +124,69 @@ public class AddPost extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-setVisible(false);
+        setVisible(false);
         n.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void SharebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SharebuttonActionPerformed
         // TODO add your handling code here:
-       try{ ContentFactory F = new ContentFactory();
-       
-        PostMangmentt p = (PostMangmentt) F.createpoststory("newpost");
-         User user= UserDatabase.getCurrentuser();
-        String content = jTextArea1.getText();
-        if (content == null || content.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Content cannot be empty" , "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            
-        }
-        if(user==null)
-        {JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);}
-        String imagePath = null;
-        int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?", "Add Photo", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            JFileChooser filechooser = new JFileChooser();
-            filechooser.setDialogTitle(imagePath);
-            filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
-            int fileResult = filechooser.showOpenDialog(this);
-            if (fileResult == JFileChooser.APPROVE_OPTION) {
-                imagePath = filechooser.getSelectedFile().getAbsolutePath();
-                ImageIcon imageIcon = new ImageIcon(imagePath);
-                Image img = imageIcon.getImage();
-                Image scaledImg = img.getScaledInstance(jImage.getWidth(), jImage.getHeight(), Image.SCALE_AREA_AVERAGING);
-                imageIcon = new ImageIcon(scaledImg);
-                jImage.setIcon(imageIcon);
+
+        try {
+            ContentFactory F = new ContentFactory();
+
+            PostMangmentt p = (PostMangmentt) F.createpoststory("newpost");
+            User user = UserDatabase.getCurrentuser();
+            String content = jTextArea1.getText();
+            if (content == null || content.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Content cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+
+            }
+            if (user == null) {
+                JOptionPane.showMessageDialog(this, "No user is Currently Loggedin ", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            String imagePath = null;
+            int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo to this post ?", "Add Photo", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JFileChooser filechooser = new JFileChooser();
+                filechooser.setDialogTitle(imagePath);
+                filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+                int fileResult = filechooser.showOpenDialog(this);
+                if (fileResult == JFileChooser.APPROVE_OPTION) {
+                    imagePath = filechooser.getSelectedFile().getAbsolutePath();
+                    ImageIcon imageIcon = new ImageIcon(imagePath);
+                    Image img = imageIcon.getImage();
+                    Image scaledImg = img.getScaledInstance(jImage.getWidth(), jImage.getHeight(), Image.SCALE_AREA_AVERAGING);
+                    imageIcon = new ImageIcon(scaledImg);
+                    jImage.setIcon(imageIcon);
+                }
+
             }
 
-        }
-        p.setContent(content);
-       // p.setTimeStamp(LocalDateTime.now());
-        p.setAuthorid(user.getUserId());
-       // p.setContentid(UUID.randomUUID().toString());
-        if (imagePath != null) {
-            p.setimage(imagePath);
-            
-        } else {
-            p.setimage(null);
-        }
-        JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        p.addPostinfile();
-       } catch(Exception e){  JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            String userId = user.getUserId();
+            ArrayList<String> friendsUserIDs = fdb.getFriendsof(userId);
+
+            for (String friendId : friendsUserIDs) {
+
+                Notifications newPost = new Notifications("Friends Posts", userId + " added a new post ");
+                UserDatabase udb = UserDatabase.getInstance();
+                udb.addNotificationToUser(friendId, newPost);
+            }
+
+            p.setContent(content);
+            // p.setTimeStamp(LocalDateTime.now());
+            p.setAuthorid(user.getUserId());
+            // p.setContentid(UUID.randomUUID().toString());
+            if (imagePath != null) {
+                p.setimage(imagePath);
+
+            } else {
+                p.setimage(null);
+            }
+            JOptionPane.showMessageDialog(this, "Post shared successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            p.addPostinfile();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
@@ -184,7 +201,6 @@ setVisible(false);
     /**
      * @param args the command line arguments
      */
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Sharebutton;

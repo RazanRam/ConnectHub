@@ -48,7 +48,6 @@ public class FriendsManagment {
         Notifications notify = new Notifications("Friend Request", user1 + " sent a friend request");
         UserDatabase udb = UserDatabase.getInstance();
         udb.addNotificationToUser(user2, notify);
-        udb.saveDatabase();
         fdb.saveDatabase(friendsrequestsFILE, FriendRqustes);
     }
 
@@ -65,7 +64,6 @@ public class FriendsManagment {
         Notifications notifyAccepter = new Notifications("Accepted", user1 + " accepted your friend request");
         UserDatabase udb = UserDatabase.getInstance();
         udb.addNotificationToUser(user2, notifyAccepter);
-        udb.saveDatabase();
 
         fdb.saveDatabase(friendsrequestsFILE, FriendRqustes);
         fdb.saveDatabase(friendsFILE, Friends);
@@ -82,7 +80,6 @@ public class FriendsManagment {
         Notifications notifyDeclined = new Notifications("Declined", user1 + " declined your friend request");
         UserDatabase udb = UserDatabase.getInstance();
         udb.addNotificationToUser(user2, notifyDeclined);
-        udb.saveDatabase();
 
         fdb.saveDatabase(friendsrequestsFILE, FriendRqustes);
 

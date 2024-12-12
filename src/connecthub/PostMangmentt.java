@@ -61,7 +61,6 @@ public class PostMangmentt extends ContentCreation {
                 userarrayofposts = new JSONArray();
                 Dataofposts.put(getAuthorid(), userarrayofposts);
             }
-            else{
             // Create a new post and add it to the array
             JSONObject newpost = new JSONObject();
             newpost.put("postid", System.currentTimeMillis());
@@ -71,19 +70,11 @@ public class PostMangmentt extends ContentCreation {
                 newpost.put("imagePath", getImagepath());
             }
             userarrayofposts.put(newpost);
-            String userId=getAuthorid();
-            ArrayList<String> friendsUserIDs = fdb.getFriendsof(userId);
-
-        for (String friendId : friendsUserIDs) {
-            
-            Notifications newPost = new Notifications("Friends Posts", userId + " added a new post ");
-            UserDatabase udb = UserDatabase.getInstance();
-            udb.addNotificationToUser(friendId, newPost);
 
             // Write the updated data back to the file
             FileWriter writer = new FileWriter(FILE_NAME);
             writer.write(Dataofposts.toString(4));
-            writer.close();}}
+            writer.close();
 
         }catch (IOException ex) {
             Logger.getLogger(PostMangmentt.class.getName()).log(Level.SEVERE, null, ex);

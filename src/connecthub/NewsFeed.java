@@ -131,10 +131,7 @@ public class NewsFeed extends javax.swing.JFrame {
 
         for (String friendId : friendsUserIDs) {
             JSONArray friendPosts = pm.getpostbyuserid(friendId);
-           /* Notifications newPost = new Notifications("Friends Posts", friendId + " added a new post ");
-            UserDatabase udb = UserDatabase.getInstance();
-            udb.addNotificationToUser(udb.getCurrentuser().getUserId(), newPost);
-            //udb.saveDatabase();*/
+           
             System.out.println(friendPosts);
             if (friendPosts != null) {
                 
