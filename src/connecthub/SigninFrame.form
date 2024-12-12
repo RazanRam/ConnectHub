@@ -39,7 +39,7 @@
                           <Component id="PasswordField" pref="123" max="32767" attributes="0"/>
                           <Component id="emailTextField" max="32767" attributes="0"/>
                           <Component id="usernameTextField" max="32767" attributes="0"/>
-                          <Component id="jDateChooser1" max="32767" attributes="0"/>
+                          <Component id="jDateChooser2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -72,7 +72,7 @@
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel4" pref="31" max="32767" attributes="0"/>
-                  <Component id="jDateChooser1" max="32767" attributes="0"/>
+                  <Component id="jDateChooser2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="39" max="32767" attributes="0"/>
               <Component id="EntersigninButtom" min="-2" pref="35" max="-2" attributes="0"/>
@@ -144,7 +144,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EntersigninButtomActionPerformed"/>
       </Events>
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
     </Component>
   </SubComponents>
 </Form>

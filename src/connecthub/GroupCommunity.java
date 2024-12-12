@@ -26,7 +26,7 @@ public JSONObject newmember(String memberid,String Groupid){
   return newmember;
 }
 public JSONObject newpost(String postid,String Groupid){
-    JSONObject newpost=new JSONObject();
+  JSONObject newpost=new JSONObject();
   newpost.put("postid", postid);
   newpost.put("groupid", Groupid);
   return newpost;
@@ -38,6 +38,19 @@ public  JSONObject newadmin(String adminid,String Groupid)
   return newadmin;
   
 }
-    
-    
+//public JSONObject removeMember(String memberID,String Groupid){
+//    JSONObject removedMember=new JSONObject();
+//    removedMember.put("MemberID", memberID);
+//    removedMember.put("GroupID", Groupid);
+//    return removedMember;
+//}
+//public JSONObject editPodt(String postID,String Groupid, String newEditedPost){
+//    JSONObject UpdatedPost=new JSONObject();
+//    UpdatedPost.put("PostID", postID);
+//    UpdatedPost.put("GroupID", Groupid);
+//    UpdatedPost.put("newEditedPost", newEditedPost);
+//    return UpdatedPost;
+//}
+
+      
 }

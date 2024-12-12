@@ -4,6 +4,7 @@
  */
 package connecthub;
 
+import static connecthub.GroupDatabase.gdb;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.json.JSONObject;
@@ -13,8 +14,9 @@ import org.json.JSONObject;
  * @author hp
  */
 public class GroupManagment {
-
-   
+    GroupCommunity GC = new GroupCommunity();
+      private String fileGroupMembers = "GroupMembers.json";
+      ArrayList<JSONObject> grpMembers=gdb.getfromfile(fileGroupMembers);
      private String filegroupposts="Groupposts.json";
     GroupDatabase gdp= GroupDatabase.getinstance();
     
@@ -41,6 +43,11 @@ public class GroupManagment {
         }
             
         }
+     public void addMemberToGroup(String groupId, String memberId) {
+        grpMembers.add(GC.newmember(memberId, groupId));
+        gdp.writeinfile(fileGroupMembers, grpMembers);
+    }
+    
     
         
     }

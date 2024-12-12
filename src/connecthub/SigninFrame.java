@@ -40,7 +40,7 @@ public class SigninFrame extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         usernameTextField = new javax.swing.JTextField();
         EntersigninButtom = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sign-in  Frame");
@@ -105,7 +105,7 @@ public class SigninFrame extends javax.swing.JFrame {
                             .addComponent(PasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                             .addComponent(emailTextField)
                             .addComponent(usernameTextField)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -129,7 +129,7 @@ public class SigninFrame extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(EntersigninButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
@@ -157,7 +157,7 @@ public class SigninFrame extends javax.swing.JFrame {
         String username=usernameTextField.getText();
         String email=emailTextField.getText();
         String pass=PasswordField.getText();
-         java.util.Date selectedDate = jDateChooser1.getDate();
+         java.util.Date selectedDate = jDateChooser2.getDate();
     
     if (selectedDate != null) {
         // If a date is selected, proceed with the conversion
@@ -210,7 +210,7 @@ public class SigninFrame extends javax.swing.JFrame {
     private javax.swing.JButton EntersigninButtom;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JTextField emailTextField;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
