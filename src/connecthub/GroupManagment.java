@@ -14,43 +14,78 @@ import org.json.JSONObject;
  * @author hp
  */
 public class GroupManagment {
-    GroupCommunity GC = new GroupCommunity();
-      private String fileGroupMembers = "GroupMembers.json";
-      ArrayList<JSONObject> grpMembers=gdb.getfromfile(fileGroupMembers);
-     private String filegroupposts="Groupposts.json";
-    GroupDatabase gdp= GroupDatabase.getinstance();
-    
-    
-    ArrayList<JSONObject> groupposts;
-  
-   public void addnewpost(String postid,String Groupid){
-        GroupCommunity GC= new GroupCommunity();
-        groupposts.add(GC.newpost(postid, Groupid));
-        gdp.writeinfile(filegroupposts, groupposts);
-        }
 
-    public void removepost(String postid){
-        ArrayList<JSONObject> posts=gdp.getfromfile(filegroupposts);
-        Iterator<JSONObject>iterator=posts.iterator();
-        while(iterator.hasNext()){
+     GroupCommunity GC = new GroupCommunity();
+     GroupDatabase gdp = GroupDatabase.getinstance();
+     private String fileGroupMembers = "GroupMembers.json";
+     private String filegroupposts = "Groupposts.json";
+     ArrayList<JSONObject> grpMembers = new ArrayList(gdb.getfromfile(fileGroupMembers));
+   
+    
+
+    ArrayList<JSONObject> groupposts;
+
+    public void addnewpost(String postid, String Groupid,String postcontent,String imagepath) {
+        GroupCommunity GC = new GroupCommunity();
+        groupposts.add(GC.newpost(postid, Groupid,postcontent,imagepath));
+        gdp.writeinfile(filegroupposts, groupposts);
+    }
+
+    public void removepost(String postid) {
+        ArrayList<JSONObject> posts = gdp.getfromfile(filegroupposts);
+        Iterator<JSONObject> iterator = posts.iterator();
+        while (iterator.hasNext()) {
             JSONObject obj = iterator.next();
             if (obj.get("postid").equals(postid)) {
-            iterator.remove();
-            break;
+                iterator.remove();
+                break;
+            }
+            gdp.writeinfile(filegroupposts, posts);
+
+        }
+
     }
-            gdp.writeinfile(filegroupposts,posts);
-          
-        }
-            
-        }
-     public void addMemberToGroup(String groupId, String memberId) {
+
+    public void addMemberToGroup(String groupId, String memberId) {
         grpMembers.add(GC.newmember(memberId, groupId));
         gdp.writeinfile(fileGroupMembers, grpMembers);
     }
-    
-    
-        
+
+    public boolean istheprimaryadmin(String userid, String groupid) {
+        ArrayList<JSONObject> arr = new ArrayList(gdp.getfromfile("createdgroups.json"));
+        for (JSONObject obj : arr) {
+            if (obj.getString("Userid").equals(userid)) {
+                JSONObject createdGroups = obj.getJSONObject("mycreatedgroups");
+                if (createdGroups.has(groupid)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
+
+    public boolean isanadmin(String userid, String groupid) {
+        ArrayList<JSONObject> arr = new ArrayList(gdp.getfromfile("GroupsAdmins.json"));
+        for (JSONObject obj : arr) {
+            if (obj.getString("adminid").equals(userid) && obj.get("groupid").equals(groupid)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public boolean ismember(String userid, String groupid) {
+        
+        for (JSONObject obj : grpMembers) {
+            if (obj.getString("memberid").equals(userid) && obj.get("groupid").equals(groupid)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+   
     
-  
-    
+
+}

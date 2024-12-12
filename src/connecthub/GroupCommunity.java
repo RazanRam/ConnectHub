@@ -23,18 +23,23 @@ public JSONObject newmember(String memberid,String Groupid){
   JSONObject newmember=new JSONObject();
   newmember.put("memberid", memberid);
   newmember.put("groupid", Groupid);
+  //newmember.put("groupname",groupname );
   return newmember;
 }
-public JSONObject newpost(String postid,String Groupid){
+public JSONObject newpost(String postid,String Groupid,String postcontent,String imagepath){
   JSONObject newpost=new JSONObject();
   newpost.put("postid", postid);
   newpost.put("groupid", Groupid);
+  newpost.put("postcontent",postcontent);
+  if(imagepath!=null)
+  {newpost.put("imagepath",imagepath);}
   return newpost;
 }
 public  JSONObject newadmin(String adminid,String Groupid)
 { JSONObject newadmin=new JSONObject();
   newadmin.put("adminid", adminid);
   newadmin.put("groupid", Groupid);
+  //newadmin.put("groupname",groupname);
   return newadmin;
   
 }

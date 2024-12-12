@@ -1,6 +1,11 @@
 [{
     "Userid": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
     "mycreatedgroups": {
+        "89dbd7ac-5329-454e-8e35-3bc7d691a78b": [
+            {"name": "my second group"},
+            {"bio": "hellooooo"},
+            {"image": "C:\\Users\\hp\\Pictures\\Screenshots\\Screenshot 2024-12-01 045743.png"}
+        ],
         "d5b4d66f-b0cd-4174-a565-fdcb818ca566": [
             {"name": "uj"},
             {"bio": "vv"},

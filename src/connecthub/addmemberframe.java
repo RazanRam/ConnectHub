@@ -10,23 +10,22 @@ import javax.swing.JOptionPane;
  *
  * @author hp
  */
-public class addadminframe extends javax.swing.JFrame {
+public class addmemberframe extends javax.swing.JFrame {groupmanagmentframe f;
+ GroupManagment gm=new GroupManagment();
  private String groupid;
-PrimaryAdmin prim=PrimaryAdmin.getInstance();
-GroupManagment gm=new GroupManagment();
-     CreateGroup cg =new CreateGroup();
-             
-      groupmanagmentframe f;
+     
+   
+
     /**
-     * Creates new form addadminframe
+     * Creates new form addmemberframe
      */
-    public addadminframe(groupmanagmentframe f,String groupid) {
+    public addmemberframe(groupmanagmentframe f,String groupid) {
         initComponents();
         this.f=f;
         this.groupid=groupid;
     }
-    public void addadmin(){
-        prim.addnewadmin(groupid,adminid.getText());
+    public void addmember(){
+      gm.addMemberToGroup(groupid,memberid.getText());
         
     }
 
@@ -39,24 +38,21 @@ GroupManagment gm=new GroupManagment();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        adminid = new javax.swing.JTextField();
+        memberid = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        memberid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                memberidActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("AdminID");
+        jLabel2.setText("MemberID");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Done");
@@ -75,10 +71,10 @@ GroupManagment gm=new GroupManagment();
                 .addComponent(jButton1)
                 .addContainerGap(171, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(adminid, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(memberid, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110))
         );
         layout.setVerticalGroup(
@@ -86,7 +82,7 @@ GroupManagment gm=new GroupManagment();
             .addGroup(layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adminid, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memberid, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -98,25 +94,26 @@ GroupManagment gm=new GroupManagment();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        {addadmin();
-         JOptionPane.showMessageDialog(this, "Admin added successfully" ,"Message", JOptionPane.INFORMATION_MESSAGE);
-        this.setVisible(false);
-        f.setVisible(true);}
-        
+
+        {addmember();
+            JOptionPane.showMessageDialog(this, "member added successfully" ,"Message", JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+            f.setVisible(true);}
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void memberidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_memberidActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField adminid;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JTextField memberid;
     // End of variables declaration//GEN-END:variables
 }
