@@ -8,12 +8,7 @@
         "userId": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86",
         "email": "malak@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/701b0ef7-c5dc-40eb-a691-fb04d2e64c86_PP.jpg",
-        "notifications": [{
-            "isRead": false,
-            "description": "ccc9ee9e-d53b-492f-bbae-9512a3d46196 sent a friend request",
-            "type": "Friend Request",
-            "timestamp": 1734038700093
-        }],
+        "notifications": [],
         "username": "malak"
     },
     {
@@ -24,49 +19,49 @@
         "isOnline": false,
         "userId": "ccc9ee9e-d53b-492f-bbae-9512a3d46196",
         "email": "jana@gmail.com",
-        "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
+        "ProfilePhotoPath": "user_PP/profilePhoto_Edit/ccc9ee9e-d53b-492f-bbae-9512a3d46196_PP.jpg",
         "notifications": [
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 accepted your friend request",
                 "type": "Accepted",
-                "timestamp": 1734038700093
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734038700093
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734038700093
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 declined your friend request",
                 "type": "Declined",
-                "timestamp": 1734038700093
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734038794576
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734038794578
+                "timestamp": 1734042396353
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734038794580
+                "timestamp": 1734042396353
             }
         ],
         "username": "jana"
