@@ -30,6 +30,27 @@ public class GroupManagment {
         groupposts.add(GC.newpost(postid, Groupid,postcontent,imagepath));
         gdp.writeinfile(filegroupposts, groupposts);
     }
+     public void removeMember(String groupId, String memberId){
+        
+        ArrayList<JSONObject> createdGroups = gdp.getfromfile("createdgroups.json");
+        // Check if  member being removed is  Primary Admin
+        for (JSONObject x : createdGroups) {
+        if (x.getString("Userid").equals(memberId) && x.getJSONObject("createdgroups").has(groupId)) 
+            return;
+            }
+        //remove member if found
+         boolean memberFound = false;
+        for (JSONObject x : grpMembers) {
+            if (x.getString("groupid").equals(groupId) 
+                && x.getString("memberid").equals(memberId)) {
+                memberFound = true;
+                grpMembers.remove(x);
+            }
+        }
+         if (memberFound) 
+            gdp.writeinfile(fileGroupMembers, grpMembers);
+
+}
 
     public void removepost(String postid) {
         ArrayList<JSONObject> posts = gdp.getfromfile(filegroupposts);

@@ -5,6 +5,7 @@
 package connecthub;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,7 +33,21 @@ public class PrimaryAdmin extends GroupManagment {
         }
         return pa;
     }
+     public void removeAdmin(String groupId,String AdminID) {
+        ArrayList<JSONObject> posts = gdp.getfromfile(filegroupadmins);
+        Iterator<JSONObject> iterator = posts.iterator();
+        while (iterator.hasNext()) {
+            JSONObject obj = iterator.next();
+            if (obj.get("adminid").equals(userid)) {
+                iterator.remove();
+                break;
+            }
+            gdp.writeinfile(filegroupadmins, posts);
 
+        }
+        
+        
+     }
    
     public void creatnewgroup(CreateGroup CG) {
     // Step 1: Load existing groups from the file

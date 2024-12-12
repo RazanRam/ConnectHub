@@ -10,12 +10,13 @@ import javax.swing.JOptionPane;
  *
  * @author hp
  */
-public class addmemberframe extends javax.swing.JFrame {groupmanagmentframe f;
+public class addmemberframe extends javax.swing.JFrame {
+    groupmanagmentframe f;
  GroupManagment gm=new GroupManagment();
  private String groupid;
      
-   
-
+ 
+ 
     /**
      * Creates new form addmemberframe
      */
