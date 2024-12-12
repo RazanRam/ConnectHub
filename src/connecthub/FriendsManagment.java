@@ -26,9 +26,7 @@ public class FriendsManagment{
     private ArrayList<friendship> Blocks;
     
     private FriendsManagment() {
-        Friends=fdb.LoadDATAbase(friendsFILE);
-        FriendRqustes=fdb.LoadDATAbase(friendsrequestsFILE);
-        Blocks=fdb.LoadDATAbase(blocksFILE);
+        Loading();
     }
     
     public static FriendsManagment getInstance(){
@@ -38,7 +36,11 @@ public class FriendsManagment{
         return fm;
     }
     
-    
+    public void Loading(){
+        Friends=fdb.LoadDATAbase(friendsFILE);
+        FriendRqustes=fdb.LoadDATAbase(friendsrequestsFILE);
+        Blocks=fdb.LoadDATAbase(blocksFILE);
+    }
     
     //user1 sent a friend request to user2
     //user1 sender
@@ -105,6 +107,22 @@ public class FriendsManagment{
         
         fdb.saveDatabase(blocksFILE,Blocks);
         fdb.saveDatabase(friendsFILE,Friends);
+    }
+    
+    //user1 unblocks user2
+    public boolean UnBlock(String user1,String user2){
+        int flag=0;
+        for(friendship f:Blocks){
+            if(f.getUserID1().equals(user1) && f.getUserID2().equals(user2)){
+                Blocks.remove(f);
+                flag=1;
+            }
+        }
+        if(flag==1){
+        fdb.saveDatabase(blocksFILE,Blocks);
+        return true;
+        }
+        return false;
     }
     
     //user1 removes user2
