@@ -46,6 +46,7 @@ public class Notifications {
     }
 
     public void Read() {
+       
         this.read = true;
     }
 }

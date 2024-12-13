@@ -82,6 +82,7 @@ public class NotificationPanel extends javax.swing.JPanel {
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
+                udb.saveDatabase();
 
 
                 break;
@@ -90,6 +91,7 @@ public class NotificationPanel extends javax.swing.JPanel {
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
+                udb.saveDatabase();
 
                 break;
             case "Friends Posts":
@@ -97,6 +99,7 @@ public class NotificationPanel extends javax.swing.JPanel {
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
+                udb.saveDatabase();
                 break;
         }
     }
