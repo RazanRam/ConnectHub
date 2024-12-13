@@ -6,6 +6,7 @@ package connecthub.search;
 
 import connecthub.*;
 import static connecthub.UserDatabase.getCurrentuser;
+import connecthub.groups.GroupManagment;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
@@ -19,6 +20,7 @@ public class SearchFrame extends javax.swing.JFrame {
     SearchEngine se=new SearchEngine();
     FriendsManagment fm=FriendsManagment.getInstance();
     UserDatabase udb=UserDatabase.getInstance();
+    GroupManagment gm= new GroupManagment();
     User me=getCurrentuser();
     /**
      * Creates new form SearchFrame
@@ -45,6 +47,11 @@ public class SearchFrame extends javax.swing.JFrame {
         BlockButton = new javax.swing.JButton();
         profButton = new javax.swing.JButton();
         UnBlockButton = new javax.swing.JButton();
+        joinGroup = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        LeaveGroup = new javax.swing.JButton();
+        viewGroup = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Search");
@@ -98,6 +105,33 @@ public class SearchFrame extends javax.swing.JFrame {
             }
         });
 
+        joinGroup.setText("Join Group");
+        joinGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinGroupActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Light", 3, 12)); // NOI18N
+        jLabel1.setText("For people");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 3, 12)); // NOI18N
+        jLabel2.setText("For Groups");
+
+        LeaveGroup.setText("Leave Group");
+        LeaveGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LeaveGroupActionPerformed(evt);
+            }
+        });
+
+        viewGroup.setText("View Group");
+        viewGroup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewGroupActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,19 +141,28 @@ public class SearchFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(BlockButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(RemFrButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(SendReqbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(profButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(UnBlockButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(UnBlockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(joinGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LeaveGroup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewGroup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(key, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(search)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel2)
+                        .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,19 +170,27 @@ public class SearchFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(key, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(search))
+                    .addComponent(search)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(profButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(profButton)
+                            .addComponent(viewGroup))
                         .addGap(18, 18, 18)
                         .addComponent(SendReqbutton)
                         .addGap(18, 18, 18)
-                        .addComponent(RemFrButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RemFrButton)
+                            .addComponent(joinGroup))
                         .addGap(18, 18, 18)
                         .addComponent(BlockButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(UnBlockButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(UnBlockButton)
+                            .addComponent(LeaveGroup)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -148,7 +199,7 @@ public class SearchFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        ArrayList<String> results=se.UserSearchResults(key.getText());
+        ArrayList<String> results=se.SearchResults(key.getText());
         String []arr1=new String[results.size()];
         String[]arr2=results.toArray(arr1);
         searchList.setListData(arr2);
@@ -159,21 +210,34 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedIndex()>se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a person not a group", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if(searchList.getSelectedValue().endsWith("<<blocked>>")){
             JOptionPane.showMessageDialog(this, "Can't veiw this Profile", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedValue().endsWith("<<Me>>")){
+            profileframe proframe = new profileframe(udb,me,new ProfileManagement(),n);
+        proframe.setVisible(true);
+                this.dispose();
+        }else{
         int i=searchList.getSelectedIndex();
         String id=se.getMap().get(i);
         User u=udb.getUserById(id);
         Search_ViewProfile s=new Search_ViewProfile(u,this);
         s.setVisible(true);
-        setVisible(false);
+        setVisible(false);}
     }//GEN-LAST:event_profButtonActionPerformed
 
     private void SendReqbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendReqbuttonActionPerformed
         if(searchList.getSelectedIndex()==-1){
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(searchList.getSelectedIndex()>se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a person not a group", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if(!searchList.getSelectedValue().endsWith("<<suggested>>") && !searchList.getSelectedValue().endsWith(" ")){
@@ -194,6 +258,10 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedIndex()>se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a person not a group", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if(!searchList.getSelectedValue().endsWith("<<friend>>")){
             JOptionPane.showMessageDialog(this, "Can't remove this person from your friends", "warning", JOptionPane.WARNING_MESSAGE);
             return;
@@ -209,6 +277,10 @@ public class SearchFrame extends javax.swing.JFrame {
     private void BlockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockButtonActionPerformed
         if(searchList.getSelectedIndex()==-1){
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(searchList.getSelectedIndex()>se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a person not a group", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if(searchList.getSelectedValue().endsWith("<<Me>>")){
@@ -235,6 +307,10 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        if(searchList.getSelectedIndex()>se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a person not a group", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if(!searchList.getSelectedValue().endsWith("<<blocked>>")){
             JOptionPane.showMessageDialog(this, "Already not Blocked", "warning", JOptionPane.WARNING_MESSAGE);
             return;
@@ -249,6 +325,52 @@ public class SearchFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UnBlockButtonActionPerformed
 
+    private void viewGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewGroupActionPerformed
+        if(searchList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(searchList.getSelectedIndex()<=se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a group not a person", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_viewGroupActionPerformed
+
+    private void joinGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinGroupActionPerformed
+        if(searchList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(searchList.getSelectedIndex()<=se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a group not a person", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        if(!gm.isanadmin(me.getUserId(), id)&&!gm.istheprimaryadmin(me.getUserId(), id)&&!gm.ismember(me.getUserId(), id)){
+            gm.addMemberToGroup(id, me.getUserId());
+        }else{
+            JOptionPane.showMessageDialog(this, "you might already be a member of this group", "warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_joinGroupActionPerformed
+
+    private void LeaveGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LeaveGroupActionPerformed
+        if(searchList.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(searchList.getSelectedIndex()<=se.getLastUseri()){
+            JOptionPane.showMessageDialog(this, "you need to select a group not a person", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }int i=searchList.getSelectedIndex();
+        String id=se.getMap().get(i);
+        if(gm.ismember(me.getUserId(), id)){
+            gm.removeMember(id, me.getUserId());
+        }else{
+            JOptionPane.showMessageDialog(this, "you are not member of this group", "warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_LeaveGroupActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,13 +378,18 @@ public class SearchFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BlockButton;
+    private javax.swing.JButton LeaveGroup;
     private javax.swing.JButton RemFrButton;
     private javax.swing.JButton SendReqbutton;
     private javax.swing.JButton UnBlockButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton joinGroup;
     private javax.swing.JTextField key;
     private javax.swing.JButton profButton;
     private javax.swing.JButton search;
     private javax.swing.JList<String> searchList;
+    private javax.swing.JButton viewGroup;
     // End of variables declaration//GEN-END:variables
 }

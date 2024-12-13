@@ -5,6 +5,7 @@
 package connecthub.search;
 
 import connecthub.*;
+import connecthub.groups.GroupManagment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,12 +17,15 @@ public class SearchEngine {
     UserDatabase udb=UserDatabase.getInstance();
     FriendsManagment fm=FriendsManagment.getInstance();
     User me=UserDatabase.getCurrentuser();
+    GroupManagment gdb= new GroupManagment();
+    
     private HashMap<Integer, String> map=new HashMap<>();
-
+    private int i=0;
+    private int LastUseri=0;
+    
     public ArrayList<String> UserSearchResults(String key){
         ArrayList<User> users=(ArrayList<User>) udb.getUsers();
         ArrayList<String> results=new ArrayList<>();
-        int i=0;
         for(User u:users){
             if(u.getUsername().contains(key)){
                 results.add(u.getUsername()+"   "+Iswhat(u.getUserId()));
@@ -29,6 +33,7 @@ public class SearchEngine {
                 i++;
             }
         }
+        LastUseri=i--;
         return results;
     }
     public String Iswhat(String id){
@@ -53,9 +58,34 @@ public class SearchEngine {
         return "";
     }
     
+    public ArrayList<String> GroupSearchResults(String key){
+        ArrayList<HashMap> groups=gdb.getGroups();
+        ArrayList<String> results=new ArrayList<>();
+        
+        for(HashMap g:groups){
+            String grpName=(String) g.get("name");
+            String grpID=(String) g.get("ID");
+            if(grpName.contains(key)){
+                results.add(grpName);
+                map.put(i, grpID);
+                i++;
+            }
+        }
+        return results;
+    }
+
+    public ArrayList<String> SearchResults(String key){
+        ArrayList<String> results=new ArrayList<>(UserSearchResults(key));
+        results.addAll(GroupSearchResults(key));
+        return results;
+    }
+    
     public HashMap<Integer, String> getMap() {
         return map;
     }
     
+    public int getLastUseri(){
+        return LastUseri;
+    }
     
 }
