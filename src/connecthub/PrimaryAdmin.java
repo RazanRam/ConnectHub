@@ -4,6 +4,7 @@
  */
 package connecthub;
 
+import static connecthub.GroupDatabase.gdb;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.json.JSONArray;
@@ -21,7 +22,7 @@ public class PrimaryAdmin extends GroupManagment {
     private String createdgroup="createdgroups.json";
     
 
-    GroupDatabase gdb=GroupDatabase.getinstance();
+    
     GroupDatabase gdp= GroupDatabase.getinstance();
     private ArrayList<JSONObject> groupadmins = new ArrayList<>(gdp.getfromfile(filegroupadmins));
 

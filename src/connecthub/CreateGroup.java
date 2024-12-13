@@ -14,7 +14,7 @@ public class CreateGroup {
 
     private String groupname;
     private String groupdescription;
-    private String groupimage;
+    private String groupimage="DefaultProfilePhoto.jpg";
     private String groupprimaryadmin;
     private String groupid;
     private String coverimage;

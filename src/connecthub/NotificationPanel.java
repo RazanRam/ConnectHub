@@ -4,7 +4,13 @@
  */
 package connecthub;
 
+import connecthub.FriendsManagment;
+import connecthub.GroupManagment;
+import connecthub.Notifications;
 import connecthub.User;
+import connecthub.UserDatabase;
+import connecthub.notificationFR;
+import connecthub.notificationType;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -124,9 +130,32 @@ public class NotificationPanel extends javax.swing.JPanel {
                 notification.Read();
                 udb.saveDatabase();
                 break;
-        }
+        
+        case "Added":
+                for (HashMap grp : groups) {
+                    if (grp.get("ID").equals(sender)) {
+                        group = grp;
+                    }
 
-    }
+                }
+                 if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
+
+            icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+        } else {
+            icon2 = new ImageIcon((String) group.get("ProfileImage"));
+        }
+                jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " a new post is added to the group "));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+                udb.saveDatabase();
+                break;
+        
+        
+        
+        }}
+
+    
 
     private String extractsSenderFromDescription(String description) {
 

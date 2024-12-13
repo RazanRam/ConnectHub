@@ -14,7 +14,7 @@ import org.json.JSONObject;
  * @author Raz_RAMADAN
  */
 public class OtherAdmin extends GroupManagment{
-     public static OtherAdmin oa=null;
+     /*public static OtherAdmin oa=null;
     private String adminId;
    private String fileGroupMembers = "GroupMembers.json";
     private String fileGroupPosts = "GroupPosts.json";
@@ -31,8 +31,8 @@ public class OtherAdmin extends GroupManagment{
             oa=new OtherAdmin();
         }
         return oa;
-    }
-    public void removeMember(String groupId, String memberId){
+    }*/
+    /*public void removeMember(String groupId, String memberId){
         
         ArrayList<JSONObject> createdGroups = gdp.getfromfile("createdgroups.json");
         // Check if  member being removed is  Primary Admin
@@ -93,7 +93,7 @@ public class OtherAdmin extends GroupManagment{
         if (requestFound) 
             gdp.writeinfile(membershipRequestsFile, membershipRequests);
     
-    }
+    }*/
 
     
 }

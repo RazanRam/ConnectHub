@@ -32,7 +32,7 @@ public class SearchEngine {
                 i++;
             }
         }
-        LastUseri=i--;
+        LastUseri=i-1;
         return results;
     }
     public String Iswhat(String id){
