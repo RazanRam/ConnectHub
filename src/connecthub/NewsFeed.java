@@ -483,10 +483,10 @@ public class NewsFeed extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        NotificationPanel notificationPanel = new NotificationPanel();
-        GlassPanePopup.showPopup(notificationPanel);
+        //NotificationPanel notificationPanel = new NotificationPanel();
+        //GlassPanePopup.showPopup(notificationPanel);
 
-        //user.deleteNotifications();
+        user.deleteNotifications();
         
      
     }//GEN-LAST:event_jButton3ActionPerformed

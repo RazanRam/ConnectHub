@@ -50,7 +50,7 @@ public class NotificationPanel extends javax.swing.JPanel {
 
     private void loadNotification() {
         User user = udb.getCurrentuser();
-        ImageIcon icon;
+        //ImageIcon icon;
         if (user == null) {
             return;
         }
@@ -71,25 +71,34 @@ public class NotificationPanel extends javax.swing.JPanel {
 
     private void NotificationType(Notifications notification) {
         String sender = extractsSenderFromDescription(notification.getDescription());
-        User user2 = udb.getUserById(sender);
         ImageIcon icon;
         ImageIcon icon2;
         HashMap group = new HashMap();
         ArrayList<HashMap> groups = gm.getGroups();
-        if (user2.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
-
-            icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
-        } else {
-            icon = new ImageIcon(user2.getProfilePhotoPath());
-        }
 
         String time = formatTimestamp(notification.getTimestamp());
         switch (notification.getType()) {
             case "Friend Request":
+                User user2 = udb.getUserById(sender);
+
+                if (user2.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+
+                    icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon = new ImageIcon(user2.getProfilePhotoPath());
+                }
                 addNotification(icon, user2.getUsername(), time, notification);
                 break;
             case "Accepted":
-                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Accepted your friend request"));
+                User user3 = udb.getUserById(sender);
+
+                if (user3.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+
+                    icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon = new ImageIcon(user3.getProfilePhotoPath());
+                }
+                jPanel1.add(new notificationType(icon, user3.getUsername(), time, " Accepted your friend request"));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
@@ -97,7 +106,15 @@ public class NotificationPanel extends javax.swing.JPanel {
 
                 break;
             case "Declined":
-                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Declined your friend request"));
+                User user4 = udb.getUserById(sender);
+
+                if (user4.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+
+                    icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon = new ImageIcon(user4.getProfilePhotoPath());
+                }
+                jPanel1.add(new notificationType(icon, user4.getUsername(), time, " Declined your friend request"));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
@@ -105,7 +122,15 @@ public class NotificationPanel extends javax.swing.JPanel {
 
                 break;
             case "Friends Posts":
-                jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Added a new Post"));
+                User user5 = udb.getUserById(sender);
+
+                if (user5.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
+
+                    icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon = new ImageIcon(user5.getProfilePhotoPath());
+                }
+                jPanel1.add(new notificationType(icon, user5.getUsername(), time, " Added a new Post"));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
@@ -118,44 +143,41 @@ public class NotificationPanel extends javax.swing.JPanel {
                     }
 
                 }
-                 if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
+                if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
 
-            icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
-        } else {
-            icon2 = new ImageIcon((String) group.get("ProfileImage"));
-        }
+                    icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon2 = new ImageIcon((String) group.get("ProfileImage"));
+                }
                 jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " You are Added to a new Group "));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
                 udb.saveDatabase();
                 break;
-        
-        case "Added":
+
+            case "Added":
                 for (HashMap grp : groups) {
                     if (grp.get("ID").equals(sender)) {
                         group = grp;
                     }
 
                 }
-                 if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
+                if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
 
-            icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
-        } else {
-            icon2 = new ImageIcon((String) group.get("ProfileImage"));
-        }
+                    icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+                } else {
+                    icon2 = new ImageIcon((String) group.get("ProfileImage"));
+                }
                 jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " a new post is added to the group "));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
                 udb.saveDatabase();
                 break;
-        
-        
-        
-        }}
 
-    
+        }
+    }
 
     private String extractsSenderFromDescription(String description) {
 

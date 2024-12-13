@@ -352,7 +352,8 @@ public class SearchFrame extends javax.swing.JFrame {
             return;
         }
         int i=searchList.getSelectedIndex();
-        String id=se.getMap().get(i);
+        HashMap grp=se.getGroupmap().get(i);
+        String id=(String) grp.get("ID");
         if(!gm.isanadmin(me.getUserId(), id)&&!gm.istheprimaryadmin(me.getUserId(), id)&&!gm.ismember(me.getUserId(), id)){
             gm.addMemberToGroup(id, me.getUserId());
         }else{
