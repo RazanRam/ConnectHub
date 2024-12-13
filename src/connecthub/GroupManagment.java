@@ -84,24 +84,46 @@ public class GroupManagment {
         
         ArrayList<JSONObject> arr = gdp.getfromfile("createdgroups.json");
         for (JSONObject obj : arr) {
+            if(obj.getString("Userid").equals(me.getUserId())){
             JSONObject createdGroups = obj.getJSONObject("mycreatedgroups");
             //loop on Groups
             for(String grpID : createdGroups.keySet()){
-                //get id of each group & put in a hashmap
-                HashMap<String,String> group=new HashMap<>();
-                group.put("ID", grpID);
-                //get name of group with specified id
-                JSONObject GrpDetails=createdGroups.getJSONObject(grpID);
-                group.put("ProfileImage", GrpDetails.getString("image"));
-                group.put("CoverImage", GrpDetails.getString("coverimage"));
-                group.put("name", GrpDetails.getString("name"));
-                group.put("desc", GrpDetails.getString("bio"));
-                
-                //add hash map in array of maps representing groups existing
-                Groups.add(group);
-                
+                Object groupData = createdGroups.get(grpID);
+
+               if (groupData instanceof JSONArray) {
+                    // If groupData is a JSONArray, iterate through it
+                    JSONArray groupDetailsArray = (JSONArray) groupData;
+
+                    HashMap<String, String> group = new HashMap<>();
+                    group.put("ID", grpID);
+
+                    for (int i = 0; i < groupDetailsArray.length(); i++) {
+                        JSONObject detail = groupDetailsArray.getJSONObject(i);
+
+                        // Extract known keys
+                        if (detail.has("name")) {
+                            group.put("name", detail.getString("name"));
+                        }
+                        if (detail.has("bio")) {
+                            group.put("desc", detail.getString("bio"));
+                        }
+                        if (detail.has("image")) {
+                            group.put("ProfileImage", detail.getString("image"));
+                        }
+                        if (detail.has("coverimage")) {
+                            group.put("CoverImage", detail.getString("coverimage"));
+                        }
+                    }
+
+                    Groups.add(group);
+
+                } else {
+                    // Log unexpected types
+                    System.err.println("Unexpected data type for group ID: " + grpID + ". Data: " + groupData);
+                }
             }
         }
+    }
         return Groups;
     }
     public ArrayList<HashMap> getMyGroups(){

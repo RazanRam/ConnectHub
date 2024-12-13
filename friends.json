@@ -1,30 +1,4 @@
-[
-  {
-    "UserID1": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
-    "UserID2": "402d81a2-ce1a-4244-b00b-94e9e79fde7a"
-  },
-  {
-    "UserID1": "e8b87ecc-0e0a-4876-a78e-9d27a5c307b1",
-    "UserID2": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f"
-  },
-  {
-    "UserID1": "60588051-051e-4c59-a600-da77c7f138e7",
-    "UserID2": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f"
-  },
-  {
-    "UserID1": "743c7389-3fbc-4a89-967b-e56126d343dd",
-    "UserID2": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f"
-  },
-  {
-    "UserID1": "698718a3-e1d9-4cf4-9d4d-451a64352f63",
-    "UserID2": "b7f59ec4-ae4f-4e06-8027-7901ab9a278f"
-  },
-  {
-    "UserID1": "ccc9ee9e-d53b-492f-bbae-9512a3d46196",
-    "UserID2": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86"
-  },
-  {
-    "UserID1": "5bd2780b-657a-4b45-bc59-616accccb302",
-    "UserID2": "ccc9ee9e-d53b-492f-bbae-9512a3d46196"
-  }
-]
+[{
+  "UserID1": "5bd2780b-657a-4b45-bc59-616accccb302",
+  "UserID2": "ccc9ee9e-d53b-492f-bbae-9512a3d46196"
+}]

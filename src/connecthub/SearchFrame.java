@@ -8,6 +8,7 @@ import connecthub.*;
 import static connecthub.UserDatabase.getCurrentuser;
 import connecthub.GroupManagment;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
@@ -334,6 +335,11 @@ public class SearchFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "you need to select a group not a person", "warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        int i=searchList.getSelectedIndex();
+            HashMap grp=se.getGroupmap().get(i);
+        GroupProfile gp=new GroupProfile(grp, n);
+            setVisible(false);
+            gp.setVisible(true);
     }//GEN-LAST:event_viewGroupActionPerformed
 
     private void joinGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinGroupActionPerformed

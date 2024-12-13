@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
 public class groupmanagmentframe extends javax.swing.JFrame {
     GroupManagment gm=new GroupManagment();
      
-     NewsFeed n;
+     GroupProfile n;
 
     /**
      * Creates new form groupmanagmentframe
      */
-    public groupmanagmentframe(NewsFeed n) {
+    public groupmanagmentframe(GroupProfile n) {
         initComponents();
         this.n=n;
     }

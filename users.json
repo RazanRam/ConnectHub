@@ -12,62 +12,62 @@
         "username": "malak"
     },
     {
-        "CoverPhotoPath": "DefaultCoverPhoto.jpg",
+        "CoverPhotoPath": "user_PP/coverPhoto_Edit/ccc9ee9e-d53b-492f-bbae-9512a3d46196_PP.jpg",
         "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-        "Bio": "",
+        "Bio": "jana's profile",
         "dateOfBirth": "2024-12-05",
-        "isOnline": false,
+        "isOnline": true,
         "userId": "ccc9ee9e-d53b-492f-bbae-9512a3d46196",
         "email": "jana@gmail.com",
         "ProfilePhotoPath": "user_PP/profilePhoto_Edit/ccc9ee9e-d53b-492f-bbae-9512a3d46196_PP.jpg",
         "notifications": [
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 accepted your friend request",
                 "type": "Accepted",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 declined your friend request",
                 "type": "Declined",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
-                "isRead": true,
+                "isRead": false,
                 "description": "701b0ef7-c5dc-40eb-a691-fb04d2e64c86 added a new post ",
                 "type": "Friends Posts",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             },
             {
                 "isRead": false,
                 "description": "5bd2780b-657a-4b45-bc59-616accccb302 sent a friend request",
                 "type": "Friend Request",
-                "timestamp": 1734101702361
+                "timestamp": 1734122793751
             }
         ],
         "username": "jana"
@@ -81,12 +81,20 @@
         "userId": "5bd2780b-657a-4b45-bc59-616accccb302",
         "email": "arwa@gmail.com",
         "ProfilePhotoPath": "DefaultProfilePhoto.jpg",
-        "notifications": [{
-            "isRead": false,
-            "description": "ccc9ee9e-d53b-492f-bbae-9512a3d46196 accepted your friend request",
-            "type": "Accepted",
-            "timestamp": 1734101702361
-        }],
+        "notifications": [
+            {
+                "isRead": false,
+                "description": "ccc9ee9e-d53b-492f-bbae-9512a3d46196 accepted your friend request",
+                "type": "Accepted",
+                "timestamp": 1734122793751
+            },
+            {
+                "isRead": false,
+                "description": "ccc9ee9e-d53b-492f-bbae-9512a3d46196 accepted your friend request",
+                "type": "Accepted",
+                "timestamp": 1734122793751
+            }
+        ],
         "username": "arwa"
     }
 ]
