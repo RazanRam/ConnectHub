@@ -16,6 +16,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
@@ -27,6 +28,7 @@ import net.miginfocom.swing.MigLayout;
 public class NotificationPanel extends javax.swing.JPanel {
 
     private final UserDatabase udb = UserDatabase.getInstance();
+    private GroupManagment gm = new GroupManagment();
 
     /**
      * Creates new form NotificationPanel
@@ -65,6 +67,9 @@ public class NotificationPanel extends javax.swing.JPanel {
         String sender = extractsSenderFromDescription(notification.getDescription());
         User user2 = udb.getUserById(sender);
         ImageIcon icon;
+        ImageIcon icon2;
+        HashMap group = new HashMap();
+        ArrayList<HashMap> groups = gm.getGroups();
         if (user2.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
 
             icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
@@ -84,7 +89,6 @@ public class NotificationPanel extends javax.swing.JPanel {
                 notification.Read();
                 udb.saveDatabase();
 
-
                 break;
             case "Declined":
                 jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Declined your friend request"));
@@ -101,7 +105,27 @@ public class NotificationPanel extends javax.swing.JPanel {
                 notification.Read();
                 udb.saveDatabase();
                 break;
+            case "Group Added":
+                for (HashMap grp : groups) {
+                    if (grp.get("ID").equals(sender)) {
+                        group = grp;
+                    }
+
+                }
+                 if (group.get("").equals("DefaultProfilePhoto.jpg")) {
+
+            icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+        } else {
+            icon = new ImageIcon((String) group.get(""));
         }
+                jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " You are Added to a new Group "));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+                udb.saveDatabase();
+                break;
+        }
+
     }
 
     private String extractsSenderFromDescription(String description) {

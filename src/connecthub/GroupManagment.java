@@ -21,7 +21,7 @@ public class GroupManagment {
      private String fileGroupMembers = "GroupMembers.json";
      private String filegroupposts = "Groupposts.json";
      ArrayList<JSONObject> grpMembers = new ArrayList(gdb.getfromfile(fileGroupMembers));
-   
+     private UserDatabase udb = UserDatabase.getInstance();
     
 
     ArrayList<JSONObject> groupposts;
@@ -92,6 +92,9 @@ public class GroupManagment {
     public void addMemberToGroup(String groupId, String memberId) {
         grpMembers.add(GC.newmember(memberId, groupId));
         gdp.writeinfile(fileGroupMembers, grpMembers);
+        Notifications Grpadd = new Notifications("Group Added", groupId + " you are added to the group ");
+        // UserDatabase udb = UserDatabase.getInstance();
+        udb.addNotificationToUser(memberId, Grpadd);
     }
 
     public boolean istheprimaryadmin(String userid, String groupid) {
