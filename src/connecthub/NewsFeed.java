@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Image;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -34,7 +35,8 @@ public class NewsFeed extends javax.swing.JFrame {
     UserDatabase udb = UserDatabase.getInstance();
     postStoryManagment psm = new postStoryManagment();
     NewsfeedService nf = new NewsfeedService();
-    GroupDatabase gdb = GroupDatabase.getinstance();
+    GroupManagment gdb = new GroupManagment();
+    HashMap<Integer, HashMap> map=new HashMap<>();
 
     /**
      * Creates new form NewsFeed
@@ -49,6 +51,7 @@ public class NewsFeed extends javax.swing.JFrame {
         showSuggest();
         showFriendsPosts();
         showStories();
+        ShowMyGroups();
     }
 
     public void showFriends() {
@@ -74,6 +77,21 @@ public class NewsFeed extends javax.swing.JFrame {
         String[] arr1 = new String[friendsUsernames.size()];
         String[] arr2 = friendsUsernames.toArray(arr1);
         suggList.setListData(arr2);
+    }
+    
+    public void ShowMyGroups(){
+        ArrayList<HashMap> mygroups=gdb.getMyGroups();
+        ArrayList<String> grpNAME=new ArrayList<>();
+        int i=0;
+        for(HashMap g:mygroups){
+            String grpName=(String) g.get("name");
+            grpNAME.add(grpName);
+            map.put(i, g);
+            i++;
+        }
+        String[] arr1 = new String[grpNAME.size()];
+        String[] arr2 = grpNAME.toArray(arr1);
+        myGroups.setListData(arr2);
     }
 
     public void showStories() {
@@ -172,6 +190,8 @@ public class NewsFeed extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        myGroups = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NewsFeed Frame");
@@ -277,6 +297,8 @@ public class NewsFeed extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane4.setViewportView(myGroups);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,11 +306,6 @@ public class NewsFeed extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -309,7 +326,15 @@ public class NewsFeed extends javax.swing.JFrame {
                         .addComponent(LogOutButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5)
-                        .addGap(3, 3, 3)))
+                        .addGap(3, 3, 3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -326,14 +351,15 @@ public class NewsFeed extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addGap(27, 27, 27)
+                .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -393,32 +419,21 @@ public class NewsFeed extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
+        if(myGroups.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "you need to select", "warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
-            String groupid = JOptionPane.showInputDialog(this, "Enter groupid");
-            ArrayList<JSONObject> objects = new ArrayList<>(gdb.getfromfile("Groupposts.json"));
-            boolean groupExists = false;
-            JSONArray arr = new JSONArray();
-
-            for (JSONObject obj : objects) {
-                System.out.print(obj.getString("groupid"));
-                if (obj.getString("groupid").equals(groupid)) {
-                    groupExists = true;
-                    JSONObject post = new JSONObject();
-                    post.put("postcontent", obj.getString("postcontent"));
-                    post.put("imagepath", obj.getString("imagepath"));
-                    arr.put(post);
-                }
-            }
-     System.out.print(arr);
-            if (!groupExists) {
-                JOptionPane.showMessageDialog(this, "Group Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            GroupFrame gf = new GroupFrame(this, arr);
-            gf.setVisible(true);
+          int i=myGroups.getSelectedIndex();
+        HashMap grp=map.get(i);
+            System.out.println(grp);
+            System.out.println(grp.get("ID"));
+          GroupProfile gp=new GroupProfile(grp, this);
+            setVisible(false);
+          gp.setVisible(true);
         } catch (Exception o) {
-            JOptionPane.showMessageDialog(this, "An error occurred: " + o.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "An error occurred 122: " + o.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -441,7 +456,9 @@ public class NewsFeed extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JList<String> myGroups;
     private javax.swing.JPanel postspanel;
     private javax.swing.JPanel storiespanel;
     private javax.swing.JList<String> suggList;

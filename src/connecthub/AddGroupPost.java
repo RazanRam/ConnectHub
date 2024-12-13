@@ -19,11 +19,13 @@ public class AddGroupPost extends javax.swing.JFrame {
     GroupManagment gm = new GroupManagment();
     private String groupid;
     private String postid;
+    private String userid;
+    
 
     /**
      * Creates new form AddGroupPost
      */
-    public AddGroupPost(NewsFeed n, String groupid) {
+    public AddGroupPost(NewsFeed n, String groupid,String userid) {
         initComponents();
         this.n = n;
         this.groupid = groupid;
@@ -33,7 +35,7 @@ public class AddGroupPost extends javax.swing.JFrame {
         try {
             String text = postarea.getText();
             //groupposts.add(GC.newpost(postid, Groupid,postcontent,imagepath));
-            String imagePath = null;
+            String imagePath = "DefaultProfilePhoto.jpg";
             int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo  ?", "Add Photo", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 JFileChooser filechooser = new JFileChooser();
@@ -46,7 +48,7 @@ public class AddGroupPost extends javax.swing.JFrame {
                 }
             }
             postid = UUID.randomUUID().toString();
-            gm.addnewpost(postid, groupid, postarea.getText(), imagePath);
+            gm.addnewpost(postid, groupid, postarea.getText(), imagePath,userid);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

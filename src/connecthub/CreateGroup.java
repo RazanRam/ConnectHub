@@ -17,6 +17,15 @@ public class CreateGroup {
     private String groupimage;
     private String groupprimaryadmin;
     private String groupid;
+    private String coverimage;
+
+    public String getCoverimage() {
+        return coverimage;
+    }
+
+    public void setCoverimage(String coverimage) {
+        this.coverimage = coverimage;
+    }
 
     public void setgroupname(String name) {
         this.groupname = name;
@@ -58,5 +67,6 @@ public class CreateGroup {
     public void setGroupid() {
         this.groupid = UUID.randomUUID().toString();
     }
+    
 
 }

@@ -27,11 +27,12 @@ public JSONObject newmember(String memberid,String Groupid){
   //newmember.put("groupname",groupname );
   return newmember;
 }
-public JSONObject newpost(String postid,String Groupid,String postcontent,String imagepath){
+public JSONObject newpost(String postid,String Groupid,String postcontent,String imagepath,String userid){
   JSONObject newpost=new JSONObject();
   newpost.put("postid", postid);
   newpost.put("groupid", Groupid);
   newpost.put("postcontent",postcontent);
+  newpost.put("userid", userid);
   if(imagepath!=null)
   {newpost.put("imagepath",imagepath);}
   return newpost;

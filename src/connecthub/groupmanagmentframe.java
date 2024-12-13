@@ -87,6 +87,11 @@ public class groupmanagmentframe extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton7.setText("Delete Post");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,7 +194,7 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         
         if(gm.istheprimaryadmin(userid,groupid)||gm.isanadmin(userid, groupid)||gm.ismember(userid, groupid))
         { 
-        AddGroupPost a =new AddGroupPost(n,groupid);
+        AddGroupPost a =new AddGroupPost(n,groupid,userid);
         a.setVisible(true);
         this.setVisible(false);}
         else{JOptionPane.showMessageDialog(this, "Sorry, you are not an admin" ,"Message", JOptionPane.INFORMATION_MESSAGE);}
@@ -197,6 +202,20 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+       /* String userid=JOptionPane.showInputDialog(this,"Please Enter Your id");
+        String groupid=JOptionPane.showInputDialog(this,"Please Enter groupid");
+
+        if(gm.istheprimaryadmin(userid,groupid)||gm.isanadmin(userid, groupid)||gm.ismember(userid, groupid))
+        {
+            RemoveGroupPost a =new RemoveGroupPost(n,groupid);
+            a.setVisible(true);
+            this.setVisible(false);}
+        else{JOptionPane.showMessageDialog(this, "Sorry, you are not an admin" ,"Message", JOptionPane.INFORMATION_MESSAGE);}
+*/
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

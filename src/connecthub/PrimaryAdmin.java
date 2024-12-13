@@ -89,6 +89,7 @@ public class PrimaryAdmin extends GroupManagment {
     groupDetailsArray.put(new JSONObject().put("name", CG.getgroupname()));
     groupDetailsArray.put(new JSONObject().put("bio", CG.getgroupdescription()));
     groupDetailsArray.put(new JSONObject().put("image", CG.getgroupimage()));
+     groupDetailsArray.put(new JSONObject().put("coverimage", CG.getCoverimage()));
          System.out.println(CG.getgroupname());
         System.out.println(CG.getgroupdescription());
     // Step 7: Add the group details to the user's created groups with groupId as the key
