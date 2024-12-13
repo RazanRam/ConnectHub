@@ -26,7 +26,10 @@ GroupManagment gm=new GroupManagment();
         this.groupid=groupid;
     }
     public void addadmin(){
-        prim.addnewadmin(groupid,adminid.getText());
+       // String check=adminid.getText();
+        //if(gm.isanadmin(check, groupid))
+         prim.addnewadmin(groupid,adminid.getText());
+        //else { JOptionPane.showMessageDialog(this, "Admin is already exist" ,"Message", JOptionPane.ERROR_MESSAGE);}
         
     }
 

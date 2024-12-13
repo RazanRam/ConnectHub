@@ -26,8 +26,10 @@ public class addmemberframe extends javax.swing.JFrame {
         this.groupid=groupid;
     }
     public void addmember(){
+     //String check =memberid.getText();
+     //if(gm.ismember(check, groupid))
       gm.addMemberToGroup(groupid,memberid.getText());
-        
+     //else { JOptionPane.showMessageDialog(this, "member is already exist" ,"Message", JOptionPane.ERROR_MESSAGE);}
     }
 
     /**

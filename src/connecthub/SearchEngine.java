@@ -17,6 +17,7 @@ public class SearchEngine {
     FriendsManagment fm=FriendsManagment.getInstance();
     User me=UserDatabase.getCurrentuser();
     GroupManagment gdb= new GroupManagment();
+    HashMap<Integer, HashMap> groupmap=new HashMap<>();
     
     private HashMap<Integer, String> map=new HashMap<>();
     private int i=0;
@@ -33,6 +34,7 @@ public class SearchEngine {
             }
         }
         LastUseri=i-1;
+        
         return results;
     }
     public String Iswhat(String id){
@@ -67,6 +69,7 @@ public class SearchEngine {
             if(grpName.contains(key)){
                 results.add(grpName);
                 map.put(i, grpID);
+                groupmap.put(i, g);
                 i++;
             }
         }
@@ -85,6 +88,14 @@ public class SearchEngine {
     
     public int getLastUseri(){
         return LastUseri;
+    }
+
+    public HashMap<Integer, HashMap> getGroupmap() {
+        return groupmap;
+    }
+
+    public void setGroupmap(HashMap<Integer, HashMap> groupmap) {
+        this.groupmap = groupmap;
     }
     
 }
