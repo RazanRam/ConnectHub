@@ -5,7 +5,6 @@
 package connecthub;
 
 import connecthub.*;
-import connecthub.groups.GroupManagment;
 import java.util.ArrayList;
 import java.util.HashMap;
 

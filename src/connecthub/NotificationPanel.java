@@ -112,11 +112,11 @@ public class NotificationPanel extends javax.swing.JPanel {
                     }
 
                 }
-                 if (group.get("").equals("DefaultProfilePhoto.jpg")) {
+                 if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
 
-            icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+            icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
         } else {
-            icon = new ImageIcon((String) group.get(""));
+            icon2 = new ImageIcon((String) group.get("ProfileImage"));
         }
                 jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " You are Added to a new Group "));
                 jPanel1.revalidate();

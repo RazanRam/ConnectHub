@@ -6,7 +6,7 @@ package connecthub;
 
 import connecthub.*;
 import static connecthub.UserDatabase.getCurrentuser;
-import connecthub.groups.GroupManagment;
+import connecthub.GroupManagment;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
