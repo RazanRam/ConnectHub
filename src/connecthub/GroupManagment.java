@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 public class GroupManagment {
 
-     GroupCommunity GC = new GroupCommunity();
+     
      GroupDatabase gdp = GroupDatabase.getinstance();
      private String fileGroupMembers = "GroupMembers.json";
      private String filegroupposts = "Groupposts.json";
@@ -23,7 +23,7 @@ public class GroupManagment {
    
     
 
-    ArrayList<JSONObject> groupposts;
+    ArrayList<JSONObject> groupposts=new ArrayList();
 
     public void addnewpost(String postid, String Groupid,String postcontent,String imagepath) {
         GroupCommunity GC = new GroupCommunity();
@@ -68,6 +68,7 @@ public class GroupManagment {
     }
 
     public void addMemberToGroup(String groupId, String memberId) {
+        GroupCommunity GC = new GroupCommunity();
         grpMembers.add(GC.newmember(memberId, groupId));
         gdp.writeinfile(fileGroupMembers, grpMembers);
     }
@@ -103,10 +104,11 @@ public class GroupManagment {
                 return true;
             }
         }
-
+System.out.println(grpMembers);
         return false;
     }
    
     
 
 }
+ 

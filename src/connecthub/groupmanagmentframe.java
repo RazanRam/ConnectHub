@@ -40,7 +40,7 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         AddAdminButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         AddAdminButton.setText("Add Admin");
@@ -96,13 +96,12 @@ public class groupmanagmentframe extends javax.swing.JFrame {
                 .addGap(152, 152, 152)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AddAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(AddMemberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RemoveMemberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(RemoveAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AddAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AddMemberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RemoveMemberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RemoveAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -134,7 +133,7 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         String groupid=JOptionPane.showInputDialog(this,"Please Enter groupid");
         
         if(gm.istheprimaryadmin(userid,groupid))
-        { addadminframe a=new addadminframe(this,groupid);
+        { addadminframe a=new addadminframe(n,groupid);
         a.setVisible(true);
         this.setVisible(false);}
         else{JOptionPane.showMessageDialog(this, "Sorry, you are not the primary admin" ,"Message", JOptionPane.INFORMATION_MESSAGE);}
@@ -180,6 +179,7 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         this.setVisible(false);}
         else{JOptionPane.showMessageDialog(this, "Sorry, you are not an admin" ,"Message", JOptionPane.INFORMATION_MESSAGE);}
         
+        
     }//GEN-LAST:event_RemoveMemberButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -189,10 +189,11 @@ public class groupmanagmentframe extends javax.swing.JFrame {
         
         if(gm.istheprimaryadmin(userid,groupid)||gm.isanadmin(userid, groupid)||gm.ismember(userid, groupid))
         { 
-        AddGroupPost a =new AddGroupPost(this,groupid);
+        AddGroupPost a =new AddGroupPost(n,groupid);
         a.setVisible(true);
         this.setVisible(false);}
         else{JOptionPane.showMessageDialog(this, "Sorry, you are not an admin" ,"Message", JOptionPane.INFORMATION_MESSAGE);}
+        
         
         
     }//GEN-LAST:event_jButton5ActionPerformed

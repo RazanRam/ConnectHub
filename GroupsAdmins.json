@@ -1,10 +1,4 @@
-[
-    {
-        "groupid": "89dbd7ac-5329-454e-8e35-3bc7d691a78b",
-        "adminid": "8603"
-    },
-    {
-        "groupid": "d5b4d66f-b0cd-4174-a565-fdcb818ca566",
-        "adminid": "8698"
-    }
-]
+[{
+    "groupid": "89dbd7ac-5329-454e-8e35-3bc7d691a78b",
+    "adminid": "123456789"
+}]

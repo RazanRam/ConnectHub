@@ -16,11 +16,11 @@ PrimaryAdmin prim=PrimaryAdmin.getInstance();
 GroupManagment gm=new GroupManagment();
      CreateGroup cg =new CreateGroup();
              
-      groupmanagmentframe f;
+     NewsFeed f;
     /**
      * Creates new form addadminframe
      */
-    public addadminframe(groupmanagmentframe f,String groupid) {
+    public addadminframe(NewsFeed f,String groupid) {
         initComponents();
         this.f=f;
         this.groupid=groupid;

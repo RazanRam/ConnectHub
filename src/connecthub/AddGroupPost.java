@@ -4,22 +4,52 @@
  */
 package connecthub;
 
+import java.io.IOException;
+import java.util.UUID;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Raz_RAMADAN
  */
 public class AddGroupPost extends javax.swing.JFrame {
-  groupmanagmentframe f;
- GroupManagment gm=new GroupManagment();
- private String groupid;
- 
+
+    NewsFeed n;
+    GroupManagment gm = new GroupManagment();
+    private String groupid;
+    private String postid;
+
     /**
      * Creates new form AddGroupPost
      */
-    public AddGroupPost(groupmanagmentframe f,String groupid) {
+    public AddGroupPost(NewsFeed n, String groupid) {
         initComponents();
-        this.f=f;
-        this.groupid=groupid;
+        this.n = n;
+        this.groupid = groupid;
+    }
+
+    public void addpost() {
+        try {
+            String text = postarea.getText();
+            //groupposts.add(GC.newpost(postid, Groupid,postcontent,imagepath));
+            String imagePath = null;
+            int result = JOptionPane.showConfirmDialog(this, "Do You want to add a photo  ?", "Add Photo", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                JFileChooser filechooser = new JFileChooser();
+                filechooser.setDialogTitle(imagePath);
+                filechooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+                int fileResult = filechooser.showOpenDialog(this);
+                if (fileResult == JFileChooser.APPROVE_OPTION) {
+                    imagePath = filechooser.getSelectedFile().getAbsolutePath();
+
+                }
+            }
+            postid = UUID.randomUUID().toString();
+            gm.addnewpost(postid, groupid, postarea.getText(), imagePath);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Process Failed " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -32,13 +62,13 @@ public class AddGroupPost extends javax.swing.JFrame {
     private void initComponents() {
 
         DoneButton = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        postarea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        DoneButton.setBackground(new java.awt.Color(153, 153, 153));
+        DoneButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         DoneButton.setText("Done");
         DoneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,43 +76,32 @@ public class AddGroupPost extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Group Id");
-
-        jLabel2.setText("Member Id");
+        postarea.setColumns(20);
+        postarea.setRows(5);
+        jScrollPane1.setViewportView(postarea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(DoneButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(DoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addComponent(DoneButton)
-                .addGap(26, 26, 26))
+                .addGap(70, 70, 70)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(DoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
@@ -90,25 +109,23 @@ public class AddGroupPost extends javax.swing.JFrame {
 
     private void DoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneButtonActionPerformed
         // TODO add your handling code here:
+
+        addpost();
+
         
-                 Addpost2 a =new Addpost2(this,groupid);
-                  a.setVisible(true);
-        gm.addnewpost(groupid, groupid, groupid, groupid);
+
         this.setVisible(false);
-            f.setVisible(true);
-        
+        n.setVisible(true);
+
     }//GEN-LAST:event_DoneButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DoneButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea postarea;
     // End of variables declaration//GEN-END:variables
 }
