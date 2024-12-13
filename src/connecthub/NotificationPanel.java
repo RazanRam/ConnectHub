@@ -16,6 +16,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
@@ -27,6 +28,7 @@ import net.miginfocom.swing.MigLayout;
 public class NotificationPanel extends javax.swing.JPanel {
 
     private final UserDatabase udb = UserDatabase.getInstance();
+    private GroupManagment gm=new GroupManagment();
 
     /**
      * Creates new form NotificationPanel
@@ -65,6 +67,9 @@ public class NotificationPanel extends javax.swing.JPanel {
         String sender = extractsSenderFromDescription(notification.getDescription());
         User user2 = udb.getUserById(sender);
         ImageIcon icon;
+        ImageIcon icon2;
+         ArrayList<HashMap> groups=gm.getGroups();
+         HashMap group=new HashMap();
         if (user2.getProfilePhotoPath().equals("DefaultProfilePhoto.jpg")) {
 
             icon = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
@@ -96,6 +101,23 @@ public class NotificationPanel extends javax.swing.JPanel {
                 break;
             case "Friends Posts":
                 jPanel1.add(new notificationType(icon, user2.getUsername(), time, " Added a new Post"));
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                notification.Read();
+                udb.saveDatabase();
+                break;
+            case "Group Add":
+                for (HashMap grp:groups){
+                if(grp.get("ID").equals(sender)){
+                group=grp;
+                } }
+                if (group.get("ProfileImage").equals("DefaultProfilePhoto.jpg")) {
+
+            icon2 = new ImageIcon(getClass().getResource("/connecthub/user default.png"));
+        } else {
+            icon2 = new ImageIcon((String) group.get("ProfileImage"));
+        }
+                jPanel1.add(new notificationType(icon2, (String) group.get("name"), time, " Added you to the Group "));
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 notification.Read();
