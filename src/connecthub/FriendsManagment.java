@@ -74,11 +74,11 @@ public class FriendsManagment {
         }
 
         friendship f = new friendship(user2, user1);
+
+        Friends.add(f);
         Notifications notifyAccepter = new Notifications("Accepted", user1 + " accepted your friend request");
         // UserDatabase udb = UserDatabase.getInstance();
         udb.addNotificationToUser(user2, notifyAccepter);
-
-        Friends.add(f);
 
         fdb.saveDatabase(friendsrequestsFILE, FriendRqustes);
         fdb.saveDatabase(friendsFILE, Friends);
